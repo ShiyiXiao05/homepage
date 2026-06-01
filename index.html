@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>肖世屹 · Shiyi Xiao</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --text: #1a1a1a;
+    --muted: #666;
+    --accent: #2563eb;
+    --border: #e5e5e5;
+    --card-bg: #fff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 60px 24px;
+  }
+  header { margin-bottom: 48px; }
+  h1 { font-size: 2rem; font-weight: 700; letter-spacing: 0.02em; }
+  .subtitle { color: var(--muted); font-size: 1rem; margin-top: 6px; }
+  .contact { margin-top: 12px; font-size: 0.9rem; color: var(--muted); }
+  .contact a { color: var(--accent); text-decoration: none; }
+  .contact a:hover { text-decoration: underline; }
+  .contact span { margin: 0 8px; }
+  section { margin-bottom: 40px; }
+  h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .card-title { font-weight: 600; }
+  .card-meta { font-size: 0.85rem; color: var(--muted); margin: 2px 0 8px; }
+  .card p { font-size: 0.9rem; color: #444; }
+  ul { list-style: none; padding: 0; }
+  li { font-size: 0.9rem; padding: 4px 0; color: #444; position: relative; padding-left: 16px; }
+  li::before { content: "—"; position: absolute; left: 0; color: var(--border); }
+  .honor-date { color: var(--muted); font-size: 0.85rem; float: right; }
+  .tag {
+    display: inline-block;
+    background: #f0f4ff;
+    color: var(--accent);
+    font-size: 0.78rem;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin: 2px 4px 2px 0;
+  }
+  footer {
+    margin-top: 64px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #bbb;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>肖世屹</h1>
+  <div class="subtitle">人工智能本科生 · 上海交通大学</div>
+  <div class="contact">
+    <a href="mailto:sjtuxsy-finance-pc@sjtu.edu.cn">sjtuxsy-finance-pc@sjtu.edu.cn</a>
+    <span>·</span>
+    <a href="https://github.com/Explorer-David">GitHub</a>
+  </div>
+</header>
+
+<section>
+  <h2>教育经历</h2>
+  <div class="card">
+    <div class="card-title">上海交通大学 — 人工智能 本科</div>
+    <div class="card-meta">2024.09 — 至今 · GPA 3.82 / 4.30 · 排名 25/66</div>
+  </div>
+</section>
+
+<section>
+  <h2>科研经历</h2>
+  <div class="card">
+    <div class="card-title">基于 Transfer Learning 的量子纠错解码器</div>
+    <div class="card-meta">2026.01 — 2026.06 · Surface Code 核心成员 · 与南洋理工大学合作</div>
+    <p>围绕容错量子计算中的 Surface Code 解码问题，构建基于 Transformer 架构的 NTU-Transformer 解码器。利用 transfer learning 将小距离码上的局部拓扑感知能力迁移到更大距离码，缓解神经解码器的 cold-start 问题。</p>
+  </div>
+  <div class="card">
+    <div class="card-title">面向量子优越性的线路智能编译与蒸馏</div>
+    <div class="card-meta">2025.08 — 2025.11 · 项目关键成员</div>
+    <p>参与面向 NISQ 量子硬件的线路智能编译与优化，负责线路结构复杂度分析与非局域性度量设计。参与 cpflow 酉矩阵综合实验与真机实验。项目获"挑战杯"揭榜挂帅擂台赛一等奖。</p>
+  </div>
+</section>
+
+<section>
+  <h2>所获荣誉</h2>
+  <ul>
+    <li><span class="honor-date">2025.12</span>致远荣誉奖学金</li>
+    <li><span class="honor-date">2025.12</span>本科生优秀奖学金</li>
+    <li><span class="honor-date">2025.11</span>"挑战杯"揭榜挂帅擂台赛 新一代信息技术领域 一等奖</li>
+    <li><span class="honor-date">2025.10</span>2024—2025 年度三好学生</li>
+    <li><span class="honor-date">2024.12</span>致远荣誉奖学金</li>
+    <li><span class="honor-date">2023.10</span>第 40 届全国中学生物理竞赛 全国二等奖</li>
+  </ul>
+</section>
+
+<section>
+  <h2>专业技能</h2>
+  <div>
+    <span class="tag">Python</span>
+    <span class="tag">C/C++</span>
+    <span class="tag">PyTorch</span>
+    <span class="tag">NumPy</span>
+    <span class="tag">Pandas</span>
+    <span class="tag">Machine Learning</span>
+    <span class="tag">Deep Learning</span>
+    <span class="tag">Reinforcement Learning</span>
+    <span class="tag">Transformer</span>
+    <span class="tag">Qiskit</span>
+    <span class="tag">LaTeX</span>
+  </div>
+</section>
+
+<footer>
+  © 2026 肖世屹
+</footer>
+
+</body>
+</html>
