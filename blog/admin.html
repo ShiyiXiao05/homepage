@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>博客后台 · Shiyi Xiao</title>
+<script>
+(function(){try{
+  var t=localStorage.getItem('sx-theme');
+  if(!t) t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  document.documentElement.dataset.theme=t;
+}catch(e){}})();
+</script>
+<style>
+:root{--bg:#fff;--ink:#1a1a1a;--body:#444;--muted:#767676;--border:#ddd;--blue:#1772d0;--card:#f7f8fa;--ok:#1a7f37;--bad:#c0392b;color-scheme:light;
+--sans:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
+--mono:'SF Mono',Menlo,Consolas,monospace}
+[data-theme="dark"]{--bg:#20212b;--ink:#eceef2;--body:#c6c9d2;--muted:#9a9daa;--border:#3a3c4a;--blue:#7fb0f5;--card:#292b38;--ok:#57ab5a;--bad:#e5534b;color-scheme:dark}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--body);font-size:14px;line-height:1.7}
+.page{max-width:1200px;margin:0 auto;padding:40px 24px 60px}
+h1{font-size:22px;color:var(--ink);margin-bottom:4px}
+.sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+button{font-family:var(--sans);font-size:13px;color:var(--ink);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px 14px;cursor:pointer}
+button:hover{border-color:var(--blue);color:var(--blue)}
+button.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+button.primary:hover{opacity:.88}
+button.danger:hover{border-color:var(--bad);color:var(--bad)}
+button:disabled{opacity:.5;cursor:not-allowed}
+input,textarea{font-family:var(--sans);font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 10px;width:100%}
+input:focus,textarea:focus{outline:2px solid var(--blue);outline-offset:1px}
+textarea{font-family:var(--mono);font-size:13px;line-height:1.6;resize:vertical}
+.cols{display:grid;grid-template-columns:260px 1fr 1fr;gap:18px;align-items:start}
+@media(max-width:960px){.cols{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px}
+.panel h3{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}
+.plist{list-style:none}.plist li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:7px 4px;border-bottom:1px solid var(--border)}
+.plist li:last-child{border-bottom:none}
+.plist a{color:var(--ink);text-decoration:none;cursor:pointer;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.plist a:hover{color:var(--blue)}
+.field{margin-bottom:10px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:3px}
+.status{font-size:12.5px;font-family:var(--mono);color:var(--muted);margin:10px 0}
+.status.ok{color:var(--ok)}.status.bad{color:var(--bad)}
+.preview{border:1px solid var(--border);border-radius:10px;padding:18px;min-height:420px;max-height:75vh;overflow-y:auto;background:var(--bg)}
+.editor{min-height:420px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.note{font-size:12px;color:var(--muted);margin-top:8px}
+.token-row{display:flex;gap:8px}
+.katex-display{overflow-x:auto;padding:4px 0}
+.img-note{color:var(--muted)}
+@media print{.page{display:none}}
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>博客后台</h1>
+  <p class="sub">GitHub API 在线编辑 · ShiyiXiao05/homepage · <a href="index.html">← 返回博客</a> · <a href="../index.html">← 返回主页</a></p>
+
+  <div class="panel" style="margin-bottom:18px">
+    <h3>GitHub Token</h3>
+    <div class="token-row">
+      <input id="tokenInput" type="password" placeholder="粘贴 Fine-grained PAT（仅本仓库 Contents 读写）">
+      <button id="saveToken" class="primary">保存</button>
+      <button id="clearToken">清除</button>
+    </div>
+    <p class="note" id="tokenNote">Token 只保存在此浏览器的 localStorage 中，不会上传到仓库之外的任何地方。建议仅授权本仓库的 Contents: Read and write。</p>
+    <p class="status" id="status"></p>
+  </div>
+
+  <div class="cols">
+    <div class="panel">
+      <h3>文章列表（_posts/）</h3>
+      <ul class="plist" id="postList"></ul>
+      <div style="margin-top:12px"><button id="newBtn">＋ 新建文章</button></div>
+    </div>
+    <div>
+      <div class="toolbar">
+        <input id="fTitle" placeholder="标题" style="flex:2;min-width:160px">
+        <input id="fDate" placeholder="2026-09-11" style="flex:1;min-width:110px">
+      </div>
+      <div class="toolbar">
+        <input id="fSlug" placeholder="文件名 slug（英文，如 my-first-post）" style="flex:2;min-width:200px">
+        <input id="fTags" placeholder="标签，逗号分隔" style="flex:1;min-width:120px">
+      </div>
+      <div class="toolbar">
+        <input id="fSummary" placeholder="摘要（列表页显示）" style="width:100%">
+      </div>
+      <textarea id="editor" class="editor" spellcheck="false" placeholder="在这里写 Markdown…"></textarea>
+      <div class="toolbar" style="margin-top:12px">
+        <button id="saveBtn" class="primary">保存并发布（commit 到 master）</button>
+        <button id="deleteBtn" class="danger">删除此文</button>
+      </div>
+      <p class="status" id="saveStatus"></p>
+    </div>
+    <div>
+      <div class="panel"><h3>实时预览</h3><div id="preview" class="preview"></div></div>
+    </div>
+  </div>
+</div>
+
+<script src="marked.min.js"></script>
+<link rel="stylesheet" href="katex/katex.min.css">
+<script defer src="katex/katex.min.js"></script>
+<script defer src="katex/contrib/auto-render.min.js"></script>
+<script>
+const REPO = 'ShiyiXiao05/homepage';
+const DIR  = '_posts';
+const $ = id => document.getElementById(id);
+let token = localStorage.getItem('sx-gh-token') || '';
+let currentFile = null, currentSha = null;
+
+function status(msg, cls){ const el=$('status'); el.textContent = msg||'\u00a0'; el.className = 'status ' + (cls||''); }
+function saveStatus(msg, cls){ const el=$('saveStatus'); el.textContent = msg||'\u00a0'; el.className = 'status ' + (cls||''); }
+
+function setToken(t){
+  token = ($('tokenInput').value || '').trim();
+  if (!token) { status('请先粘贴 Token', 'bad'); return; }
+  localStorage.setItem('sx-gh-token', token);
+  status('Token 已保存到本浏览器 ✓', 'ok');
+  loadList();
+}
+$('saveToken').addEventListener('click', () => setToken());
+$('clearToken').addEventListener('click', () => {
+  localStorage.removeItem('sx-gh-token'); token=''; $('tokenInput').value='';
+  status('Token 已清除'); $('postList').innerHTML='';
+});
+
+function b64ToUtf8(b64){
+  const bin = atob(b64.replace(/\n/g,''));
+  const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+function utf8ToB64(str){
+  const bytes = new TextEncoder().encode(str);
+  let bin = ''; bytes.forEach(b => bin += String.fromCharCode(b));
+  return btoa(bin);
+}
+async function api(path, opts){
+  const res = await fetch('https://api.github.com' + path, Object.assign({}, opts, {
+    headers: Object.assign({
+      'Authorization': 'Bearer ' + token,
+      'Accept': 'application/vnd.github+json',
+      'Content-Type': 'application/json'
+    }, (opts && opts.headers) || {})
+  }));
+  if (!res.ok) throw new Error(res.status + ': ' + (await res.text()).slice(0, 300));
+  return res.json();
+}
+
+async function loadList(){
+  if (!token) { status('未配置 Token —— 只能浏览，无法读写。', ''); return; }
+  status('加载文章列表…');
+  try {
+    const data = await api('/repos/' + REPO + '/contents/' + DIR);
+    const ul = $('postList'); ul.innerHTML = '';
+    data.filter(f => f.name.endsWith('.md')).sort().reverse().forEach(f => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.textContent = f.name; a.onclick = () => openPost(f);
+      li.appendChild(a); ul.appendChild(li);
+    });
+    status('共 ' + ul.children.length + ' 篇文章 ✓', 'ok');
+  } catch (e) { status('加载失败：' + e.message, 'bad'); }
+}
+
+async function openPost(f){
+  status('读取 ' + f.name + ' …');
+  try {
+    const data = await api('/repos/' + REPO + '/contents/' + DIR + '/' + f.name);
+    currentFile = f.name; currentSha = data.sha;
+    const md = b64ToUtf8(data.content);
+    $('editor').value = md;
+    const fm = parseFrontMatter(md);
+    $('fTitle').value = fm.title || '';
+    $('fDate').value = fm.date || '';
+    $('fTags').value = fm.tags || '';
+    $('fSummary').value = fm.summary || '';
+    $('fSlug').value = f.name.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.md$/, '');
+    saveStatus('已载入 ' + f.name + ' ✓', 'ok');
+    preview();
+  } catch (e) { saveStatus('读取失败：' + e.message, 'bad'); }
+}
+
+function parseFrontMatter(md){
+  const m = md.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+  const fm = {};
+  if (m) m[1].split('\n').forEach(line => {
+    const i = line.indexOf(':');
+    if (i > 0) fm[line.slice(0,i).trim()] = line.slice(i+1).trim().replace(/^"|"/g, '');
+  });
+  if (fm.tags) fm.tags = fm.tags.replace(/[\[\]]/g, '');
+  return fm;
+}
+
+function buildMarkdown(){
+  const tags = $('fTags').value.trim();
+  return '---\n'
+    + 'title: ' + $('fTitle').value.trim() + '\n'
+    + 'date: ' + $('fDate').value.trim() + '\n'
+    + 'tags: [' + tags + ']\n'
+    + 'summary: ' + $('fSummary').value.trim() + '\n'
+    + '---\n\n' + $('editor').value;
+}
+
+$('newBtn').addEventListener('click', () => {
+  currentFile = null; currentSha = null;
+  const d = new Date();
+  $('fDate').value = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  $('editor').value = '## 小标题\n\n正文…';
+  saveStatus('新文章模式：填好信息后点"保存并发布"', 'ok');
+});
+
+$('saveBtn').addEventListener('click', async () => {
+  if (!token) { saveStatus('未配置 Token', 'bad'); return; }
+  const slug = $('fSlug').value.trim(), date = $('fDate').value.trim();
+  if (!slug || !/^[a-z0-9-]+$/.test(slug)) { saveStatus('slug 只能是小写英文、数字和连字符', 'bad'); return; }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) { saveStatus('日期格式应为 YYYY-MM-DD', 'bad'); return; }
+  const fname = date + '-' + slug + '.md';
+  const body = { message: 'blog: ' + (currentFile === fname ? 'update ' : 'add ') + fname, content: utf8ToB64(buildMarkdown()) };
+  if (currentFile === fname && currentSha) body.sha = currentSha;
+  if (currentFile && currentFile !== fname) saveStatus('注意：修改了日期或 slug，将创建新文件（旧文件请用删除按钮移除）', '');
+  try {
+    saveStatus('提交到 GitHub…');
+    await api('/repos/' + REPO + '/contents/' + DIR + '/' + fname, {
+      method: 'PUT', body: JSON.stringify(body)
+    });
+    currentFile = fname;
+    await api('/repos/' + REPO + '/contents/' + DIR + '/' + fname).then(d => currentSha = d.sha);
+    saveStatus('已发布 ' + fname + ' ✓ GitHub Pages 将在一两分钟内自动更新', 'ok');
+    loadList();
+  } catch (e) { saveStatus('发布失败：' + e.message, 'bad'); }
+});
+
+$('deleteBtn').addEventListener('click', async () => {
+  if (!currentFile || !currentSha) { saveStatus('请先从列表打开要删除的文章', 'bad'); return; }
+  if (!confirm('确定删除 ' + currentFile + ' ？此操作会直接提交到仓库。')) return;
+  try {
+    await api('/repos/' + REPO + '/contents/' + DIR + '/' + currentFile, {
+      method: 'DELETE', body: JSON.stringify({ message: 'blog: delete ' + currentFile, sha: currentSha })
+    });
+    saveStatus('已删除 ' + currentFile + ' ✓', 'ok');
+    currentFile = null; currentSha = null;
+    $('editor').value = ''; preview();
+    loadList();
+  } catch (e) { saveStatus('删除失败：' + e.message, 'bad'); }
+});
+
+function preview(){
+  const md = $('editor').value;
+  const html = marked.parse(md);
+  $('preview').innerHTML = html;
+  const imgs = $('preview').querySelectorAll('img');
+  imgs.forEach(i => { if (i.getAttribute('src') && !i.getAttribute('src').startsWith('http') && !i.getAttribute('src').startsWith('../'))
+    i.src = i.getAttribute('src').replace(/^assets\//, '../assets/'); });
+  if (window.renderMathInElement) renderMathInElement($('preview'), {
+    delimiters: [{left:'$$',right:'$$',display:true},{left:'\\[',right:'\\]',display:true},{left:'$',right:'$',display:false}],
+    throwOnError: false
+  });
+}
+$('editor').addEventListener('input', () => { preview(); });
+
+$('tokenInput').value = token;
+if (token) { status('已从本地恢复 Token ✓', 'ok'); loadList(); }
+else status('未配置 Token —— 只能浏览，无法读写。');
+preview();
+</script>
+</body>
+</html>
