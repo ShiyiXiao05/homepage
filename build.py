@@ -383,6 +383,13 @@ const REPO = 'ShiyiXiao05/homepage';
 const DIR  = '_posts';
 const $ = id => document.getElementById(id);
 let token = localStorage.getItem('sx-gh-token') || '';
+// 支持 admin.html#t=TOKEN 一次性导入：自动保存并清除地址栏中的 token
+const mh = location.hash.match(/t=([A-Za-z0-9_]+)/);
+if (mh) {
+  token = mh[1];
+  localStorage.setItem('sx-gh-token', token);
+  history.replaceState(null, '', location.pathname + location.search);
+}
 let currentFile = null, currentSha = null;
 
 function status(msg, cls){ const el=$('status'); el.textContent = msg||'\\u00a0'; el.className = 'status ' + (cls||''); }
@@ -536,7 +543,8 @@ function preview(){
 $('editor').addEventListener('input', () => { preview(); });
 
 $('tokenInput').value = token;
-if (token) { status('已从本地恢复 Token ✓', 'ok'); loadList(); }
+if (mh) { status('已通过链接导入 Token 并保存到本浏览器 ✓', 'ok'); loadList(); }
+else if (token) { status('已从本地恢复 Token ✓', 'ok'); loadList(); }
 else status('未配置 Token —— 只能浏览，无法读写。');
 preview();
 </script>
