@@ -1,135 +1,619 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>肖世屹 · Shiyi Xiao</title>
+<meta name="description" content="肖世屹（Shiyi Xiao）— 上海交通大学人工智能学院本科生（拔尖英才试点班）。量子纠错神经解码器、量子线路智能编译、AI 基础架构。">
+<meta property="og:title" content="肖世屹 · Shiyi Xiao">
+<meta property="og:description" content="上海交通大学人工智能本科生 · 量子纠错 × 机器学习">
+<meta property="og:type" content="profile">
+<meta name="theme-color" content="#ffffff" id="metaTheme">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ffffff'/%3E%3Crect x='4' y='4' width='11' height='11' fill='%231772d0'/%3E%3Crect x='17' y='17' width='11' height='11' fill='%231772d0'/%3E%3Crect x='17' y='4' width='11' height='11' fill='none' stroke='%23f09228' stroke-width='2'/%3E%3Crect x='4' y='17' width='11' height='11' fill='none' stroke='%23f09228' stroke-width='2'/%3E%3C/svg%3E">
+<script>
+(function(){try{
+  var t=localStorage.getItem('sx-theme');
+  if(!t) t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  document.documentElement.dataset.theme=t;
+}catch(e){}})();
+</script>
 <style>
   :root {
-    --bg: #fafafa;
-    --text: #1a1a1a;
-    --muted: #666;
-    --accent: #2563eb;
-    --border: #e5e5e5;
-    --card-bg: #fff;
+    --bg: #ffffff;
+    --ink: #1a1a1a;
+    --body: #444444;
+    --muted: #767676;
+    --border: #dddddd;
+    --card: #f7f8fa;
+    --blue: #1772d0;
+    --hover: #f09228;
+    --sel: rgba(23,114,208,.14);
+    color-scheme: light;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    --mono: "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+  }
+  [data-theme="dark"] {
+    --bg: #20212b;
+    --ink: #eceef2;
+    --body: #c6c9d2;
+    --muted: #9a9daa;
+    --border: #3a3c4a;
+    --card: #292b38;
+    --blue: #7fb0f5;
+    --hover: #f0a85c;
+    --sel: rgba(127,176,245,.26);
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+      --bg: #20212b;
+      --ink: #eceef2;
+      --body: #c6c9d2;
+      --muted: #9a9daa;
+      --border: #3a3c4a;
+      --card: #292b38;
+      --blue: #7fb0f5;
+      --hover: #f0a85c;
+      --sel: rgba(127,176,245,.26);
+      color-scheme: dark;
+    }
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 60px 24px;
+  body { font-family: var(--sans); background: var(--bg); color: var(--body); font-size: 15px; line-height: 1.7; transition: background-color .25s ease, color .25s ease; }
+  ::selection { background: var(--sel); }
+  :focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 2px; }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { color: var(--hover); text-decoration: underline; text-underline-offset: 3px; }
+  strong { color: var(--ink); }
+
+  .page { max-width: 860px; margin: 0 auto; padding: 56px 28px 64px; }
+
+  /* floating toggles */
+  .toggles { position: fixed; top: 14px; right: 16px; display: flex; gap: 8px; z-index: 50; }
+  .tgl {
+    width: 34px; height: 34px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 12px; font-weight: 600;
+    color: var(--muted); background: var(--bg); border: 1px solid var(--border);
+    cursor: pointer; transition: color .15s, border-color .15s, transform .15s;
   }
-  header { margin-bottom: 48px; }
-  h1 { font-size: 2rem; font-weight: 700; letter-spacing: 0.02em; }
-  .subtitle { color: var(--muted); font-size: 1rem; margin-top: 6px; }
-  .contact { margin-top: 12px; font-size: 0.9rem; color: var(--muted); }
-  .contact a { color: var(--accent); text-decoration: none; }
-  .contact a:hover { text-decoration: underline; }
-  .contact span { margin: 0 8px; }
+  .tgl:hover { color: var(--blue); border-color: var(--blue); transform: scale(1.08); }
+
+  /* header */
+  header { display: flex; gap: 40px; align-items: flex-start; margin-bottom: 46px; }
+  .h-left { flex: 1.6; min-width: 0; }
+  .h-right { flex: 1; max-width: 215px; flex: none; width: 215px; }
+  .name { font-size: 30px; font-weight: 600; color: var(--ink); text-align: center; letter-spacing: .02em; line-height: 1.3; }
+  .alt-name { text-align: center; color: var(--muted); font-size: 15px; margin-top: 2px; }
+  .subtitle { text-align: center; color: var(--muted); font-size: 14px; margin-top: 10px; }
+  .bio { margin-top: 16px; text-align: justify; }
+  .bio p { margin-top: 8px; }
+  .avatar { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 50%; border: 1px solid var(--border); }
+  .contact { margin-top: 18px; display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 22px; }
+  .contact a { display: inline-flex; align-items: center; gap: 6px; font-size: 14.5px; }
+  .contact svg { width: 15px; height: 15px; }
+  .copy {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: inherit; font-size: 14.5px; color: var(--blue);
+    background: none; border: none; cursor: pointer; padding: 0;
+  }
+  .copy svg { width: 15px; height: 15px; }
+  .copy:hover { color: var(--hover); }
+
   section { margin-bottom: 40px; }
-  h2 {
-    font-size: 1rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--muted);
-    margin-bottom: 16px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
+  h2 { font-size: 21px; font-weight: 500; color: var(--ink); margin-bottom: 14px; letter-spacing: .01em; }
+
+  .news li { list-style: none; margin: 7px 0; }
+  .nd { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--blue); margin-right: 8px; }
+
+  /* publications */
+  .pub { display: flex; gap: 24px; margin-top: 18px; align-items: flex-start; }
+  .pub-thumb { width: 172px; flex: none; }
+  .pub-thumb img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: 4px; transition: box-shadow .2s ease; }
+  .pub-thumb img:hover { box-shadow: 0 3px 14px rgba(0,0,0,.16); }
+  .pub-title { font-size: 16.5px; font-weight: 600; line-height: 1.5; }
+  .pub-title a { color: var(--ink); }
+  .pub-title a:hover { color: var(--blue); }
+  .pub-authors { margin-top: 6px; font-size: 14.5px; }
+  .pub-authors strong { font-weight: 600; }
+  .pub-venue { margin-top: 4px; font-family: var(--mono); font-size: 13px; color: var(--muted); }
+  .chips { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    display: inline-block; border: 1px solid var(--border); border-radius: 16px;
+    padding: 1.5px 13px; font-size: 12.5px; color: var(--blue);
+    transition: background-color .15s, color .15s, border-color .15s;
   }
-  .card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px 20px;
-    margin-bottom: 12px;
+  .chip:hover { background: var(--blue); border-color: var(--blue); color: #fff !important; text-decoration: none; }
+  [data-theme="dark"] .chip:hover { color: #10121a !important; }
+
+  /* research */
+  .proj { display: flex; gap: 24px; margin-top: 20px; align-items: flex-start; }
+  .proj-img { width: 252px; flex: none; }
+  .proj-img > img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: 6px; background: #fff; }
+  .carousel { position: relative; outline: none; }
+  .carousel:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; border-radius: 8px; }
+  .car-viewport { overflow: hidden; border: 1px solid var(--border); border-radius: 6px; background: #fff; }
+  .car-track { display: flex; transition: transform .35s ease; }
+  .car-slide { min-width: 100%; margin: 0; }
+  .car-slide img { display: block; width: 100%; height: 200px; object-fit: contain; background: #fff; }
+  .car-slide figcaption {
+    font-family: var(--mono); font-size: 11.5px; color: var(--muted);
+    text-align: center; line-height: 1.55; padding: 7px 10px 9px;
+    border-top: 1px solid var(--border);
   }
-  .card-title { font-weight: 600; }
-  .card-meta { font-size: 0.85rem; color: var(--muted); margin: 2px 0 8px; }
-  .card p { font-size: 0.9rem; color: #444; }
-  ul { list-style: none; padding: 0; }
-  li { font-size: 0.9rem; padding: 4px 0; color: #444; position: relative; padding-left: 16px; }
-  li::before { content: "—"; position: absolute; left: 0; color: var(--border); }
-  .honor-date { color: var(--muted); font-size: 0.85rem; float: right; }
-  .tag {
-    display: inline-block;
-    background: #f0f4ff;
-    color: var(--accent);
-    font-size: 0.78rem;
-    padding: 2px 10px;
-    border-radius: 12px;
-    margin: 2px 4px 2px 0;
+  .car-btn {
+    position: absolute; top: 100px; transform: translateY(-50%); z-index: 2;
+    width: 27px; height: 27px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg); border: 1px solid var(--border); color: var(--ink);
+    cursor: pointer; box-shadow: 0 1px 6px rgba(0,0,0,.18); padding: 0;
   }
+  .car-btn:hover { color: var(--blue); border-color: var(--blue); }
+  .car-btn.prev { left: 8px; }
+  .car-btn.next { right: 8px; }
+  .car-btn svg { width: 12px; height: 12px; }
+  .car-dots { display: flex; gap: 7px; justify-content: center; margin-top: 9px; }
+  .car-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    border: 1px solid var(--muted); background: transparent;
+    cursor: pointer; padding: 0;
+  }
+  .car-dot.on { background: var(--blue); border-color: var(--blue); }
+  .proj h3 { font-size: 16px; font-weight: 600; color: var(--ink); line-height: 1.5; }
+  .proj-meta { font-family: var(--mono); font-size: 12.5px; color: var(--muted); margin: 4px 0 8px; }
+  .proj p.desc { font-size: 14.5px; text-align: justify; }
+
+  /* education */
+  .edu-title { font-size: 15.5px; font-weight: 600; color: var(--ink); }
+  .edu-meta { font-size: 14.5px; margin-top: 4px; }
+  .edu-note { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* interests */
+  .interests li { list-style: none; margin: 7px 0; padding-left: 16px; position: relative; }
+  .interests li::before { content: "—"; position: absolute; left: 0; color: var(--border); }
+
+  /* honors */
+  .honors li { list-style: none; display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14.5px; }
+  .honors li:last-child { border-bottom: none; }
+  .honor-date { font-family: var(--mono); font-size: 13px; color: var(--muted); flex: none; }
+
   footer {
-    margin-top: 64px;
-    text-align: center;
-    font-size: 0.8rem;
-    color: #bbb;
+    margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    font-size: 13px; color: var(--muted);
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 64px 20px 56px; }
+    header { flex-direction: column-reverse; gap: 20px; }
+    .h-right { width: 150px; max-width: 150px; margin: 0 auto; }
+    .h-left { width: 100%; }
+    .pub { flex-direction: column; gap: 12px; }
+    .pub-thumb { width: 200px; }
+    .proj { flex-direction: column; gap: 12px; }
+    .proj-img { width: 100%; max-width: 340px; }
+    .car-slide img { height: 230px; }
+    .car-btn { top: 115px; }
+  }
+
+  @media print {
+    :root { --bg: #fff; --ink: #000; --body: #222; --muted: #555; --border: #bbb; --blue: #000; --hover: #000; }
+    .toggles, .copy, .car-btn, .car-dots { display: none !important; }
+    .car-track { transform: none !important; transition: none !important; }
+    .car-track .car-slide:not(:first-child) { display: none; }
+    body { font-size: 11.5pt; }
+    .page { max-width: 100%; padding: 0; }
+    a { color: inherit; }
+    section { margin-bottom: 20px; }
+    .proj p.desc, .bio p { text-align: left; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>肖世屹</h1>
-  <div class="subtitle">人工智能本科生 · 上海交通大学</div>
-  <div class="contact">
-    <a href="mailto:sjtuxsy-finance-pc@sjtu.edu.cn">sjtuxsy-finance-pc@sjtu.edu.cn</a>
-    <span>·</span>
-    <a href="https://github.com/ShiyiXiao05">GitHub</a>
-  </div>
-</header>
+<div class="toggles">
+  <button id="langBtn" class="tgl" type="button" aria-label="Switch to English">EN</button>
+  <button id="themeBtn" class="tgl" type="button" aria-label="切换深色模式">◐</button>
+</div>
 
-<section>
-  <h2>教育经历</h2>
-  <div class="card">
-    <div class="card-title">上海交通大学 — 人工智能 本科</div>
-    <div class="card-meta">2024.09 — 至今 · GPA 3.82 / 4.30 · 排名 25/66</div>
-  </div>
-</section>
+<div class="page">
 
-<section>
-  <h2>科研经历</h2>
-  <div class="card">
-    <div class="card-title">基于 Transfer Learning 的量子纠错解码器</div>
-    <div class="card-meta">2026.01 — 2026.06 · Surface Code 核心成员 · 与南洋理工大学合作</div>
-    <p>围绕容错量子计算中的 Surface Code 解码问题，构建基于 Transformer 架构的 NTU-Transformer 解码器。利用 transfer learning 将小距离码上的局部拓扑感知能力迁移到更大距离码，缓解神经解码器的 cold-start 问题。</p>
-  </div>
-  <div class="card">
-    <div class="card-title">面向量子优越性的线路智能编译与蒸馏</div>
-    <div class="card-meta">2025.08 — 2025.11 · 项目关键成员</div>
-    <p>参与面向 NISQ 量子硬件的线路智能编译与优化，负责线路结构复杂度分析与非局域性度量设计。参与 cpflow 酉矩阵综合实验与真机实验。项目获"挑战杯"揭榜挂帅擂台赛一等奖。</p>
-  </div>
-</section>
+  <header>
+    <div class="h-left">
+      <h1 class="name" data-i18n="name">肖世屹</h1>
+      <p class="alt-name" data-i18n="alt">Shiyi Xiao</p>
+      <p class="subtitle" data-i18n="subtitle">人工智能本科生（拔尖英才试点班）· 上海交通大学</p>
+      <div class="bio">
+        <p data-i18n="bio1">我目前在上海交通大学人工智能学院攻读本科学位，入选人工智能拔尖英才试点班，研究兴趣集中在量子计算与机器学习的交叉方向。</p>
+        <p data-i18n="bio2">我先后参与 Surface Code 量子纠错的神经解码器（NTU 迁移学习框架）与面向 NISQ 硬件的量子线路智能编译两个项目，同时对 AI 基础架构与高效训练推理优化保持关注。</p>
+      </div>
+      <div class="contact">
+        <a href="mailto:sjtuxsy-finance-pc@sjtu.edu.cn">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="1.2"/><path d="M2 4l6 4.5L14 4"/></svg>
+          <span>Email</span>
+        </a>
+        <button id="copyBtn" class="copy" type="button" aria-live="polite">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="5" y="5" width="9" height="9" rx="1.2"/><path d="M11 5V3.2A1.2 1.2 0 0 0 9.8 2H3.2A1.2 1.2 0 0 0 2 3.2v6.6A1.2 1.2 0 0 0 3.2 11H5"/></svg>
+          <span data-i18n="copy">复制</span>
+        </button>
+        <a href="https://github.com/ShiyiXiao05" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+    <div class="h-right">
+      <img class="avatar" src="assets/avatar.jpg" alt="肖世屹的照片" data-i18n-alt="avatar-alt">
+    </div>
+  </header>
 
-<section>
-  <h2>所获荣誉</h2>
-  <ul>
-    <li><span class="honor-date">2025.12</span>2025年度致远荣誉奖学金</li>
-    <li><span class="honor-date">2025.12</span>本科生优秀奖学金</li>
-    <li><span class="honor-date">2025.11</span>"挑战杯"揭榜挂帅擂台赛 新一代信息技术领域 一等奖</li>
-    <li><span class="honor-date">2025.10</span>2024—2025 年度三好学生</li>
-    <li><span class="honor-date">2024.12</span>2024年度致远荣誉奖学金</li>
-    <li><span class="honor-date">2023.10</span>第 40 届全国中学生物理竞赛 全国二等奖</li>
-  </ul>
-</section>
+  <main>
+    <section>
+      <h2 data-i18n="sec-news">动态</h2>
+      <ul class="news">
+        <li><span class="nd">[2026.06]</span><span data-i18n="n1">论文《Efficient Foundation Decoders for Fault-Tolerant Quantum Computing》预印本发布（arXiv:2606.27119）。</span></li>
+        <li><span class="nd">[2026.01]</span><span data-i18n="n2">加入与南洋理工大学合作的量子纠错解码项目，参与神经解码器研究。</span></li>
+        <li><span class="nd">[2025.12]</span><span data-i18n="n3">获 2025 年度致远荣誉奖学金、本科生优秀奖学金。</span></li>
+        <li><span class="nd">[2025.11]</span><span data-i18n="n4">获“挑战杯”揭榜挂帅擂台赛新一代信息技术领域一等奖。</span></li>
+        <li><span class="nd">[2025.10]</span><span data-i18n="n5">获 2024–2025 年度三好学生。</span></li>
+      </ul>
+    </section>
 
-<section>
-  <h2>研究兴趣</h2>
-  <ul>
-    <li>人工智能基础架构：Transformer 架构、预训练与微调、迁移学习、高效训练和推理优化</li>
-    <li>量子计算与人工智能的交叉领域，如量子机器学习和量子神经网络</li>
-    <li>大模型在科学计算、复杂系统建模和智能优化任务中的应用</li>
-  </ul>
-</section>
+    <section>
+      <h2 data-i18n="sec-edu">教育经历</h2>
+      <p class="edu-title" data-i18n="edu-title">上海交通大学 — 人工智能（拔尖英才试点班） 本科</p>
+      <p class="edu-meta" data-i18n="edu-meta">2024.09 — 至今 · 学积分 90.27 / 100（排名 18 / 66）· GPA 3.85 / 4.30（排名 22 / 66）</p>
+      <p class="edu-note" data-i18n="edu-note">成绩截至 2025–2026 学年夏季学期（大二学年结束）。</p>
+    </section>
 
-<footer>
-  © 2026 肖世屹
-</footer>
+    <section>
+      <h2 data-i18n="sec-res">科研经历</h2>
+      <div class="proj">
+        <div class="proj-img">
+          <div class="carousel" id="ntuCar" tabindex="0" role="region" aria-roledescription="carousel" aria-label="NTU 论文图片轮播" data-i18n-aria="car-label">
+            <div class="car-viewport">
+              <div class="car-track">
+                <figure class="car-slide">
+                  <img src="assets/ntu-figure-1b.png" alt="可迁移的局部感知与消息传递表征（论文图 1b）" data-i18n-alt="img-ntu1">
+                  <figcaption data-i18n="cap-ntu1">可迁移的局部感知与消息传递表征（图 1b）</figcaption>
+                </figure>
+                <figure class="car-slide">
+                  <img src="assets/ntu-figure-1c.png" alt="训练算力对比：NTU 相比从头训练大幅节约 GPU 成本（论文图 1c）" data-i18n-alt="img-ntu2">
+                  <figcaption data-i18n="cap-ntu2">训练算力对比：NTU 显著降低训练开销（图 1c）</figcaption>
+                </figure>
+                <figure class="car-slide">
+                  <img src="assets/ntu-surface.png" alt="Surface Code 全 distance 结果：LER、精度与训练曲线" data-i18n-alt="img-ntu3">
+                  <figcaption data-i18n="cap-ntu3">Surface Code 全 distance 结果与训练曲线</figcaption>
+                </figure>
+                <figure class="car-slide">
+                  <img src="assets/ntu-bb-results.png" alt="迁移至 BB qLDPC 码的结果" data-i18n-alt="img-ntu4">
+                  <figcaption data-i18n="cap-ntu4">迁移至 BB qLDPC 码 [[72,12,6]] → [[144,12,12]]</figcaption>
+                </figure>
+              </div>
+            </div>
+            <button class="car-btn prev" type="button" aria-label="上一张" data-i18n-aria="car-prev">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 1.5 3.5 6 8 10.5"/></svg>
+            </button>
+            <button class="car-btn next" type="button" aria-label="下一张" data-i18n-aria="car-next">
+              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 1.5 8.5 6 4 10.5"/></svg>
+            </button>
+            <div class="car-dots"></div>
+          </div>
+        </div>
+        <div class="proj-body">
+          <h3 data-i18n="res1-t">基于 Transfer Learning 的量子纠错解码器</h3>
+          <p class="proj-meta" data-i18n="res1-m">2026.01 — 2026.06 · Surface Code 核心成员 · 与南洋理工大学合作</p>
+          <p class="desc" data-i18n="res1-d">围绕容错量子计算中的 Surface Code 解码问题，提出 Neural Transfer Unification（NTU）迁移学习框架：利用结构化码族的代数尺度不变性，将小距离码上学到的错误知识直接迁移到大规模容错码，消除神经解码器的 cold-start 问题。NTU-Transformer 在电路级噪声下精度与 SOTA 相关 PyMatching 基线相当，并可迁移至 BB qLDPC 码。同时主导 Surface Code Decoder 全 distance 训练，大幅节约 GPU hours 与计算成本。</p>
+        </div>
+      </div>
+      <div class="proj">
+        <div class="proj-img">
+          <img src="assets/qc-solution.png" alt="编译优化后的量子线路与经典精确解对比" data-i18n-alt="img-qc">
+        </div>
+        <div class="proj-body">
+          <h3 data-i18n="res2-t">面向量子优越性的线路智能编译与蒸馏</h3>
+          <p class="proj-meta" data-i18n="res2-m">2025.08 — 2025.11 · 项目关键成员</p>
+          <p class="desc" data-i18n="res2-d">参与面向 NISQ 量子硬件的线路智能编译与优化，负责线路结构复杂度分析与非局域性度量设计；参与基于 cpflow 的酉矩阵综合实验（门数 6378 → 58）与真机实验。项目获“挑战杯”揭榜挂帅擂台赛一等奖。</p>
+        </div>
+      </div>
+    </section>
 
+    <section>
+      <h2 data-i18n="sec-pub">论文</h2>
+      <div class="pub">
+        <div class="pub-thumb">
+          <a href="https://arxiv.org/abs/2606.27119" target="_blank" rel="noopener">
+            <img src="assets/ntu-surface.png" alt="NTU 论文表面码实验结果图" data-i18n-alt="img-pub">
+          </a>
+        </div>
+        <div class="pub-body">
+          <p class="pub-title"><a href="https://arxiv.org/abs/2606.27119" target="_blank" rel="noopener">Efficient Foundation Decoders for Fault-Tolerant Quantum Computing</a></p>
+          <p class="pub-authors">Ge Yan, Shanchuan Li, <strong>Shiyi Xiao</strong>, Pengyue Ma, Hanyan Cao, Feng Pan, Yuxuan Du</p>
+          <p class="pub-venue">arXiv:2606.27119 · Preprint · 2026</p>
+          <p class="chips">
+            <a class="chip" href="https://arxiv.org/abs/2606.27119" target="_blank" rel="noopener">arXiv</a>
+            <a class="chip" href="https://grahamyan.github.io/ntu-decoder/" target="_blank" rel="noopener" data-i18n="pub-page">项目主页</a>
+            <a class="chip" href="https://huggingface.co/Dreamworldsmile/ntu-surface-code-decoder" target="_blank" rel="noopener" data-i18n="pub-weights">模型权重</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 data-i18n="sec-int">研究兴趣</h2>
+      <ul class="interests">
+        <li><strong data-i18n="int1-k">人工智能基础架构</strong> — <span data-i18n="int1-d">Transformer 架构、预训练与微调、迁移学习、高效训练和推理优化</span></li>
+        <li><strong data-i18n="int2-k">量子计算 × 人工智能</strong> — <span data-i18n="int2-d">量子机器学习、量子神经网络等交叉方向</span></li>
+        <li><strong data-i18n="int3-k">大模型 × 科学计算</strong> — <span data-i18n="int3-d">大模型在科学计算、复杂系统建模和智能优化任务中的应用</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 data-i18n="sec-hon">所获荣誉</h2>
+      <ul class="honors">
+        <li><span data-i18n="h0">2026 年芜湖市夏季国际象棋等级赛（公开组）第三名</span><span class="honor-date">2026.08</span></li>
+        <li><span data-i18n="h0c">2026 年上海交通大学“体总杯”国际象棋项目 团体第四名</span><span class="honor-date">2026.05</span></li>
+        <li><span data-i18n="h0b">2026 年芜湖市春季国际象棋等级赛（公开组）第三名</span><span class="honor-date">2026.02</span></li>
+        <li><span data-i18n="h1">2025年度致远荣誉奖学金</span><span class="honor-date">2025.12</span></li>
+        <li><span data-i18n="h2">本科生优秀奖学金</span><span class="honor-date">2025.12</span></li>
+        <li><span data-i18n="h3">“挑战杯”揭榜挂帅擂台赛 新一代信息技术领域 一等奖</span><span class="honor-date">2025.11</span></li>
+        <li><span data-i18n="h4">2024—2025 年度三好学生</span><span class="honor-date">2025.10</span></li>
+        <li><span data-i18n="h5">2024年度致远荣誉奖学金</span><span class="honor-date">2024.12</span></li>
+        <li><span data-i18n="h6">第 40 届全国中学生物理竞赛 全国二等奖</span><span class="honor-date">2023.10</span></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 肖世屹 · Shiyi Xiao</span>
+    <span data-i18n="updated">最后更新 2026.09</span>
+    <a href="https://github.com/ShiyiXiao05/homepage" target="_blank" rel="noopener" data-i18n="source">源码</a>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var T = {
+    zh: {
+      title: '肖世屹 · Shiyi Xiao',
+      name: '肖世屹', alt: 'Shiyi Xiao',
+      subtitle: '人工智能本科生（拔尖英才试点班）· 上海交通大学',
+      'avatar-alt': '肖世屹的照片',
+      bio1: '我目前在上海交通大学人工智能学院攻读本科学位，入选人工智能拔尖英才试点班，研究兴趣集中在量子计算与机器学习的交叉方向。',
+      bio2: '我先后参与 Surface Code 量子纠错的神经解码器（NTU 迁移学习框架）与面向 NISQ 硬件的量子线路智能编译两个项目，同时对 AI 基础架构与高效训练推理优化保持关注。',
+      copy: '复制', copied: '已复制',
+      'sec-news': '动态',
+      n1: '论文《Efficient Foundation Decoders for Fault-Tolerant Quantum Computing》预印本发布（arXiv:2606.27119）。',
+      n2: '加入与南洋理工大学合作的量子纠错解码项目，参与神经解码器研究。',
+      n3: '获 2025 年度致远荣誉奖学金、本科生优秀奖学金。',
+      n4: '获“挑战杯”揭榜挂帅擂台赛新一代信息技术领域一等奖。',
+      n5: '获 2024–2025 年度三好学生。',
+      'sec-edu': '教育经历',
+      'edu-title': '上海交通大学 — 人工智能（拔尖英才试点班） 本科',
+      'edu-meta': '2024.09 — 至今 · 学积分 90.27 / 100（排名 18 / 66）· GPA 3.85 / 4.30（排名 22 / 66）',
+      'edu-note': '成绩截至 2025–2026 学年夏季学期（大二学年结束）。',
+      'sec-res': '科研经历',
+      'res1-t': '基于 Transfer Learning 的量子纠错解码器',
+      'res1-m': '2026.01 — 2026.06 · Surface Code 核心成员 · 与南洋理工大学合作',
+      'res1-d': '围绕容错量子计算中的 Surface Code 解码问题，提出 Neural Transfer Unification（NTU）迁移学习框架：利用结构化码族的代数尺度不变性，将小距离码上学到的错误知识直接迁移到大规模容错码，消除神经解码器的 cold-start 问题。NTU-Transformer 在电路级噪声下精度与 SOTA 相关 PyMatching 基线相当，并可迁移至 BB qLDPC 码。同时主导 Surface Code Decoder 全 distance 训练，大幅节约 GPU hours 与计算成本。',
+      'car-label': 'NTU 论文图片轮播',
+      'car-prev': '上一张',
+      'car-next': '下一张',
+      'img-ntu1': '可迁移的局部感知与消息传递表征（论文图 1b）',
+      'cap-ntu1': '可迁移的局部感知与消息传递表征（图 1b）',
+      'img-ntu2': '训练算力对比：NTU 相比从头训练大幅节约 GPU 成本（论文图 1c）',
+      'cap-ntu2': '训练算力对比：NTU 显著降低训练开销（图 1c）',
+      'img-ntu3': 'Surface Code 全 distance 结果：LER、精度与训练曲线',
+      'cap-ntu3': 'Surface Code 全 distance 结果与训练曲线',
+      'img-ntu4': '迁移至 BB qLDPC 码的结果',
+      'cap-ntu4': '迁移至 BB qLDPC 码 [[72,12,6]] → [[144,12,12]]',
+      'res2-t': '面向量子优越性的线路智能编译与蒸馏',
+      'res2-m': '2025.08 — 2025.11 · 项目关键成员',
+      'res2-d': '参与面向 NISQ 量子硬件的线路智能编译与优化，负责线路结构复杂度分析与非局域性度量设计；参与基于 cpflow 的酉矩阵综合实验（门数 6378 → 58）与真机实验。项目获“挑战杯”揭榜挂帅擂台赛一等奖。',
+      'img-qc': '编译优化后的量子线路与经典精确解对比',
+      'sec-pub': '论文',
+      'img-pub': 'NTU 论文表面码实验结果图',
+      'pub-page': '项目主页',
+      'pub-weights': '模型权重',
+      'sec-int': '研究兴趣',
+      'int1-k': '人工智能基础架构',
+      'int1-d': 'Transformer 架构、预训练与微调、迁移学习、高效训练和推理优化',
+      'int2-k': '量子计算 × 人工智能',
+      'int2-d': '量子机器学习、量子神经网络等交叉方向',
+      'int3-k': '大模型 × 科学计算',
+      'int3-d': '大模型在科学计算、复杂系统建模和智能优化任务中的应用',
+      'sec-hon': '所获荣誉',
+      h0: '2026 年芜湖市夏季国际象棋等级赛（公开组）第三名',
+      h0b: '2026 年芜湖市春季国际象棋等级赛（公开组）第三名',
+      h0c: '2026 年上海交通大学“体总杯”国际象棋项目 团体第四名',
+      h1: '2025年度致远荣誉奖学金',
+      h2: '本科生优秀奖学金',
+      h3: '“挑战杯”揭榜挂帅擂台赛 新一代信息技术领域 一等奖',
+      h4: '2024—2025 年度三好学生',
+      h5: '2024年度致远荣誉奖学金',
+      h6: '第 40 届全国中学生物理竞赛 全国二等奖',
+      updated: '最后更新 2026.09',
+      source: '源码'
+    },
+    en: {
+      title: 'Shiyi Xiao · 肖世屹',
+      name: 'Shiyi Xiao', alt: '肖世屹',
+      subtitle: 'Undergraduate in Artificial Intelligence (Top-Talent Pilot Class) · Shanghai Jiao Tong University',
+      'avatar-alt': 'Photo of Shiyi Xiao',
+      bio1: 'I am an undergraduate in the School of Artificial Intelligence at Shanghai Jiao Tong University, admitted to the AI Top-Talent Pilot Class, working at the intersection of quantum computing and machine learning.',
+      bio2: 'I have worked on neural decoders for Surface Code quantum error correction (the NTU transfer-learning framework) and on intelligent compilation of quantum circuits for NISQ hardware, and I follow AI infrastructure and efficient training and inference.',
+      copy: 'Copy', copied: 'Copied',
+      'sec-news': 'News',
+      n1: 'Preprint released: “Efficient Foundation Decoders for Fault-Tolerant Quantum Computing” (arXiv:2606.27119).',
+      n2: 'Joined the quantum error correction decoder project in collaboration with Nanyang Technological University.',
+      n3: 'Received the 2025 Zhiyuan Honor Scholarship and the Undergraduate Excellence Scholarship.',
+      n4: 'First Prize, New-Generation IT track, “Challenge Cup” Open-Grant Arena Competition.',
+      n5: 'Named a Merit Student of 2024–2025.',
+      'sec-edu': 'Education',
+      'edu-title': 'Shanghai Jiao Tong University — B.S. in Artificial Intelligence (Top-Talent Pilot Class)',
+      'edu-meta': '2024.09 — Present · Weighted Avg. 90.27 / 100 (Rank 18 / 66) · GPA 3.85 / 4.30 (Rank 22 / 66)',
+      'edu-note': 'Grades as of the 2025–2026 Summer Term (end of sophomore year).',
+      'sec-res': 'Research Experience',
+      'res1-t': 'Transfer-Learning-Based Decoders for Quantum Error Correction',
+      'res1-m': '2026.01 — 2026.06 · Core member, Surface Code · In collaboration with Nanyang Technological University',
+      'res1-d': 'Working on the decoding problem of the Surface Code in fault-tolerant quantum computation, proposed Neural Transfer Unification (NTU), a transfer-learning framework that exploits the algebraic scale invariance of structured code families, carrying error knowledge learned on small-distance codes directly to large-scale fault-tolerant codes and eliminating the cold-start problem of neural decoders. NTU-Transformer matches the state-of-the-art correlated PyMatching baseline under circuit-level noise and transfers to BB qLDPC codes. Also led the full-distance training of the Surface Code decoder, substantially saving GPU hours and compute cost.',
+      'car-label': 'NTU paper figure carousel',
+      'car-prev': 'Previous figure',
+      'car-next': 'Next figure',
+      'img-ntu1': 'Transferable local-perception and message-passing representations (Fig. 1b)',
+      'cap-ntu1': 'Transferable local perception & message passing (Fig. 1b)',
+      'img-ntu2': 'Training compute: NTU vs. from-scratch training (Fig. 1c)',
+      'cap-ntu2': 'Training compute: NTU cuts GPU cost vs. scratch (Fig. 1c)',
+      'img-ntu3': 'Full-distance Surface Code results: LER, accuracy, and training curves',
+      'cap-ntu3': 'Full-distance Surface Code results & training curves',
+      'img-ntu4': 'Transfer results to BB qLDPC codes',
+      'cap-ntu4': 'Transfer to BB qLDPC [[72,12,6]] → [[144,12,12]]',
+      'res2-t': 'Intelligent Compilation and Distillation of Quantum Circuits toward Quantum Advantage',
+      'res2-m': '2025.08 — 2025.11 · Key project member',
+      'res2-d': 'Contributed to intelligent compilation and optimization of quantum circuits for NISQ hardware, responsible for circuit structural-complexity analysis and the design of non-locality measures; took part in cpflow unitary-synthesis experiments (gate count 6378 → 58) and experiments on real quantum hardware. The project won the First Prize of the “Challenge Cup” open-grant arena competition.',
+      'img-qc': 'Solutions computed by the compiled, optimized quantum circuit versus the exact classical solution',
+      'sec-pub': 'Publications',
+      'img-pub': 'Surface-code benchmark results of the NTU paper',
+      'pub-page': 'Project Page',
+      'pub-weights': 'Model Weights',
+      'sec-int': 'Research Interests',
+      'int1-k': 'AI Infrastructure',
+      'int1-d': 'Transformer architectures, pretraining and fine-tuning, transfer learning, efficient training and inference optimization',
+      'int2-k': 'Quantum × AI',
+      'int2-d': 'The intersection of quantum computing and AI, such as quantum machine learning and quantum neural networks',
+      'int3-k': 'LLMs × Science',
+      'int3-d': 'Applications of large models in scientific computing, complex-system modeling, and intelligent optimization',
+      'sec-hon': 'Honors & Awards',
+      h0: '3rd Place, Open Group, 2026 Wuhu Summer International Chess Rating Tournament',
+      h0b: '3rd Place, Open Group, 2026 Wuhu Spring International Chess Rating Tournament',
+      h0c: '4th Place (Team), 2026 SJTU “Tizong Cup” International Chess Event',
+      h1: 'Zhiyuan Honor Scholarship, 2025',
+      h2: 'Undergraduate Excellence Scholarship',
+      h3: 'First Prize (New-Generation Information Technology), “Challenge Cup” Open-Grant Arena Competition',
+      h4: 'Merit Student of 2024–2025',
+      h5: 'Zhiyuan Honor Scholarship, 2024',
+      h6: 'National Second Prize, 40th National Physics Olympiad for Secondary Students',
+      updated: 'Last updated 2026.09',
+      source: 'Source'
+    }
+  };
+
+  var langBtn = document.getElementById('langBtn');
+  var themeBtn = document.getElementById('themeBtn');
+  var copyBtn = document.getElementById('copyBtn');
+  var metaTheme = document.getElementById('metaTheme');
+  var EMAIL = 'sjtuxsy-finance-pc@sjtu.edu.cn';
+  var cur = 'zh';
+
+  function setLang(l) {
+    cur = l;
+    var els = document.querySelectorAll('[data-i18n]');
+    for (var i = 0; i < els.length; i++) {
+      var v = T[l][els[i].dataset.i18n];
+      if (v != null) els[i].textContent = v;
+    }
+    var als = document.querySelectorAll('[data-i18n-alt]');
+    for (var j = 0; j < als.length; j++) {
+      var a = T[l][als[j].dataset.i18nAlt];
+      if (a != null) als[j].setAttribute('alt', a);
+    }
+    var ars = document.querySelectorAll('[data-i18n-aria]');
+    for (var k = 0; k < ars.length; k++) {
+      var av = T[l][ars[k].dataset.i18nAria];
+      if (av != null) ars[k].setAttribute('aria-label', av);
+    }
+    document.documentElement.lang = l === 'zh' ? 'zh-CN' : 'en';
+    document.title = T[l].title;
+    langBtn.textContent = l === 'zh' ? 'EN' : '中';
+    langBtn.setAttribute('aria-label', l === 'zh' ? 'Switch to English' : '切换为中文');
+    try { localStorage.setItem('sx-lang', l); } catch (e) {}
+  }
+
+  function setTheme(t) {
+    document.documentElement.dataset.theme = t;
+    metaTheme.content = t === 'dark' ? '#20212b' : '#ffffff';
+    themeBtn.setAttribute('aria-label', t === 'dark' ? '切换浅色模式' : '切换深色模式');
+    try { localStorage.setItem('sx-theme', t); } catch (e) {}
+  }
+
+  langBtn.addEventListener('click', function () { setLang(cur === 'zh' ? 'en' : 'zh'); });
+  themeBtn.addEventListener('click', function () {
+    setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+  });
+
+  copyBtn.addEventListener('click', function () {
+    function done() {
+      var span = copyBtn.querySelector('span');
+      span.textContent = T[cur].copied;
+      setTimeout(function () { span.textContent = T[cur].copy; }, 1600);
+    }
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = EMAIL; document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      ta.remove();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(EMAIL).then(done, function () { fallback(); done(); });
+    } else { fallback(); done(); }
+  });
+
+  var mq = matchMedia('(prefers-color-scheme: dark)');
+
+  var car = document.getElementById('ntuCar');
+  if (car) {
+    var track = car.querySelector('.car-track');
+    var slides = car.querySelectorAll('.car-slide');
+    var dotsBox = car.querySelector('.car-dots');
+    var n = slides.length, idx = 0, dots = [];
+    for (var d = 0; d < n; d++) {
+      (function (i) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'car-dot';
+        b.setAttribute('aria-label', String(i + 1) + ' / ' + String(n));
+        b.addEventListener('click', function () { go(i); });
+        dotsBox.appendChild(b);
+        dots.push(b);
+      })(d);
+    }
+    function go(i) {
+      idx = (i % n + n) % n;
+      track.style.transform = 'translateX(' + (-100 * idx) + '%)';
+      for (var k = 0; k < dots.length; k++) dots[k].className = k === idx ? 'car-dot on' : 'car-dot';
+    }
+    car.querySelector('.car-btn.prev').addEventListener('click', function () { go(idx - 1); });
+    car.querySelector('.car-btn.next').addEventListener('click', function () { go(idx + 1); });
+    car.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') go(idx - 1);
+      else if (e.key === 'ArrowRight') go(idx + 1);
+    });
+    var sx = null;
+    car.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; }, { passive: true });
+    car.addEventListener('touchend', function (e) {
+      if (sx === null) return;
+      var dx = e.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 40) go(idx + (dx < 0 ? 1 : -1));
+      sx = null;
+    }, { passive: true });
+    go(0);
+  }
+
+  mq.addEventListener('change', function (e) {
+    var stored = null;
+    try { stored = localStorage.getItem('sx-theme'); } catch (err) {}
+    if (!stored) setTheme(e.matches ? 'dark' : 'light');
+  });
+
+  try {
+    var l = localStorage.getItem('sx-lang');
+    if (l && T[l]) setLang(l);
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>
