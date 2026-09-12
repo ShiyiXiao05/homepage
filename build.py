@@ -21,9 +21,9 @@ SITE = "https://shiyiXiao05.github.io/homepage"
 
 # giscus 评论配置：到 giscus.app 生成后把两个 ID 填进来即可开启评论区（留空则不渲染）
 GISCUS_REPO = "ShiyiXiao05/homepage"
-GISCUS_REPO_ID = ""
+GISCUS_REPO_ID = "R_kgDOStnO4Q"
 GISCUS_CATEGORY = "Announcements"
-GISCUS_CATEGORY_ID = ""
+GISCUS_CATEGORY_ID = "DIC_kwDOStnO4c4DFbGe"
 
 # ---------------------------------------------------------------- deps bootstrap
 
