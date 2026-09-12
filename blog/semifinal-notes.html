@@ -262,23 +262,22 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <body>
 <div class="toggles"><button id="langBtn" class="tgl" type="button" aria-label="Switch language">EN</button><button id="themeBtn" class="tgl" type="button" aria-label="Toggle theme">◐</button></div>
 <div class="page">
-<a class="home-link" href="index.html">← 博客</a><article><h1>复赛小记（上）</h1><div class="post-meta"><span class="post-date">2026.09.12</span><span class="rt" data-min="30"></span><a class="chip" href="index.html?tag=物理">物理</a><a class="chip" href="index.html?tag=随笔">随笔</a></div><details class="toc"><summary data-ui="toc">目录</summary><div class="toc">
+<a class="home-link" href="index.html">← 博客</a><article><h1>复赛小记（上）</h1><div class="post-meta"><span class="post-date">2026.09.12</span><span class="rt" data-min="29"></span><a class="chip" href="index.html?tag=物理">物理</a><a class="chip" href="index.html?tag=随笔">随笔</a></div><details class="toc"><summary data-ui="toc">目录</summary><div class="toc">
 <ul>
 <li><a href="#_1">写在前面</a></li>
 <li><a href="#_2">一、手机透镜组的主点与等效焦距</a></li>
-<li><a href="#_3">总结来看这道题目确实不是很复杂，在考场上能看到一个这样的题目对于稳定信心来说很有帮助，至少我看到这个题目之后是心中一阵窃喜。</a></li>
-<li><a href="#40">二、（40 分）半圆玻璃管中的活塞</a><ul>
+<li><a href="#_3">二、半圆玻璃管中的活塞</a><ul>
 <li><a href="#_4">题目</a></li>
 <li><a href="#_5">受力法</a></li>
 <li><a href="#_6">能量法</a></li>
 </ul>
 </li>
-<li><a href="#40_1">三、（40 分）楔块上的匀质圆球</a><ul>
+<li><a href="#40">三、（40 分）楔块上的匀质圆球</a><ul>
 <li><a href="#_7">题目</a></li>
 <li><a href="#_8">解答</a></li>
 </ul>
 </li>
-<li><a href="#40_2">四、（40 分）编木拱桥的平衡</a><ul>
+<li><a href="#40_1">四、（40 分）编木拱桥的平衡</a><ul>
 <li><a href="#_9">题目</a></li>
 <li><a href="#_10">解答</a></li>
 </ul>
@@ -335,8 +334,9 @@ $$</p>
 <div class="arithmatex">\[F' = v_{F'} - v_{H'} = \frac{-f_1 f_2}{d - f_1 - f_2},\qquad \text{即 } \frac{1}{F'} = \frac{1}{f_1} + \frac{1}{f_2} - \frac{d}{f_1 f_2}\]</div>
 <p>由光路可逆，物方焦距 <span class="arithmatex">\(F = F'\)</span>。</p>
 <hr />
-<h2 id="_3">总结来看这道题目确实不是很复杂，在考场上能看到一个这样的题目对于稳定信心来说很有帮助，至少我看到这个题目之后是心中一阵窃喜。</h2>
-<h2 id="40">二、（40 分）半圆玻璃管中的活塞</h2>
+<p>总结来看这道题目确实不是很复杂，在考场上能看到一个这样的题目对于稳定信心来说很有帮助，至少我看到这个题目之后是心中一阵窃喜。</p>
+<hr />
+<h2 id="_3">二、半圆玻璃管中的活塞</h2>
 <h3 id="_4">题目</h3>
 <p>如图 2a，将一个粗细均匀、两端封闭的细玻璃管弯成半径为 <span class="arithmatex">\(r\)</span> 的半圆环（玻璃管的横截面半径远小于 <span class="arithmatex">\(r\)</span>），竖直固定于水平地面上，两端面与地面接触。玻璃管内有一个质量为 <span class="arithmatex">\(m\)</span> 的活塞（金属片），活塞与管内壁紧密接触，两者之间的摩擦可忽略不计。活塞在半圆环内相对于竖直方向的位置记为 <span class="arithmatex">\(\theta\)</span>。活塞两边管内各有 <span class="arithmatex">\(n\)</span> 摩尔的理想气体，且其温度始终与外界温度 <span class="arithmatex">\(T\)</span>（绝对温度）相同。已知重力加速度大小为 <span class="arithmatex">\(g\)</span>，普适气体常量为 <span class="arithmatex">\(R\)</span>，所有涉及的气体状态变化的过程均可视为准静态过程。</p>
 <figure><img alt="图 2a. 半圆环玻璃管与活塞" src="../assets/blog/cpho40/fig-2a.svg" /><figcaption>图 2a. 半圆环玻璃管与活塞</figcaption></figure>
@@ -346,7 +346,7 @@ $$</p>
 <p>（4）当 <span class="arithmatex">\(T &lt; T_c\)</span> 时，求活塞在稳定平衡位置附近做微振动的圆频率 <span class="arithmatex">\(\omega_0\)</span> 对 <span class="arithmatex">\(\theta_0\)</span> 的依赖关系 <span class="arithmatex">\(\omega_0(\theta_0)\)</span>（表达式中可含有上一问中的 <span class="arithmatex">\(\theta_0\)</span> 参量，但不可包含 <span class="arithmatex">\(T\)</span> 参量），并给出温度 <span class="arithmatex">\(T\)</span> 略小于 <span class="arithmatex">\(T_c\)</span> 和略小于 <span class="arithmatex">\(T_c\)</span> 两种情况下，活塞微振动的圆频率对温度的依赖关系；</p>
 <p>（5）当 <span class="arithmatex">\(T &lt; T_c\)</span> 时，假设活塞的初始速度近似为零，求活塞从正中央运动到可到达的角位置 <span class="arithmatex">\(\theta\)</span> 处的角速度大小。</p>
 <hr />
-<p>那这道题目实际上就是一个很具有普物风格的题目。从一个基本的模型出发，讨论不同参数关系情况下体系表现出的不同的行为，从稳定平衡到微振动，是一个结合了热学和力学的题目。总体上也很容易想到这类振动的题目有受力法和能量法两种方式求解，我们依次来看一看，首先看受力法</p>
+<p>那这道题目实际上就是一个很具有普物风格的题目。从一个基本的模型出发，讨论不同参数关系情况下体系表现出的不同的行为，从稳定平衡到微振动，是一个结合了热学和力学的题目。总体上也很容易想到这类振动的题目有受力法和能量法两种方式求解，我们依次来看一看，首先看受力法：</p>
 <hr />
 <h3 id="_5">受力法</h3>
 <p>设活塞偏离正中央的角度为 <span class="arithmatex">\(\theta\)</span>。两侧气柱长度分别为 <span class="arithmatex">\(r(\pi/2 - \theta)\)</span> 和 <span class="arithmatex">\(r(\pi/2 + \theta)\)</span>，由理想气体状态方程，两侧压强为 <span class="arithmatex">\(p = nRT / V\)</span>。活塞沿管切向的运动方程为：</p>
@@ -469,7 +469,7 @@ T_c=\frac{\pi^2mgr}{8nR}.\]</div>
 <hr />
 <p>总体上看这个题目的思路上难度不是很大，按部就班地求解即可，计算量也还不算特别大，考试时这个题目应该还是要拿到绝大部分的分数。</p>
 <hr />
-<h2 id="40_1">三、（40 分）楔块上的匀质圆球</h2>
+<h2 id="40">三、（40 分）楔块上的匀质圆球</h2>
 <h3 id="_7">题目</h3>
 <p>如图 3a，倾角为 <span class="arithmatex">\(\theta\)</span>、质量为 <span class="arithmatex">\(M\)</span> 的三角形楔块放在光滑的水平地面上，其斜面上有一个质量为 <span class="arithmatex">\(m\)</span>、半径为 <span class="arithmatex">\(r\)</span> 的匀质圆球，让该球从静止开始自由向下运动，整个过程中楔块无转动。重力加速度大小为 <span class="arithmatex">\(g\)</span>，假设圆球与楔块之间的静摩擦因数和滑动摩擦因数均为 <span class="arithmatex">\(\mu\)</span>。</p>
 <figure><img alt="图 3a. 楔块与匀质圆球" src="../assets/blog/cpho40/fig-3a.svg" /><figcaption>图 3a. 楔块与匀质圆球</figcaption></figure>
@@ -480,45 +480,42 @@ T_c=\frac{\pi^2mgr}{8nR}.\]</div>
 <p>（iv）楔块对圆球的支持力的大小 <span class="arithmatex">\(N_1\)</span>；</p>
 <p>（v）为了使匀质圆球保持无滑动，球与楔块之间静摩擦因数 <span class="arithmatex">\(\mu\)</span> 的最小可能值 <span class="arithmatex">\(\mu_0\)</span>。</p>
 <p>（2）若 <span class="arithmatex">\(\mu\)</span> 小于（1）(v) 问中的 <span class="arithmatex">\(\mu_0\)</span>，且楔块斜面足够长，求圆球从静止开始运动一段时间 <span class="arithmatex">\(\Delta t\)</span> 后，圆球上与楔块接触的点 P 相对于楔块的速度。</p>
+<hr />
+<p>这个题也是有一点意义不明，一个很经典的球滚斜面模型，没啥好说的，算就是了。所以其实可以看见到这里为止40届题目的思路不是很困难，但是计算量确实不小。</p>
+<hr />
 <h3 id="_8">解答</h3>
-<p><strong>(1)(i)</strong> 球无滑动滚下时，过球质心与楔块质心的竖直面与斜面垂直，只需考虑平面内运动。设楔块加速度为 <span class="arithmatex">\(a_0\)</span>（水平），球质心相对楔块的加速度为 <span class="arithmatex">\(a_c\)</span>（沿斜面），摩擦力为 <span class="arithmatex">\(f\)</span>。球在地面参考系中，沿斜面方向的质心运动方程与绕质心的转动方程分别为：</p>
-<div class="arithmatex">\[ma_c = ma_0\cos\theta + mg\sin\theta - f, \qquad f\, r = I_c\ddot{\varphi}\]</div>
-<p>纯滚动条件 <span class="arithmatex">\(a_c = r\ddot{\varphi}\)</span>，且匀质球 <span class="arithmatex">\(I_c = \dfrac{2}{5}mr^2\)</span>，得 <span class="arithmatex">\(f = \dfrac{2}{5}ma_c\)</span>。地面系中系统水平方向动量守恒（求导）：</p>
+<p><strong>(1)(i)</strong> 球无滑动滚下时，设楔块加速度为 <span class="arithmatex">\(a_0\)</span>（水平），球质心相对楔块的加速度为 <span class="arithmatex">\(a_c\)</span>（沿斜面），摩擦力为 <span class="arithmatex">\(f\)</span>。球在地面参考系中，沿斜面方向的质心运动方程与绕质心的转动方程分别为：</p>
+<div class="arithmatex">\[ma_c = ma_0\cos\theta + mg\sin\theta - f, \qquad fr = I_c\ddot{\varphi}\]</div>
+<p>纯滚动条件 <span class="arithmatex">\(a_c = r\ddot{\varphi}\)</span>，且匀质球 <span class="arithmatex">\(I_c = \dfrac{2}{5}mr^2\)</span>，得 <span class="arithmatex">\(f = \dfrac{2}{5}ma_c\)</span>。地面系中系统水平方向动量守恒：</p>
 <div class="arithmatex">\[m(a_c\cos\theta - a_0) = M a_0\]</div>
 <p>联立解得：</p>
-<div class="arithmatex">\[\boxed{a_0 = \dfrac{\dfrac{5}{7}mg\sin\theta\cos\theta}{M + m - \dfrac{5}{7}m\cos^2\theta}}\]</div>
+<div class="arithmatex">\[a_0 = \dfrac{\dfrac{5}{7}mg\sin\theta\cos\theta}{M + m - \dfrac{5}{7}m\cos^2\theta}\]</div>
 <p><strong>(1)(ii)</strong> 将 <span class="arithmatex">\(a_0\)</span> 代回解出球质心相对楔块的加速度：</p>
-<div class="arithmatex">\[\boxed{a_c = \dfrac{\dfrac{5}{7}(M + m)g\sin\theta}{M + m - \dfrac{5}{7}m\cos^2\theta}}\]</div>
+<div class="arithmatex">\[a_c = \dfrac{\dfrac{5}{7}(M + m)g\sin\theta}{M + m - \dfrac{5}{7}m\cos^2\theta}\]</div>
 <p><strong>(1)(iii)</strong> 把楔块和球看作整体，质心竖直方向加速度 <span class="arithmatex">\(a_y = \dfrac{-m a_c\sin\theta}{M + m}\)</span>，由质心运动定理：</p>
-<div class="arithmatex">\[\boxed{N = (M + m)g\,\dfrac{M + \dfrac{2}{7}m}{M + m - \dfrac{5}{7}m\cos^2\theta}}\]</div>
-<p>（也可将楔块单独作为研究对象，用球对楔块的压力与摩擦力求出同样结果。）</p>
-<p><strong>(1)(iv)</strong> 在相对楔块静止的参考系中，垂直斜面方向上球受力平衡（含惯性力分量）：</p>
-<div class="arithmatex">\[\boxed{N_1 = mg\cos\theta\,\dfrac{M + \dfrac{2}{7}m}{M + m - \dfrac{5}{7}m\cos^2\theta}}\]</div>
+<div class="arithmatex">\[N = (M + m)g\dfrac{M + \dfrac{2}{7}m}{M + m - \dfrac{5}{7}m\cos^2\theta}\]</div>
+<p><strong>(1)(iv)</strong> 在相对楔块静止的参考系中，垂直斜面方向上球受力平衡，考虑惯性力：</p>
+<div class="arithmatex">\[N_1 = mg\cos\theta\,\dfrac{M + \dfrac{2}{7}m}{M + m - \dfrac{5}{7}m\cos^2\theta}\]</div>
 <p><strong>(1)(v)</strong> 纯滚动要求 <span class="arithmatex">\(f \le \mu N_1\)</span>，其中 <span class="arithmatex">\(f = \dfrac{2}{5}ma_c\)</span>：</p>
-<div class="arithmatex">\[\boxed{\mu_0 = \frac{f}{N_1} = \frac{2(M + m)}{7M + 2m}\tan\theta}\]</div>
+<div class="arithmatex">\[\mu_0 = \frac{f}{N_1} = \frac{2(M + m)}{7M + 2m}\tan\theta\]</div>
 <p><strong>(2)</strong> <span class="arithmatex">\(\mu &lt; \mu_0\)</span> 时球连滚带滑。此时 <span class="arithmatex">\(f = \mu N_1\)</span>，球质心动力学方程仍由上式给出，联立解得：</p>
 <div class="arithmatex">\[a_c = \frac{(M + m)g(\sin\theta - \mu\cos\theta)}{M + m - m\cos^2\theta - \mu m\sin\theta\cos\theta}\]</div>
 <p><span class="arithmatex">\(a_c\)</span>、角加速度 <span class="arithmatex">\(\ddot{\varphi} = \dfrac{5f}{2mr}\)</span> 均为常量。接触点 P 相对楔块的速度为质心滑动速度与转动线速度之差：</p>
-<div class="arithmatex">\[\boxed{v_P = \frac{(M + m)g\sin\theta - \mu\left(m + \dfrac{7}{2}M\right)g\cos\theta}{M + m - m\cos^2\theta - \mu m\sin\theta\cos\theta}\,\Delta t}\]</div>
-<p>可检验 <span class="arithmatex">\(\mu = \mu_0\)</span> 时 <span class="arithmatex">\(v_P = 0\)</span>（纯滚动）；<span class="arithmatex">\(\mu &lt; \mu_0\)</span> 时 <span class="arithmatex">\(v_P &gt; 0\)</span>，P 点相对楔块斜向下滑。</p>
-<blockquote>
-<p><strong>我的回忆</strong></p>
-<p>（待补：当年这道题是纯滚动还是连滚带滑的判断有没有犹豫；动量守恒和质心运动定理的选择……）</p>
-</blockquote>
-<hr />
-<h2 id="40_2">四、（40 分）编木拱桥的平衡</h2>
+<div class="arithmatex">\[v_P = \frac{(M + m)g\sin\theta - \mu\left(m + \dfrac{7}{2}M\right)g\cos\theta}{M + m - m\cos^2\theta - \mu m\sin\theta\cos\theta}\Delta t\]</div>
+<h2 id="40_1">四、（40 分）编木拱桥的平衡</h2>
 <h3 id="_9">题目</h3>
-<p>北宋著名画家张择端所绘的《清明上河图》中有一座用木材制作的"编木拱桥"（图 4a），形成一道飞虹架设在河上。四百多年后达·芬奇也曾留下类似的设计手稿，至今为世人称奇。图 4b 是五个单元组成的编木拱桥实物模型，每个单元包含一对与纸面平行的长杆和一根垂直于纸面的短杆，它没有钉也没有卯，整个结构的所有组件在重力作用下互相挤压而结合在一起，靠支持力和摩擦力互相支撑，互相制约。真实桥梁需要在木材上开槽，以提升桥的安全性。</p>
-<figure><img alt="图 4a / 图 4b. 编木拱桥：原画场景与实物模型" src="../assets/blog/cpho40/fig-4ab.png" /><figcaption>图 4a / 图 4b. 编木拱桥：原画场景与实物模型</figcaption></figure>
 <p>考虑一个简化的编木拱桥模型，即仅有三个单元的左右对称的拱桥，图 4c 是其侧视图。在简化模型下，只考虑拱桥在竖直平面（纸面）内的平衡，将与纸面平行的每一对长杆等效为一根质量为 <span class="arithmatex">\(M\)</span> 的杆，则此编木拱桥可进一步简化为六根杆：三根短杆 A、A'、B 和三根长杆 C、D、D'。所有的杆都是半径为 <span class="arithmatex">\(R\)</span> 的匀质圆柱体，没有开槽。短杆的质量均为 <span class="arithmatex">\(m\)</span>，长杆的长度均为 <span class="arithmatex">\(L\)</span>，长杆之间互不接触。短杆 B 表面是光滑的，其余杆之间的静摩擦因数均为 <span class="arithmatex">\(\mu\)</span>，杆与地面间的静摩擦因数为 <span class="arithmatex">\(\mu'\)</span>。长杆 D、D' 与水平地面的夹角均为 <span class="arithmatex">\(\theta\)</span>。重力加速度大小为 <span class="arithmatex">\(g\)</span>。</p>
 <figure><img alt="图 4c. 三单元编木拱桥侧视图（简化为六根杆）" src="../assets/blog/cpho40/fig-4c.svg" /><figcaption>图 4c. 三单元编木拱桥侧视图（简化为六根杆）</figcaption></figure>
 <p>（1）已知图 4c 中 D 杆下端到与 A 杆的接触点之间的长度为 <span class="arithmatex">\(a\)</span>，求 D 杆下端到与 B 杆的接触点之间的长度 <span class="arithmatex">\(b\)</span> 的表达式。</p>
 <p>（2）系统平衡时，考虑到杆 A 与 A' 对称，杆 D 与 D' 对称，分析图 4c 中 A、B、C、D 四根杆的受力情况。图 4d、4e 分别给出了 A、B 两根杆的受力，请画出图 4c 中 C、D 两根杆的受力图，为简明起见，每一对作用力和反作用力请用同一符号表示。对 A、B、C、D 四根杆分别列出相应的力平衡方程（必要时包括力矩平衡方程）。</p>
 <figure><img alt="图 4d / 图 4e. A 杆与 B 杆的受力图" src="../assets/blog/cpho40/fig-4de.svg" /><figcaption>图 4d / 图 4e. A 杆与 B 杆的受力图</figcaption></figure>
 <p>（3）设 <span class="arithmatex">\(M = 6m\)</span>，<span class="arithmatex">\(\theta = 45°\)</span>，<span class="arithmatex">\(L = 30\ \mathrm{cm}\)</span>，<span class="arithmatex">\(a = 16\ \mathrm{cm}\)</span>，<span class="arithmatex">\(R = 2(\sqrt{2}-1)\ \mathrm{cm}\)</span>，试求静摩擦因数 <span class="arithmatex">\(\mu\)</span> 和 <span class="arithmatex">\(\mu'\)</span> 满足什么数值条件时，图 4c 所示的结构能保持平衡（数值结果保留三位有效数字）？</p>
+<hr />
+<p>我考场上直接就没看懂这个题目，于是把第一问做了之后就跑路了，后来发现感觉还是有一点跑路跑路早了，感觉并没有那么地难这个题。主要还是平常训练的时候这种静力学的题目做的不多，手感太生疏了。而且后面的题目也有更多可以拿分的题，于是做了一点之后就润了。</p>
+<hr />
 <h3 id="_10">解答</h3>
 <p><strong>(1)</strong> 由接触点的几何关系：</p>
-<div class="arithmatex">\[\boxed{b = a + 4R\cot\frac{\theta}{2}}\]</div>
+<div class="arithmatex">\[b = a + 4R\cot\frac{\theta}{2}\]</div>
 <p><strong>(2)</strong> C、D 两杆的受力图：C 杆受两端来自 A、A' 的支持力 <span class="arithmatex">\(N_1\)</span>（两处）、自身重力 <span class="arithmatex">\(Mg\)</span>、来自 B 的压力 <span class="arithmatex">\(N_3\)</span>，以及 A、A' 与 C 之间的静摩擦力 <span class="arithmatex">\(f_1\)</span>（两处）；D 杆受地面支持力 <span class="arithmatex">\(N_5\)</span> 与摩擦力 <span class="arithmatex">\(f_5\)</span>、来自 B 的压力 <span class="arithmatex">\(N_4\)</span> 与摩擦 <span class="arithmatex">\(f_2\)</span>、来自 A 的支持力 <span class="arithmatex">\(N_2\)</span> 与摩擦 <span class="arithmatex">\(f_2\)</span>（同一对作用力）、自身重力 <span class="arithmatex">\(Mg\)</span>。</p>
 <p>各杆的平衡方程（ <span class="arithmatex">\(f_1\)</span> 为 A、C 间摩擦力，<span class="arithmatex">\(f_2\)</span> 为 A、D 与 B、D 间的摩擦力，<span class="arithmatex">\(N_2\)</span> 为 A、D 间压力，<span class="arithmatex">\(N_4\)</span> 为 B、D 间压力）：</p>
 <div class="arithmatex">\[\text{A 杆：}\quad N_1 + mg = N_2\cos\theta + f_2\sin\theta\]</div>
