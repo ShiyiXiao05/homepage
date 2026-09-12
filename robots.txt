@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: https://shiyiXiao05.github.io/homepage/blog/admin.html
+Sitemap: https://shiyiXiao05.github.io/homepage/sitemap.xml

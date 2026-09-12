@@ -455,6 +455,21 @@ a:hover{text-decoration:underline}
 </body>
 </html>"""
 
+def inject_homepage(posts):
+    index = os.path.join(ROOT, "index.html")
+    html = open(index, encoding="utf-8").read()
+    marker_start, marker_end = "<!-- BLOG:RECENT:START -->", "<!-- BLOG:RECENT:END -->"
+    if marker_start not in html:
+        print("[build] homepage markers not found — skipped recent-posts injection")
+        return
+    items = "".join(
+        f'<li><span class="nd">[{p["date_disp"][:7]}]</span><a href="blog/{p["slug"]}.html">{p["title"]}</a></li>'
+        for p in posts[:3]
+    )
+    html = re.sub(marker_start + ".*?" + marker_end, marker_start + "\n" + items + "\n" + marker_end, html, flags=re.S)
+    open(index, "w", encoding="utf-8").write(html)
+    print("[build] homepage recent-posts updated")
+
 def main():
     files = sorted((f for f in os.listdir(POSTS_DIR) if f.endswith(".md")), reverse=True)
     posts = [parse_post(os.path.join(POSTS_DIR, f)) for f in files]
@@ -466,6 +481,18 @@ def main():
     for p in posts:
         write(os.path.join(out, p["slug"] + ".html"), build_post(p, posts))
     # blog/admin.html (online editor) is hand-maintained; not generated here
+
+    # 清理已删除文章留下的过期 HTML
+    keep = {"index.html", "admin.html"} | {p["slug"] + ".html" for p in posts}
+    for f in os.listdir(out):
+        if f.endswith(".html") and f not in keep:
+            os.remove(os.path.join(out, f))
+            print("[build] removed stale", f)
+
+    write(os.path.join(ROOT, "sitemap.xml"), build_sitemap(posts))
+    write(os.path.join(ROOT, "robots.txt"), ROBOTS_TXT)
+    write(os.path.join(ROOT, "404.html"), build_404())
+    write(os.path.join(out, "feed.xml"), build_feed(posts))
 
     inject_homepage(posts)
     print("[build] done.")

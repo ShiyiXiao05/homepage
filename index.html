@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="light">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,10 @@
 <meta property="og:title" content="肖世屹 · Shiyi Xiao">
 <meta property="og:description" content="上海交通大学人工智能本科生 · 量子纠错 × 机器学习">
 <meta property="og:type" content="profile">
+<meta property="og:url" content="https://shiyiXiao05.github.io/homepage/">
+<meta property="og:image" content="https://shiyiXiao05.github.io/homepage/assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/atom+xml" title="肖世屹的博客" href="blog/feed.xml">
 <meta name="theme-color" content="#ffffff" id="metaTheme">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ffffff'/%3E%3Crect x='4' y='4' width='11' height='11' fill='%231772d0'/%3E%3Crect x='17' y='17' width='11' height='11' fill='%231772d0'/%3E%3Crect x='17' y='4' width='11' height='11' fill='none' stroke='%23f09228' stroke-width='2'/%3E%3Crect x='4' y='17' width='11' height='11' fill='none' stroke='%23f09228' stroke-width='2'/%3E%3C/svg%3E">
 <script>
@@ -208,7 +212,7 @@
         <p data-i18n="bio2">我先后参与 Surface Code 量子纠错的神经解码器（NTU 迁移学习框架）与面向 NISQ 硬件的量子线路智能编译两个项目，同时对 AI 基础架构与高效训练推理优化保持关注。</p>
       </div>
       <div class="contact">
-        <a href="mailto:sjtuxsy-finance-pc@sjtu.edu.cn">
+        <a id="emailLink" href="#">
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="1.2"/><path d="M2 4l6 4.5L14 4"/></svg>
           <span>Email</span>
         </a>
@@ -248,7 +252,7 @@
       <h2 data-i18n="sec-blog">近期博文</h2>
       <ul class="news">
         <!-- BLOG:RECENT:START -->
-<li><span class="nd">[2026.09.11]</span><a href="blog/second-cpho-semifinal.html">回忆我的第二次物理复赛（上）：第 40 届复赛前四题全解析</a></li>
+<li><span class="nd">[2026.09]</span><a href="blog/second-cpho-semifinal.html">回忆我的第二次物理复赛（上）：第 40 届复赛前四题全解析</a></li>
 <!-- BLOG:RECENT:END -->
       </ul>
       <p style="margin-top:10px"><a href="blog/" style="font-family:var(--mono);font-size:13px" data-i18n="more-posts">全部文章 →</a></p>
@@ -469,7 +473,14 @@
   var themeBtn = document.getElementById('themeBtn');
   var copyBtn = document.getElementById('copyBtn');
   var metaTheme = document.getElementById('metaTheme');
-  var EMAIL = 'sjtuxsy-finance-pc@sjtu.edu.cn';
+  var EM_U = 'sjtuxsy-finance-pc', EM_D = 'sjtu.edu.cn';
+  var EMAIL = EM_U + '@' + EM_D;
+  (function () {
+    var a = document.getElementById('emailLink');
+    if (!a) return;
+    a.href = 'mailto:' + EMAIL;
+    document.getElementById('emailTxt').textContent = EMAIL;
+  })();
   var cur = 'zh';
 
   function setLang(l) {

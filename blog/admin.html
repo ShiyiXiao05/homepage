@@ -306,7 +306,7 @@ function parseFrontMatter(md){
   const fm={};
   if(m)m[1].split('\n').forEach(line=>{
     const i=line.indexOf(':');
-    if(i>0)fm[line.slice(0,i).trim()]=line.slice(i+1).trim().replace(/^"|"/g,'');
+    if(i>0)fm[line.slice(0,i).trim()]=line.slice(i+1).trim().replace(/^"(.*)"$/,'$1');
   });
   if(fm.tags)fm.tags=fm.tags.replace(/[\[\]]/g,'');
   return fm;
@@ -408,7 +408,7 @@ async function publish(){
     try{sessionStorage.removeItem('sx-admin-meta');}catch(e){}
     let extra='';
     if(prev&&prev!==fname)extra='<br>⚠️ 改了日期/slug：创建了新文件，旧文件 '+esc(prev)+' 还在列表里，请打开它点「删除此文」。';
-    saveStatusHTML('已发布 ✓ Pages 一两分钟内更新 · <a target="_blank" rel="noopener" href="'+BASE+'blog/'+slug+'.html">查看文章 ↗</a>'+extra,'ok');
+    saveStatusHTML('已提交 ✓ 自动构建中，约 1 分钟后生效 · <a target="_blank" rel="noopener" href="'+BASE+'blog/'+slug+'.html">查看文章 ↗</a>'+extra,'ok');
     loadList();
   }catch(e){saveStatus('发布失败：'+e.message,'bad');}
   finally{$('saveBtn').disabled=false;setActiveList();}
@@ -532,7 +532,7 @@ let prevTmr;
 function schedulePreview(){clearTimeout(prevTmr);prevTmr=setTimeout(previewNow,150);}
 function previewNow(){
   const box=$('preview');
-  box.innerHTML=marked.parse($('editor').value);
+  const __src=$('editor').value.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/,'');box.innerHTML=marked.parse(__src);
   box.querySelectorAll('img').forEach(i=>{
     const s=i.getAttribute('src')||'';
     if(s&&!/^https?:/.test(s)&&!s.startsWith('/')&&!s.startsWith('../'))i.src='../'+s;

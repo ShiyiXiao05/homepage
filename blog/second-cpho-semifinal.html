@@ -1,9 +1,18 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="light">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>回忆我的第二次物理复赛（上）：第 40 届复赛前四题全解析 · Shiyi Xiao</title>
 <meta name="theme-color" content="#ffffff" id="metaTheme">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ffffff'/%3E%3Crect x='4' y='4' width='11' height='11' fill='%231772d0'/%3E%3Crect x='17' y='17' width='11' height='11' fill='%231772d0'/%3E%3Crect x='17' y='4' width='11' height='11' fill='none' stroke='%23f09228' stroke-width='2'/%3E%3Crect x='4' y='17' width='11' height='11' fill='none' stroke='%23f09228' stroke-width='2'/%3E%3C/svg%3E">
+<meta name="description" content="又到一年复赛时。翻出自己 2023 年考的第 40 届复赛卷，把前四题完整解析一遍，顺便在每个题后面留了一段"我的回忆"，等自己慢慢补上。">
+<meta property="og:title" content="回忆我的第二次物理复赛（上）：第 40 届复赛前四题全解析 · Shiyi Xiao">
+<meta property="og:description" content="又到一年复赛时。翻出自己 2023 年考的第 40 届复赛卷，把前四题完整解析一遍，顺便在每个题后面留了一段"我的回忆"，等自己慢慢补上。">
+<meta property="og:url" content="https://shiyiXiao05.github.io/homepage/blog/second-cpho-semifinal.html">
+<meta property="og:image" content="https://shiyiXiao05.github.io/homepage/assets/og-card.png">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://shiyiXiao05.github.io/homepage/blog/second-cpho-semifinal.html">
 
 <script>
 (function(){try{
@@ -86,12 +95,200 @@ footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--border);font-
 @media(max-width:640px){.page{padding:60px 20px 56px}article h1{font-size:24px}h1.page-title{font-size:28px}.plist a{gap:12px}}
 @media print{.toggles,.post-nav{display:none!important}.page{max-width:100%;padding:0}a{color:inherit}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
-</style>
+
+/* pygments: light */
+pre { line-height: 125%; }
+td.linenos .normal { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: #666666; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.codehilite .hll { background-color: #ffffcc }
+.codehilite { background: #f0f0f0; }
+.codehilite .c { color: #60A0B0; font-style: italic } /* Comment */
+.codehilite .err { border: 1px solid #F00 } /* Error */
+.codehilite .k { color: #007020; font-weight: bold } /* Keyword */
+.codehilite .o { color: #666 } /* Operator */
+.codehilite .ch { color: #60A0B0; font-style: italic } /* Comment.Hashbang */
+.codehilite .cm { color: #60A0B0; font-style: italic } /* Comment.Multiline */
+.codehilite .cp { color: #007020 } /* Comment.Preproc */
+.codehilite .cpf { color: #60A0B0; font-style: italic } /* Comment.PreprocFile */
+.codehilite .c1 { color: #60A0B0; font-style: italic } /* Comment.Single */
+.codehilite .cs { color: #60A0B0; background-color: #FFF0F0 } /* Comment.Special */
+.codehilite .gd { color: #A00000 } /* Generic.Deleted */
+.codehilite .ge { font-style: italic } /* Generic.Emph */
+.codehilite .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.codehilite .gr { color: #F00 } /* Generic.Error */
+.codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.codehilite .gi { color: #00A000 } /* Generic.Inserted */
+.codehilite .go { color: #888 } /* Generic.Output */
+.codehilite .gp { color: #C65D09; font-weight: bold } /* Generic.Prompt */
+.codehilite .gs { font-weight: bold } /* Generic.Strong */
+.codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.codehilite .gt { color: #04D } /* Generic.Traceback */
+.codehilite .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+.codehilite .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+.codehilite .kp { color: #007020 } /* Keyword.Pseudo */
+.codehilite .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+.codehilite .kt { color: #902000 } /* Keyword.Type */
+.codehilite .m { color: #40A070 } /* Literal.Number */
+.codehilite .s { color: #4070A0 } /* Literal.String */
+.codehilite .na { color: #4070A0 } /* Name.Attribute */
+.codehilite .nb { color: #007020 } /* Name.Builtin */
+.codehilite .nc { color: #0E84B5; font-weight: bold } /* Name.Class */
+.codehilite .no { color: #60ADD5 } /* Name.Constant */
+.codehilite .nd { color: #555; font-weight: bold } /* Name.Decorator */
+.codehilite .ni { color: #D55537; font-weight: bold } /* Name.Entity */
+.codehilite .ne { color: #007020 } /* Name.Exception */
+.codehilite .nf { color: #06287E } /* Name.Function */
+.codehilite .nl { color: #002070; font-weight: bold } /* Name.Label */
+.codehilite .nn { color: #0E84B5; font-weight: bold } /* Name.Namespace */
+.codehilite .nt { color: #062873; font-weight: bold } /* Name.Tag */
+.codehilite .nv { color: #BB60D5 } /* Name.Variable */
+.codehilite .ow { color: #007020; font-weight: bold } /* Operator.Word */
+.codehilite .w { color: #BBB } /* Text.Whitespace */
+.codehilite .mb { color: #40A070 } /* Literal.Number.Bin */
+.codehilite .mf { color: #40A070 } /* Literal.Number.Float */
+.codehilite .mh { color: #40A070 } /* Literal.Number.Hex */
+.codehilite .mi { color: #40A070 } /* Literal.Number.Integer */
+.codehilite .mo { color: #40A070 } /* Literal.Number.Oct */
+.codehilite .sa { color: #4070A0 } /* Literal.String.Affix */
+.codehilite .sb { color: #4070A0 } /* Literal.String.Backtick */
+.codehilite .sc { color: #4070A0 } /* Literal.String.Char */
+.codehilite .dl { color: #4070A0 } /* Literal.String.Delimiter */
+.codehilite .sd { color: #4070A0; font-style: italic } /* Literal.String.Doc */
+.codehilite .s2 { color: #4070A0 } /* Literal.String.Double */
+.codehilite .se { color: #4070A0; font-weight: bold } /* Literal.String.Escape */
+.codehilite .sh { color: #4070A0 } /* Literal.String.Heredoc */
+.codehilite .si { color: #70A0D0; font-style: italic } /* Literal.String.Interpol */
+.codehilite .sx { color: #C65D09 } /* Literal.String.Other */
+.codehilite .sr { color: #235388 } /* Literal.String.Regex */
+.codehilite .s1 { color: #4070A0 } /* Literal.String.Single */
+.codehilite .ss { color: #517918 } /* Literal.String.Symbol */
+.codehilite .bp { color: #007020 } /* Name.Builtin.Pseudo */
+.codehilite .fm { color: #06287E } /* Name.Function.Magic */
+.codehilite .vc { color: #BB60D5 } /* Name.Variable.Class */
+.codehilite .vg { color: #BB60D5 } /* Name.Variable.Global */
+.codehilite .vi { color: #BB60D5 } /* Name.Variable.Instance */
+.codehilite .vm { color: #BB60D5 } /* Name.Variable.Magic */
+.codehilite .il { color: #40A070 } /* Literal.Number.Integer.Long */
+/* pygments: dark */
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+[data-theme="dark"] .codehilite .hll { background-color: #49483e }
+[data-theme="dark"] .codehilite { background: #272822; color: #F8F8F2 }
+[data-theme="dark"] .codehilite .c { color: #959077 } /* Comment */
+[data-theme="dark"] .codehilite .err { color: #ED007E; background-color: #1E0010 } /* Error */
+[data-theme="dark"] .codehilite .esc { color: #F8F8F2 } /* Escape */
+[data-theme="dark"] .codehilite .g { color: #F8F8F2 } /* Generic */
+[data-theme="dark"] .codehilite .k { color: #66D9EF } /* Keyword */
+[data-theme="dark"] .codehilite .l { color: #AE81FF } /* Literal */
+[data-theme="dark"] .codehilite .n { color: #F8F8F2 } /* Name */
+[data-theme="dark"] .codehilite .o { color: #FF4689 } /* Operator */
+[data-theme="dark"] .codehilite .x { color: #F8F8F2 } /* Other */
+[data-theme="dark"] .codehilite .p { color: #F8F8F2 } /* Punctuation */
+[data-theme="dark"] .codehilite .ch { color: #959077 } /* Comment.Hashbang */
+[data-theme="dark"] .codehilite .cm { color: #959077 } /* Comment.Multiline */
+[data-theme="dark"] .codehilite .cp { color: #959077 } /* Comment.Preproc */
+[data-theme="dark"] .codehilite .cpf { color: #959077 } /* Comment.PreprocFile */
+[data-theme="dark"] .codehilite .c1 { color: #959077 } /* Comment.Single */
+[data-theme="dark"] .codehilite .cs { color: #959077 } /* Comment.Special */
+[data-theme="dark"] .codehilite .gd { color: #FF4689 } /* Generic.Deleted */
+[data-theme="dark"] .codehilite .ge { color: #F8F8F2; font-style: italic } /* Generic.Emph */
+[data-theme="dark"] .codehilite .ges { color: #F8F8F2; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+[data-theme="dark"] .codehilite .gr { color: #FF4689 } /* Generic.Error */
+[data-theme="dark"] .codehilite .gh { color: #F8F8F2 } /* Generic.Heading */
+[data-theme="dark"] .codehilite .gi { color: #A6E22E } /* Generic.Inserted */
+[data-theme="dark"] .codehilite .go { color: #66D9EF } /* Generic.Output */
+[data-theme="dark"] .codehilite .gp { color: #FF4689; font-weight: bold } /* Generic.Prompt */
+[data-theme="dark"] .codehilite .gs { color: #F8F8F2; font-weight: bold } /* Generic.Strong */
+[data-theme="dark"] .codehilite .gu { color: #959077 } /* Generic.Subheading */
+[data-theme="dark"] .codehilite .gt { color: #66D9EF } /* Generic.Traceback */
+[data-theme="dark"] .codehilite .kc { color: #66D9EF } /* Keyword.Constant */
+[data-theme="dark"] .codehilite .kd { color: #66D9EF } /* Keyword.Declaration */
+[data-theme="dark"] .codehilite .kn { color: #FF4689 } /* Keyword.Namespace */
+[data-theme="dark"] .codehilite .kp { color: #66D9EF } /* Keyword.Pseudo */
+[data-theme="dark"] .codehilite .kr { color: #66D9EF } /* Keyword.Reserved */
+[data-theme="dark"] .codehilite .kt { color: #66D9EF } /* Keyword.Type */
+[data-theme="dark"] .codehilite .ld { color: #E6DB74 } /* Literal.Date */
+[data-theme="dark"] .codehilite .m { color: #AE81FF } /* Literal.Number */
+[data-theme="dark"] .codehilite .s { color: #E6DB74 } /* Literal.String */
+[data-theme="dark"] .codehilite .na { color: #A6E22E } /* Name.Attribute */
+[data-theme="dark"] .codehilite .nb { color: #A6E22E } /* Name.Builtin */
+[data-theme="dark"] .codehilite .nc { color: #A6E22E } /* Name.Class */
+[data-theme="dark"] .codehilite .no { color: #66D9EF } /* Name.Constant */
+[data-theme="dark"] .codehilite .nd { color: #A6E22E } /* Name.Decorator */
+[data-theme="dark"] .codehilite .ni { color: #F8F8F2 } /* Name.Entity */
+[data-theme="dark"] .codehilite .ne { color: #A6E22E } /* Name.Exception */
+[data-theme="dark"] .codehilite .nf { color: #A6E22E } /* Name.Function */
+[data-theme="dark"] .codehilite .nl { color: #F8F8F2 } /* Name.Label */
+[data-theme="dark"] .codehilite .nn { color: #F8F8F2 } /* Name.Namespace */
+[data-theme="dark"] .codehilite .nx { color: #A6E22E } /* Name.Other */
+[data-theme="dark"] .codehilite .py { color: #F8F8F2 } /* Name.Property */
+[data-theme="dark"] .codehilite .nt { color: #FF4689 } /* Name.Tag */
+[data-theme="dark"] .codehilite .nv { color: #F8F8F2 } /* Name.Variable */
+[data-theme="dark"] .codehilite .ow { color: #FF4689 } /* Operator.Word */
+[data-theme="dark"] .codehilite .pm { color: #F8F8F2 } /* Punctuation.Marker */
+[data-theme="dark"] .codehilite .w { color: #F8F8F2 } /* Text.Whitespace */
+[data-theme="dark"] .codehilite .mb { color: #AE81FF } /* Literal.Number.Bin */
+[data-theme="dark"] .codehilite .mf { color: #AE81FF } /* Literal.Number.Float */
+[data-theme="dark"] .codehilite .mh { color: #AE81FF } /* Literal.Number.Hex */
+[data-theme="dark"] .codehilite .mi { color: #AE81FF } /* Literal.Number.Integer */
+[data-theme="dark"] .codehilite .mo { color: #AE81FF } /* Literal.Number.Oct */
+[data-theme="dark"] .codehilite .sa { color: #E6DB74 } /* Literal.String.Affix */
+[data-theme="dark"] .codehilite .sb { color: #E6DB74 } /* Literal.String.Backtick */
+[data-theme="dark"] .codehilite .sc { color: #E6DB74 } /* Literal.String.Char */
+[data-theme="dark"] .codehilite .dl { color: #E6DB74 } /* Literal.String.Delimiter */
+[data-theme="dark"] .codehilite .sd { color: #E6DB74 } /* Literal.String.Doc */
+[data-theme="dark"] .codehilite .s2 { color: #E6DB74 } /* Literal.String.Double */
+[data-theme="dark"] .codehilite .se { color: #AE81FF } /* Literal.String.Escape */
+[data-theme="dark"] .codehilite .sh { color: #E6DB74 } /* Literal.String.Heredoc */
+[data-theme="dark"] .codehilite .si { color: #E6DB74 } /* Literal.String.Interpol */
+[data-theme="dark"] .codehilite .sx { color: #E6DB74 } /* Literal.String.Other */
+[data-theme="dark"] .codehilite .sr { color: #E6DB74 } /* Literal.String.Regex */
+[data-theme="dark"] .codehilite .s1 { color: #E6DB74 } /* Literal.String.Single */
+[data-theme="dark"] .codehilite .ss { color: #E6DB74 } /* Literal.String.Symbol */
+[data-theme="dark"] .codehilite .bp { color: #A6E22E } /* Name.Builtin.Pseudo */
+[data-theme="dark"] .codehilite .fm { color: #A6E22E } /* Name.Function.Magic */
+[data-theme="dark"] .codehilite .vc { color: #F8F8F2 } /* Name.Variable.Class */
+[data-theme="dark"] .codehilite .vg { color: #F8F8F2 } /* Name.Variable.Global */
+[data-theme="dark"] .codehilite .vi { color: #F8F8F2 } /* Name.Variable.Instance */
+[data-theme="dark"] .codehilite .vm { color: #F8F8F2 } /* Name.Variable.Magic */
+[data-theme="dark"] .codehilite .il { color: #AE81FF } /* Literal.Number.Integer.Long */</style>
 </head>
 <body>
 <div class="toggles"><button id="langBtn" class="tgl" type="button" aria-label="Switch language">EN</button><button id="themeBtn" class="tgl" type="button" aria-label="Toggle theme">◐</button></div>
 <div class="page">
-<a class="home-link" href="index.html">← 博客</a><article><h1>回忆我的第二次物理复赛（上）：第 40 届复赛前四题全解析</h1><div class="post-meta"><span class="post-date">2026.09.11</span><span class="rt" data-min="23"></span><span class="chip">物理竞赛</span><span class="chip">复赛</span><span class="chip">试题解析</span></div><div class="body"><h2 id="_1">写在前面</h2>
+<a class="home-link" href="index.html">← 博客</a><article><h1>回忆我的第二次物理复赛（上）：第 40 届复赛前四题全解析</h1><div class="post-meta"><span class="post-date">2026.09.11</span><span class="rt" data-min="23"></span><a class="chip" href="index.html?tag=物理竞赛">物理竞赛</a><a class="chip" href="index.html?tag=复赛">复赛</a><a class="chip" href="index.html?tag=试题解析">试题解析</a></div><details class="toc"><summary data-ui="toc">目录</summary><div class="toc">
+<ul>
+<li><a href="#_1">写在前面</a></li>
+<li><a href="#40">一、（40 分）手机透镜组的主点与等效焦距</a><ul>
+<li><a href="#_2">题目</a></li>
+<li><a href="#_3">解答</a></li>
+</ul>
+</li>
+<li><a href="#40_1">二、（40 分）半圆玻璃管中的活塞</a><ul>
+<li><a href="#_4">题目</a></li>
+<li><a href="#_5">解答</a></li>
+</ul>
+</li>
+<li><a href="#40_2">三、（40 分）楔块上的匀质圆球</a><ul>
+<li><a href="#_6">题目</a></li>
+<li><a href="#_7">解答</a></li>
+</ul>
+</li>
+<li><a href="#40_3">四、（40 分）编木拱桥的平衡</a><ul>
+<li><a href="#_8">题目</a></li>
+<li><a href="#_9">解答</a></li>
+</ul>
+</li>
+<li><a href="#_10">下一篇</a></li>
+</ul>
+</div>
+</details><div class="body"><h2 id="_1">写在前面</h2>
 <p>这个博客大概是用来记录我自己想写的东西的——研究笔记、做题的思考、或者仅仅是某天突然想明白的一件小事。</p>
 <p>最近一年一度的物理复赛又要来了。作为两年前从赛场上走下来的人，难免想回忆一下自己考复赛是什么感觉。于是我翻出了自己当年考的<strong>第 40 届全国中学生物理竞赛复赛</strong>（2023 年 9 月 16 日）的试卷和参考解答，作为博客的第一篇正式内容，把当时的题目完整解析一遍。</p>
 <p>我参加的是<strong>第二次复赛</strong>（第一次的故事以后有机会再讲）。这一届的试卷共 <strong>8 道题、320 分、考试时间 3 小时</strong>，内容覆盖光学、热学、力学、结构平衡、电磁感应、大气声学和 X 射线物理。本文先完整解析<strong>前四题</strong>，后四题留到下一篇。</p>
@@ -310,6 +507,23 @@ themeBtn.addEventListener('click',function(){
   try{localStorage.setItem('sx-theme',document.documentElement.dataset.theme);}catch(e){}
   if(window.giscusSync)window.giscusSync();});
 applyTheme(document.documentElement.dataset.theme||'light');
+window.giscusSync=function(){var f=document.querySelector('iframe.giscus-frame');if(f)
+  f.contentWindow.postMessage({giscus:{setConfig:{theme:document.documentElement.dataset.theme==='dark'?'dark':'light'}}},'https://giscus.app');};
+if(document.querySelector('.tagrow')){(function(){
+  var active='';
+  function apply(){document.querySelectorAll('.plist li').forEach(function(li){
+    var ts=(li.dataset.tags||'').split('|');
+    var show=!active||ts.indexOf(active)>=0;
+    li.style.display=show?'':'none';});
+    document.querySelectorAll('.tagchip').forEach(function(c){
+      c.classList.toggle('on',c.dataset.tag===active&&active!=='');});
+    var clr=document.getElementById('clearChip');if(clr)clr.hidden=!active;}
+  document.querySelector('.tagrow').addEventListener('click',function(e){
+    var c=e.target.closest('.tagchip');if(!c)return;
+    active=(active===c.dataset.tag)?'':c.dataset.tag;apply();});
+  var q=new URLSearchParams(location.search).get('tag');
+  if(q){active=q;apply();}
+})();} 
 setLang(cur);
 </script>
 </body>
