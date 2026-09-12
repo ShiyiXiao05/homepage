@@ -36,6 +36,7 @@ h1.page-title{font-family:var(--serif);font-size:34px;font-weight:700;color:var(
 .year{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.1em;margin:26px 0 4px}
 .plist{list-style:none}
 .plist li{border-bottom:1px solid var(--border)}
+.plist li:last-child{border-bottom:none}
 .plist a{display:flex;align-items:baseline;gap:16px;padding:13px 6px;transition:background-color .15s ease,padding-left .15s ease}
 .plist a:hover{background:var(--card);text-decoration:none;padding-left:12px}
 .plist .nd{font-family:var(--mono);font-size:13px;color:var(--muted);flex:none;transition:color .15s}
@@ -61,6 +62,7 @@ article .body{font-size:15.5px;line-height:1.85}
 .tagchip{display:inline-block;border:1px solid var(--border);border-radius:14px;padding:1px 12px;font-size:12.5px;color:var(--muted);cursor:pointer;background:var(--bg)}
 .tagchip:hover{color:var(--blue);border-color:var(--blue)}
 .tagchip.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.tagchip[hidden]{display:none}
 .body p{margin:13px 0}
 .body ul,.body ol{margin:13px 0;padding-left:24px}
 .body li{margin:6px 0}
@@ -261,7 +263,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <body>
 <div class="toggles"><button id="langBtn" class="tgl" type="button" aria-label="Switch language">EN</button><button id="themeBtn" class="tgl" type="button" aria-label="Toggle theme">◐</button></div>
 <div class="page">
-<a class="home-link" href="../index.html">← 主页</a><h1 class="page-title" data-ui="blog">博客</h1><p class="page-sub" data-ui="sub">研究笔记 · 技术教程 · 杂谈</p><div class="tagrow"><span class="tagchip" data-tag="物理">物理</span><span class="tagchip" data-tag="随笔">随笔</span><span class="tagchip" data-tag="" id="clearChip" hidden data-ui="clear">清除筛选</span></div><div class="year">2026 · 1 篇</div><ul class="plist"><li data-tags="物理|随笔"><a href="semifinal-notes.html"><span class="nd">2026.09.12</span><span class="pt">复赛小记（上）<span class="p-sum">作为第一篇blog，正好也是复赛将要开始的时候，写一点当时的感想和复赛的赛题解析聊以记录当时的自由时光</span></span><span class="arrow">→</span></a></li></ul>
+<a class="home-link" href="../index.html">← 主页</a><h1 class="page-title" data-ui="blog">博客</h1><div class="tagrow"><span class="tagchip" data-tag="物理">物理</span><span class="tagchip" data-tag="随笔">随笔</span><span class="tagchip" data-tag="" id="clearChip" hidden data-ui="clear">清除筛选</span></div><div class="year">2026 · 1 篇</div><ul class="plist"><li data-tags="物理|随笔"><a href="semifinal-notes.html"><span class="nd">2026.09.12</span><span class="pt">复赛小记（上）<span class="p-sum">作为第一篇blog，正好也是复赛将要开始的时候，写一点当时的感想和复赛的赛题解析聊以记录当时的自由时光</span></span><span class="arrow">→</span></a></li></ul>
 <footer><span>© 2026 肖世屹 · Shiyi Xiao</span><a href="../index.html" data-ui="home">主页</a></footer>
 </div>
 
@@ -269,7 +271,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 var langBtn=document.getElementById('langBtn');
 var themeBtn=document.getElementById('themeBtn');
 var metaTheme=document.getElementById('metaTheme');
-var UI={zh:{home:'主页',blog:'博客',sub:'研究笔记 · 技术教程 · 杂谈',back:'返回列表',newer:'较新一篇',older:'较旧一篇',toc:'目录',langA:'切换语言',themeA:'切换配色主题',clear:'清除筛选'},en:{home:'Home',blog:'Blog',sub:'Research notes · Tutorials · Misc',back:'All posts',newer:'Newer',older:'Older',toc:'Contents',langA:'Switch language',themeA:'Toggle color theme',clear:'Clear filter'}};
+var UI={zh:{home:'主页',blog:'博客',back:'返回列表',newer:'较新一篇',older:'较旧一篇',toc:'目录',langA:'切换语言',themeA:'切换配色主题',clear:'清除筛选'},en:{home:'Home',blog:'Blog',back:'All posts',newer:'Newer',older:'Older',toc:'Contents',langA:'Switch language',themeA:'Toggle color theme',clear:'Clear filter'}};
 var cur=(function(){try{return localStorage.getItem('sx-lang')==='en'?'en':'zh'}catch(e){return 'zh'}})();
 function applyTheme(t){document.documentElement.dataset.theme=t;
   if(metaTheme)metaTheme.content=t==='dark'?'#20212b':'#ffffff';}
@@ -304,7 +306,8 @@ if(document.querySelector('.tagrow')){(function(){
     var c=e.target.closest('.tagchip');if(!c)return;
     active=(active===c.dataset.tag)?'':c.dataset.tag;apply();});
   var q=new URLSearchParams(location.search).get('tag');
-  if(q){active=q;apply();}
+  if(q){active=q;}
+  apply();
 })();} 
 setLang(cur);
 </script>

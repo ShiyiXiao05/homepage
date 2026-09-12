@@ -152,7 +152,7 @@ THEME_JS = """
 var langBtn=document.getElementById('langBtn');
 var themeBtn=document.getElementById('themeBtn');
 var metaTheme=document.getElementById('metaTheme');
-var UI={zh:{home:'主页',blog:'博客',sub:'研究笔记 · 技术教程 · 杂谈',back:'返回列表',newer:'较新一篇',older:'较旧一篇',toc:'目录',langA:'切换语言',themeA:'切换配色主题',clear:'清除筛选'},en:{home:'Home',blog:'Blog',sub:'Research notes · Tutorials · Misc',back:'All posts',newer:'Newer',older:'Older',toc:'Contents',langA:'Switch language',themeA:'Toggle color theme',clear:'Clear filter'}};
+var UI={zh:{home:'主页',blog:'博客',back:'返回列表',newer:'较新一篇',older:'较旧一篇',toc:'目录',langA:'切换语言',themeA:'切换配色主题',clear:'清除筛选'},en:{home:'Home',blog:'Blog',back:'All posts',newer:'Newer',older:'Older',toc:'Contents',langA:'Switch language',themeA:'Toggle color theme',clear:'Clear filter'}};
 var cur=(function(){try{return localStorage.getItem('sx-lang')==='en'?'en':'zh'}catch(e){return 'zh'}})();
 function applyTheme(t){document.documentElement.dataset.theme=t;
   if(metaTheme)metaTheme.content=t==='dark'?'#20212b':'#ffffff';}
@@ -187,7 +187,8 @@ if(document.querySelector('.tagrow')){(function(){
     var c=e.target.closest('.tagchip');if(!c)return;
     active=(active===c.dataset.tag)?'':c.dataset.tag;apply();});
   var q=new URLSearchParams(location.search).get('tag');
-  if(q){active=q;apply();}
+  if(q){active=q;}
+  apply();
 })();} 
 setLang(cur);
 """
@@ -221,6 +222,7 @@ h1.page-title{font-family:var(--serif);font-size:34px;font-weight:700;color:var(
 .year{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.1em;margin:26px 0 4px}
 .plist{list-style:none}
 .plist li{border-bottom:1px solid var(--border)}
+.plist li:last-child{border-bottom:none}
 .plist a{display:flex;align-items:baseline;gap:16px;padding:13px 6px;transition:background-color .15s ease,padding-left .15s ease}
 .plist a:hover{background:var(--card);text-decoration:none;padding-left:12px}
 .plist .nd{font-family:var(--mono);font-size:13px;color:var(--muted);flex:none;transition:color .15s}
@@ -246,6 +248,7 @@ article .body{font-size:15.5px;line-height:1.85}
 .tagchip{display:inline-block;border:1px solid var(--border);border-radius:14px;padding:1px 12px;font-size:12.5px;color:var(--muted);cursor:pointer;background:var(--bg)}
 .tagchip:hover{color:var(--blue);border-color:var(--blue)}
 .tagchip.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.tagchip[hidden]{display:none}
 .body p{margin:13px 0}
 .body ul,.body ol{margin:13px 0;padding-left:24px}
 .body li{margin:6px 0}
@@ -348,7 +351,6 @@ def build_index(posts):
     rows.append("</ul>")
     body = ('<a class="home-link" href="../index.html">← 主页</a>'
             '<h1 class="page-title" data-ui="blog">博客</h1>'
-            '<p class="page-sub" data-ui="sub">研究笔记 · 技术教程 · 杂谈</p>'
             + tagrow + "".join(rows))
     return shell("博客 · Shiyi Xiao", body, False)
 
