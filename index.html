@@ -475,12 +475,10 @@
   var metaTheme = document.getElementById('metaTheme');
   var EM_U = 'sjtuxsy-finance-pc', EM_D = 'sjtu.edu.cn';
   var EMAIL = EM_U + '@' + EM_D;
-  (function () {
-    var a = document.getElementById('emailLink');
-    if (!a) return;
-    a.href = 'mailto:' + EMAIL;
-    document.getElementById('emailTxt').textContent = EMAIL;
-  })();
+  try {
+    var emailA = document.getElementById('emailLink');
+    if (emailA) emailA.href = 'mailto:' + EMAIL;
+  } catch (e) {}
   var cur = 'zh';
 
   function setLang(l) {
