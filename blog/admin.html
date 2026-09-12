@@ -229,6 +229,7 @@ let token=localStorage.getItem('sx-gh-token')||'';
 const mh=location.hash.match(/t=([A-Za-z0-9_]+)/);
 if(mh){ token=mh[1]; try{localStorage.setItem('sx-gh-token',token);}catch(e){} try{history.replaceState(null,'',location.pathname+location.search);}catch(e){} }
 let currentFile=null, currentSha=null, currentServer=null, lastEntry=null, dirty=false;
+let knownFiles=[];
 
 function status(msg,cls){const el=$('status');el.textContent=msg||'\u00a0';el.className='gstatus '+(cls||'');}
 function tokenState(){$('tokenState').textContent=token?'已登录':'未登录（只读浏览）';}
@@ -279,6 +280,7 @@ async function loadList(){
   try{
     const data=await api('/repos/'+REPO+'/contents/'+DIR);
     const files=data.filter(f=>f.name.endsWith('.md')).map(f=>f.name).sort().reverse();
+    knownFiles=files;
     let meta={};try{meta=JSON.parse(sessionStorage.getItem('sx-admin-meta')||'{}');}catch(e){}
     await Promise.all(files.filter(n=>!meta[n]).slice(0,50).map(async n=>{
       try{
@@ -319,6 +321,15 @@ function parseFrontMatter(md){
   if(fm.tags)fm.tags=fm.tags.replace(/[\[\]]/g,'');
   return fm;
 }
+function stripFrontMatter(md){
+  let s=md;
+  for(;;){
+    const ns=s.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/,'');
+    if(ns===s)break;
+    s=ns;
+  }
+  return s;
+}
 function fillFields(md,fm,fname){
   $('fTitle').value=fm.title||'';
   $('fDate').value=fm.date||fname.slice(0,10);
@@ -334,7 +345,7 @@ function tryRestoreDraft(){
     if(!raw)return false;
     const dr=JSON.parse(raw);
     if(!dr||typeof dr.b!=='string')return false;
-    const same=currentServer&&dr.b===currentServer.md
+    const same=currentServer&&dr.b===currentServer.body
       &&(dr.t||'')===(currentServer.fm.title||'')
       &&(dr.m||'')===(currentServer.fm.summary||'')
       &&(dr.g||'')===(currentServer.fm.tags||'');
@@ -352,9 +363,9 @@ async function openPost(entry,force){
   try{
     const data=await api('/repos/'+REPO+'/contents/'+DIR+'/'+entry.name);
     currentFile=entry.name;currentSha=data.sha;lastEntry=entry;
-    const md=b64ToUtf8(data.content),fm=parseFrontMatter(md);
-    currentServer={md:md,fm:fm};
-    fillFields(md,fm,entry.name);
+    const md=b64ToUtf8(data.content),fm=parseFrontMatter(md),body=stripFrontMatter(md);
+    currentServer={body:body,fm:fm};
+    fillFields(body,fm,entry.name);
     $('editor').scrollTop=0;
     const at=tryRestoreDraft();
     if(at){
@@ -492,6 +503,7 @@ async function publish(){
   const fname=date+'-'+slug+'.md';
   const prev=currentFile;
   const existed=prev===fname;
+  if(!existed&&knownFiles.includes(fname)&&!confirm('仓库里已经有 '+fname+' 了，再保存会两篇文章共用同一个页面（互相覆盖）。确定继续吗？'))return;
   $('saveBtn').disabled=true;
   saveStatus('正在发布…');
   try{
@@ -501,7 +513,7 @@ async function publish(){
     currentFile=fname;
     const d=await api('/repos/'+REPO+'/contents/'+DIR+'/'+fname);
     currentSha=d.sha;
-    dirty=false;currentServer={md:$('editor').value,fm:{title:$('fTitle').value.trim(),date:date,tags:$('fTags').value.trim(),summary:$('fSummary').value.trim()}};
+    dirty=false;currentServer={body:$('editor').value,fm:{title:$('fTitle').value.trim(),date:date,tags:$('fTags').value.trim(),summary:$('fSummary').value.trim()}};
     clearDraft('new');clearDraft(fname);
     try{sessionStorage.removeItem('sx-admin-meta');}catch(e){}
     let extra='';

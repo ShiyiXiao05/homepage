@@ -476,6 +476,15 @@ def main():
     posts.sort(key=lambda p: p["date"], reverse=True)
     print(f"[build] {len(posts)} post(s) found")
 
+    seen = {}
+    for p in posts:
+        if p["slug"] in seen:
+            raise SystemExit(
+                f"[build] ERROR: duplicate slug '{p['slug']}' — both {seen[p['slug']]} "
+                f"and {p['date']}-{p['slug']}.md would overwrite the same page. Rename one file."
+            )
+        seen[p["slug"]] = f"{p['date']}-{p['slug']}.md"
+
     out = os.path.join(ROOT, "blog")
     write(os.path.join(out, "index.html"), build_index(posts))
     for p in posts:
