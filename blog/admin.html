@@ -18,9 +18,6 @@
 [data-theme="dark"]{--bg:#20212b;--ink:#eceef2;--body:#c6c9d2;--muted:#9a9daa;--border:#3a3c4a;--blue:#7fb0f5;--card:#292b38;--ok:#57ab5a;--bad:#e5534b;color-scheme:dark}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--sans);background:var(--bg);color:var(--body);font-size:14px;line-height:1.7}
-.page{max-width:1200px;margin:0 auto;padding:40px 24px 60px}
-h1{font-size:22px;color:var(--ink);margin-bottom:4px}
-.sub{color:var(--muted);font-size:13px;margin-bottom:20px}
 button{font-family:var(--sans);font-size:13px;color:var(--ink);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px 14px;cursor:pointer}
 button:hover{border-color:var(--blue);color:var(--blue)}
 button.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
@@ -29,248 +26,635 @@ button.danger:hover{border-color:var(--bad);color:var(--bad)}
 button:disabled{opacity:.5;cursor:not-allowed}
 input,textarea{font-family:var(--sans);font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:7px 10px;width:100%}
 input:focus,textarea:focus{outline:2px solid var(--blue);outline-offset:1px}
-textarea{font-family:var(--mono);font-size:13px;line-height:1.6;resize:vertical}
-.cols{display:grid;grid-template-columns:260px 1fr 1fr;gap:18px;align-items:start}
-@media(max-width:960px){.cols{grid-template-columns:1fr}}
+textarea{font-family:var(--mono);font-size:13px;line-height:1.65;resize:none}
+a{color:var(--blue);text-decoration:none}
 .panel{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px}
-.panel h3{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}
-.plist{list-style:none}.plist li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:7px 4px;border-bottom:1px solid var(--border)}
-.plist li:last-child{border-bottom:none}
-.plist a{color:var(--ink);text-decoration:none;cursor:pointer;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.plist a:hover{color:var(--blue)}
-.field{margin-bottom:10px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:3px}
-.status{font-size:12.5px;font-family:var(--mono);color:var(--muted);margin:10px 0}
+.panel h3{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em}
+.status{font-size:12.5px;font-family:var(--mono);color:var(--muted);margin:6px 0}
 .status.ok{color:var(--ok)}.status.bad{color:var(--bad)}
-.preview{border:1px solid var(--border);border-radius:10px;padding:18px;min-height:420px;max-height:75vh;overflow-y:auto;background:var(--bg)}
-.editor{min-height:420px}
-.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.status a{text-decoration:underline;text-underline-offset:3px}
 .note{font-size:12px;color:var(--muted);margin-top:8px}
+
+/* ---- top bar ---- */
+.top{max-width:1440px;margin:0 auto;padding:16px 24px 0;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.top h1{font-size:19px;color:var(--ink);font-weight:700}
+.top .repo{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.top .grow{flex:1}
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.seg button{border:none;border-radius:0;padding:5px 13px;font-size:12.5px;color:var(--muted)}
+.seg button.on{background:var(--blue);color:#fff}
+.seg button:not(.on):hover{color:var(--blue)}
+#menuBtn{display:none}
+.gstatus{max-width:1440px;margin:6px auto 0;padding:0 24px;font-size:12.5px;font-family:var(--mono);color:var(--muted)}
+.gstatus.ok{color:var(--ok)}.gstatus.bad{color:var(--bad)}
+details.tokenbox{max-width:1440px;margin:8px auto 0;padding:0 24px}
+details.tokenbox>summary{cursor:pointer;font-size:12.5px;color:var(--muted);list-style:none}
+details.tokenbox>summary::before{content:'▸ ';font-family:var(--mono)}
+details.tokenbox[open]>summary::before{content:'▾ '}
+details.tokenbox .inner{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-top:8px}
 .token-row{display:flex;gap:8px}
+.note{margin:6px 0 0}
+
+/* ---- layout ---- */
+.layout{max-width:1440px;margin:12px auto 0;padding:0 24px 40px;display:grid;grid-template-columns:235px minmax(0,1.04fr) minmax(0,1fr);gap:16px;align-items:start}
+body[data-mode="edit"] .layout{grid-template-columns:235px minmax(0,1fr)}
+body[data-mode="edit"] .prevcol{display:none}
+body[data-mode="preview"] .layout{grid-template-columns:235px minmax(0,1fr)}
+body[data-mode="preview"] .editcol{display:none}
+.backdrop{display:none}
+
+/* ---- sidebar ---- */
+.sidebar ul.plist{list-style:none}
+.plist li{border-bottom:1px solid var(--border)}
+.plist li:last-child{border-bottom:none}
+.plist a{display:block;padding:8px 8px;border-radius:8px;cursor:pointer}
+.plist a:hover{background:var(--card)}
+.plist .nd{display:block;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.plist .pt{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:13.5px;color:var(--ink);line-height:1.45}
+.plist li.active a{background:var(--sel,rgba(23,114,208,.1));box-shadow:inset 3px 0 0 var(--blue)}
+.plist li.active.dirty .pt::after{content:' ●';color:var(--bad);font-size:11px}
+.sidebar .newbtn{width:100%;margin-top:12px}
+
+/* ---- editor column ---- */
+.editcol{display:flex;flex-direction:column}
+.meta{display:grid;grid-template-columns:130px minmax(0,1fr);gap:8px;margin-bottom:8px}
+.meta .full{grid-column:1/-1}
+.meta input[type=date]{font-family:var(--mono)}
+.tb{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px}
+.tb button{padding:4px 9px;font-size:12.5px;border-radius:6px;color:var(--body)}
+.tb button b{font-weight:700}.tb button i{font-style:italic}
+.tb .sep{width:1px;background:var(--border);margin:3px 4px}
+#editor{min-height:52vh;flex:1}
+#editor.dropping,#preview.dropping{outline:2px dashed var(--blue);outline-offset:-4px}
+.actionbar{position:sticky;bottom:0;display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--bg);padding:10px 2px;border-top:1px solid var(--border);margin-top:8px}
+.actionbar .fn{font-family:var(--mono);font-size:11.5px;color:var(--muted);word-break:break-all}
+.actionbar .grow{flex:1}
+#saveStatus{margin:0}
+#wc{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+
+/* ---- preview column ---- */
+.prevcol .panel{position:sticky;top:14px}
+#preview{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:18px;min-height:52vh;max-height:calc(100vh - 190px);overflow-y:auto;overflow-x:hidden}
+#preview h1,#preview h2,#preview h3{color:var(--ink);margin:14px 0 8px}
+#preview h1{font-size:22px}#preview h2{font-size:19px;border-bottom:1px solid var(--border);padding-bottom:6px}#preview h3{font-size:16px}
+#preview p{margin:10px 0}
+#preview ul,#preview ol{margin:10px 0;padding-left:24px}
+#preview img{max-width:100%;height:auto;border:1px solid var(--border);border-radius:8px}
+#preview blockquote{border-left:3px solid var(--border);padding:2px 0 2px 14px;color:var(--muted);margin:12px 0}
+#preview code{font-family:var(--mono);font-size:.86em;background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1px 5px}
+#preview pre{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;overflow-x:auto;margin:12px 0}
+#preview pre code{background:none;border:none}
+#preview table{border-collapse:collapse;margin:12px 0}
+#preview th,#preview td{border:1px solid var(--border);padding:5px 12px}
+#preview figure{text-align:center;margin:16px 0}
 .katex-display{overflow-x:auto;padding:4px 0}
-.img-note{color:var(--muted)}
-@media print{.page{display:none}}
+@media print{.top,.gstatus,details.tokenbox,.sidebar,.tb,.actionbar{display:none!important}.layout{display:block;max-width:100%;padding:0}#preview{max-height:none;border:none}}
+@media(max-width:1100px){
+  .layout,body[data-mode="edit"] .layout,body[data-mode="preview"] .layout{grid-template-columns:1fr}
+  body:not([data-mode="preview"]) .prevcol{display:none}
+  #menuBtn{display:inline-block}
+  .sidebar{position:fixed;left:0;top:0;bottom:0;width:min(300px,85vw);background:var(--bg);z-index:60;transform:translateX(-105%);transition:transform .2s;padding:20px;overflow:auto;border-right:1px solid var(--border)}
+  body.sidebar-open .sidebar{transform:none}
+  body.sidebar-open .backdrop{display:block;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:50}
+}
 </style>
 </head>
-<body>
-<div class="page">
+<body data-mode="split">
+
+<header class="top">
+  <button id="menuBtn" type="button">☰ 文章</button>
   <h1>博客后台</h1>
-  <p class="sub">GitHub API 在线编辑 · ShiyiXiao05/homepage · <a href="index.html">← 返回博客</a> · <a href="../index.html">← 返回主页</a></p>
-
-  <div class="panel" style="margin-bottom:18px">
-    <h3>GitHub Token</h3>
-    <div class="token-row">
-      <input id="tokenInput" type="password" placeholder="粘贴 Fine-grained PAT（仅本仓库 Contents 读写）">
-      <button id="saveToken" class="primary">保存</button>
-      <button id="clearToken">清除</button>
-    </div>
-    <p class="note" id="tokenNote">Token 只保存在此浏览器的 localStorage 中，不会上传到仓库之外的任何地方。建议仅授权本仓库的 Contents: Read and write。</p>
-    <p class="status" id="status"></p>
+  <span class="repo">ShiyiXiao05/homepage · master</span>
+  <span class="grow"></span>
+  <div class="seg" id="modeSeg" title="切换界面模式">
+    <button type="button" data-m="edit">编辑</button>
+    <button type="button" data-m="split">分屏</button>
+    <button type="button" data-m="preview">预览</button>
   </div>
+  <a href="index.html">← 博客</a>
+  <a href="../index.html">主页</a>
+</header>
+<p class="gstatus" id="status"></p>
 
-  <div class="cols">
+<details class="tokenbox" id="tokenBox">
+  <summary>GitHub 令牌：<b id="tokenState"></b>（点击管理）</summary>
+  <div class="inner">
+    <div class="token-row">
+      <input id="tokenInput" type="password" placeholder="粘贴 Fine-grained PAT（仅本仓库 Contents 读写）" autocomplete="off">
+      <button id="saveToken" class="primary" type="button">保存</button>
+      <button id="clearToken" type="button">清除</button>
+    </div>
+    <p class="note">令牌只保存在此浏览器的 localStorage，不会发往 GitHub 之外。建议仅授权本仓库的 Contents: Read and write。也支持 admin.html#t=令牌 链接一键导入。</p>
+  </div>
+</details>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
     <div class="panel">
       <h3>文章列表（_posts/）</h3>
       <ul class="plist" id="postList"></ul>
-      <div style="margin-top:12px"><button id="newBtn">＋ 新建文章</button></div>
+      <button id="newBtn" class="newbtn" type="button">＋ 新建文章</button>
     </div>
-    <div>
-      <div class="toolbar">
-        <input id="fTitle" placeholder="标题" style="flex:2;min-width:160px">
-        <input id="fDate" placeholder="2026-09-11" style="flex:1;min-width:110px">
-      </div>
-      <div class="toolbar">
-        <input id="fSlug" placeholder="文件名 slug（英文，如 my-first-post）" style="flex:2;min-width:200px">
-        <input id="fTags" placeholder="标签，逗号分隔" style="flex:1;min-width:120px">
-      </div>
-      <div class="toolbar">
-        <input id="fSummary" placeholder="摘要（列表页显示）" style="width:100%">
-      </div>
-      <textarea id="editor" class="editor" spellcheck="false" placeholder="在这里写 Markdown…"></textarea>
-      <div class="toolbar" style="margin-top:12px">
-        <button id="saveBtn" class="primary">保存并发布（commit 到 master）</button>
-        <button id="deleteBtn" class="danger">删除此文</button>
-      </div>
-      <p class="status" id="saveStatus"></p>
+  </aside>
+  <div class="backdrop" id="backdrop"></div>
+
+  <section class="editcol">
+    <div class="meta">
+      <input id="fTitle" class="full" placeholder="标题（必填）">
+      <input id="fDate" type="date" title="发布日期">
+      <input id="fSlug" placeholder="slug（英文，如 my-post）" spellcheck="false">
+      <input id="fTags" class="full" placeholder="标签，逗号分隔">
+      <input id="fSummary" class="full" placeholder="摘要（列表页显示）">
     </div>
-    <div>
-      <div class="panel"><h3>实时预览</h3><div id="preview" class="preview"></div></div>
+    <div class="tb" id="tb">
+      <button type="button" data-cmd="h2" title="标题（## ）">H2</button>
+      <button type="button" data-cmd="h3" title="小标题（### ）">H3</button>
+      <span class="sep"></span>
+      <button type="button" data-cmd="bold" title="加粗（⌘B）"><b>B</b></button>
+      <button type="button" data-cmd="italic" title="斜体（⌘I）"><i>I</i></button>
+      <button type="button" data-cmd="strike" title="删除线"><s>S</s></button>
+      <button type="button" data-cmd="icode" title="行内代码">&lt;&gt;</button>
+      <button type="button" data-cmd="codeblock" title="代码块">```</button>
+      <span class="sep"></span>
+      <button type="button" data-cmd="link" title="链接（⌘K）">链接</button>
+      <button type="button" data-cmd="image" title="上传图片（也可直接拖拽 / 粘贴截图到编辑器）">图片</button>
+      <span class="sep"></span>
+      <button type="button" data-cmd="quote" title="引用">引用</button>
+      <button type="button" data-cmd="ul" title="无序列表">列表</button>
+      <button type="button" data-cmd="ol" title="有序列表">编号</button>
+      <span class="sep"></span>
+      <button type="button" data-cmd="math" title="行内公式 $…$">$…$</button>
+      <button type="button" data-cmd="mathblock" title="公式块 $$…$$">$$ 公式</button>
+      <button type="button" data-cmd="table" title="插入表格">表格</button>
+      <button type="button" data-cmd="hr" title="分隔线">――</button>
     </div>
-  </div>
+    <textarea id="editor" spellcheck="false" placeholder="在这里写 Markdown…支持直接粘贴截图上传"></textarea>
+    <div class="actionbar">
+      <button id="saveBtn" class="primary" type="button">保存并发布（⌘S）</button>
+      <button id="deleteBtn" class="danger" type="button">删除此文</button>
+      <span id="wc"></span>
+      <span class="grow"></span>
+      <span id="saveStatus" class="status"></span>
+      <span class="fn" id="fnHint"></span>
+    </div>
+  </section>
+
+  <section class="prevcol">
+    <div class="panel">
+      <h3>实时预览</h3>
+      <div id="preview"></div>
+    </div>
+  </section>
 </div>
+<input id="fileInput" type="file" accept="image/*" multiple hidden>
 
 <script src="marked.min.js"></script>
 <link rel="stylesheet" href="katex/katex.min.css">
 <script defer src="katex/katex.min.js"></script>
 <script defer src="katex/contrib/auto-render.min.js"></script>
 <script>
-const REPO = 'ShiyiXiao05/homepage';
-const DIR  = '_posts';
-const $ = id => document.getElementById(id);
-let token = localStorage.getItem('sx-gh-token') || '';
-// 支持 admin.html#t=TOKEN 一次性导入：自动保存并清除地址栏中的 token
-const mh = location.hash.match(/t=([A-Za-z0-9_]+)/);
-if (mh) {
-  token = mh[1];
-  localStorage.setItem('sx-gh-token', token);
-  history.replaceState(null, '', location.pathname + location.search);
-}
-let currentFile = null, currentSha = null;
+'use strict';
+const REPO='ShiyiXiao05/homepage', DIR='_posts', BASE='https://shiyixiao05.github.io/homepage/';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let token=localStorage.getItem('sx-gh-token')||'';
+const mh=location.hash.match(/t=([A-Za-z0-9_]+)/);
+if(mh){ token=mh[1]; try{localStorage.setItem('sx-gh-token',token);}catch(e){} try{history.replaceState(null,'',location.pathname+location.search);}catch(e){} }
+let currentFile=null, currentSha=null, currentServer=null, lastEntry=null, dirty=false;
 
-function status(msg, cls){ const el=$('status'); el.textContent = msg||'\u00a0'; el.className = 'status ' + (cls||''); }
-function saveStatus(msg, cls){ const el=$('saveStatus'); el.textContent = msg||'\u00a0'; el.className = 'status ' + (cls||''); }
+function status(msg,cls){const el=$('status');el.textContent=msg||'\u00a0';el.className='gstatus '+(cls||'');}
+function tokenState(){$('tokenState').textContent=token?'已登录':'未登录（只读浏览）';}
+function saveStatusHTML(html,cls){const el=$('saveStatus');el.innerHTML=html||'\u00a0';el.className='status '+(cls||'');}
+function saveStatus(msg,cls){saveStatusHTML(esc(msg),cls);}
 
-function setToken(t){
-  token = ($('tokenInput').value || '').trim();
-  if (!token) { status('请先粘贴 Token', 'bad'); return; }
-  localStorage.setItem('sx-gh-token', token);
-  status('Token 已保存到本浏览器 ✓', 'ok');
-  loadList();
-}
-$('saveToken').addEventListener('click', () => setToken());
-$('clearToken').addEventListener('click', () => {
-  localStorage.removeItem('sx-gh-token'); token=''; $('tokenInput').value='';
-  status('Token 已清除'); $('postList').innerHTML='';
-});
-
+/* ---------- GitHub API ---------- */
 function b64ToUtf8(b64){
-  const bin = atob(b64.replace(/\n/g,''));
-  const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
+  const bin=atob(b64.replace(/\n/g,''));
+  const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));
   return new TextDecoder().decode(bytes);
 }
 function utf8ToB64(str){
-  const bytes = new TextEncoder().encode(str);
-  let bin = ''; bytes.forEach(b => bin += String.fromCharCode(b));
+  const bytes=new TextEncoder().encode(str);
+  let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));
   return btoa(bin);
 }
-async function api(path, opts){
-  const res = await fetch('https://api.github.com' + path, Object.assign({}, opts, {
-    headers: Object.assign({
-      'Authorization': 'Bearer ' + token,
-      'Accept': 'application/vnd.github+json',
-      'Content-Type': 'application/json'
-    }, (opts && opts.headers) || {})
-  }));
-  if (!res.ok) throw new Error(res.status + ': ' + (await res.text()).slice(0, 300));
+function bytesToB64(buf){
+  const b=new Uint8Array(buf);let s='';
+  for(let i=0;i<b.length;i+=8192)s+=String.fromCharCode.apply(null,b.subarray(i,i+8192));
+  return btoa(s);
+}
+async function api(path,opts){
+  opts=opts||{};
+  const headers=Object.assign({'Accept':'application/vnd.github+json','Content-Type':'application/json'},opts.headers||{});
+  if(token)headers['Authorization']='Bearer '+token;
+  const res=await fetch('https://api.github.com'+path,Object.assign({},opts,{headers}));
+  if(!res.ok)throw new Error(res.status+': '+(await res.text()).slice(0,300));
   return res.json();
 }
 
+/* ---------- dirty / draft ---------- */
+function draftKey(){return 'sx-draft:'+(currentFile||'new');}
+function snap(){return {t:$('fTitle').value,d:$('fDate').value,s:$('fSlug').value,g:$('fTags').value,m:$('fSummary').value,b:$('editor').value,at:Date.now()};}
+function saveDraftNow(){try{localStorage.setItem(draftKey(),JSON.stringify(snap()));}catch(e){}}
+let draftTmr;
+function scheduleDraft(){clearTimeout(draftTmr);draftTmr=setTimeout(saveDraftNow,600);}
+function clearDraft(fname){try{localStorage.removeItem('sx-draft:'+(fname||'new'));}catch(e){}}
+function markDirty(){
+  if(!dirty){dirty=true;setActiveList();}
+  scheduleDraft();schedulePreview();updateWc();
+}
+function fmtTime(ts){return new Date(ts).toLocaleString('zh-CN',{hour12:false,month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});}
+
+/* ---------- list ---------- */
 async function loadList(){
-  if (!token) { status('未配置 Token —— 只能浏览，无法读写。', ''); return; }
   status('加载文章列表…');
-  try {
-    const data = await api('/repos/' + REPO + '/contents/' + DIR);
-    const ul = $('postList'); ul.innerHTML = '';
-    data.filter(f => f.name.endsWith('.md')).sort().reverse().forEach(f => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.textContent = f.name; a.onclick = () => openPost(f);
-      li.appendChild(a); ul.appendChild(li);
+  try{
+    const data=await api('/repos/'+REPO+'/contents/'+DIR);
+    const files=data.filter(f=>f.name.endsWith('.md')).map(f=>f.name).sort().reverse();
+    let meta={};try{meta=JSON.parse(sessionStorage.getItem('sx-admin-meta')||'{}');}catch(e){}
+    await Promise.all(files.filter(n=>!meta[n]).slice(0,50).map(async n=>{
+      try{
+        const d=await api('/repos/'+REPO+'/contents/'+DIR+'/'+n);
+        const fm=parseFrontMatter(b64ToUtf8(d.content));
+        meta[n]={t:fm.title||n,d:fm.date||n.slice(0,10)};
+      }catch(e){meta[n]={t:n,d:n.slice(0,10)};}
+    }));
+    try{sessionStorage.setItem('sx-admin-meta',JSON.stringify(meta));}catch(e){}
+    const ul=$('postList');ul.innerHTML='';
+    files.forEach(n=>{
+      const li=document.createElement('li');li.dataset.fn=n;
+      const a=document.createElement('a');
+      a.innerHTML='<span class="nd">'+esc(meta[n].d||n.slice(0,10))+'</span><span class="pt">'+esc(meta[n].t||n)+'</span>';
+      a.title=n;a.onclick=()=>openPost({name:n});
+      li.appendChild(a);ul.appendChild(li);
     });
-    status('共 ' + ul.children.length + ' 篇文章 ✓', 'ok');
-  } catch (e) { status('加载失败：' + e.message, 'bad'); }
+    status((token?'':'只读模式 · ')+files.length+' 篇文章 ✓',token?'ok':'');
+    setActiveList();
+  }catch(e){status('加载失败：'+e.message,'bad');}
 }
-
-async function openPost(f){
-  status('读取 ' + f.name + ' …');
-  try {
-    const data = await api('/repos/' + REPO + '/contents/' + DIR + '/' + f.name);
-    currentFile = f.name; currentSha = data.sha;
-    const md = b64ToUtf8(data.content);
-    $('editor').value = md;
-    const fm = parseFrontMatter(md);
-    $('fTitle').value = fm.title || '';
-    $('fDate').value = fm.date || '';
-    $('fTags').value = fm.tags || '';
-    $('fSummary').value = fm.summary || '';
-    $('fSlug').value = f.name.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.md$/, '');
-    saveStatus('已载入 ' + f.name + ' ✓', 'ok');
-    preview();
-  } catch (e) { saveStatus('读取失败：' + e.message, 'bad'); }
-}
-
-function parseFrontMatter(md){
-  const m = md.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
-  const fm = {};
-  if (m) m[1].split('\n').forEach(line => {
-    const i = line.indexOf(':');
-    if (i > 0) fm[line.slice(0,i).trim()] = line.slice(i+1).trim().replace(/^"|"/g, '');
+function setActiveList(){
+  document.querySelectorAll('#postList li').forEach(li=>{
+    const active=li.dataset.fn===currentFile;
+    li.classList.toggle('active',active);
+    li.classList.toggle('dirty',active&&dirty);
   });
-  if (fm.tags) fm.tags = fm.tags.replace(/[\[\]]/g, '');
+}
+
+/* ---------- open / new ---------- */
+function parseFrontMatter(md){
+  const m=md.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+  const fm={};
+  if(m)m[1].split('\n').forEach(line=>{
+    const i=line.indexOf(':');
+    if(i>0)fm[line.slice(0,i).trim()]=line.slice(i+1).trim().replace(/^"|"/g,'');
+  });
+  if(fm.tags)fm.tags=fm.tags.replace(/[\[\]]/g,'');
   return fm;
 }
-
-function buildMarkdown(){
-  const tags = $('fTags').value.trim();
-  return '---\n'
-    + 'title: ' + $('fTitle').value.trim() + '\n'
-    + 'date: ' + $('fDate').value.trim() + '\n'
-    + 'tags: [' + tags + ']\n'
-    + 'summary: ' + $('fSummary').value.trim() + '\n'
-    + '---\n\n' + $('editor').value;
+function fillFields(md,fm,fname){
+  $('fTitle').value=fm.title||'';
+  $('fDate').value=fm.date||fname.slice(0,10);
+  $('fTags').value=fm.tags||'';
+  $('fSummary').value=fm.summary||'';
+  $('fSlug').value=fname.replace(/^\d{4}-\d{2}-\d{2}-/,'').replace(/\.md$/,'');
+  $('editor').value=md;
+  dirty=false;
+}
+function tryRestoreDraft(){
+  try{
+    const raw=localStorage.getItem(draftKey());
+    if(!raw)return false;
+    const dr=JSON.parse(raw);
+    if(!dr||typeof dr.b!=='string')return false;
+    const same=currentServer&&dr.b===currentServer.md
+      &&(dr.t||'')===(currentServer.fm.title||'')
+      &&(dr.m||'')===(currentServer.fm.summary||'')
+      &&(dr.g||'')===(currentServer.fm.tags||'');
+    if(same){clearDraft();return false;}
+    $('fTitle').value=dr.t||'';$('fDate').value=dr.d||$('fDate').value;
+    $('fSlug').value=dr.s||'';$('fTags').value=dr.g||'';$('fSummary').value=dr.m||'';
+    $('editor').value=dr.b;
+    dirty=true;
+    return dr.at;
+  }catch(e){return false;}
+}
+async function openPost(entry,force){
+  if(dirty&&!force&&!confirm('当前有未发布的修改，打开「'+entry.name+'」会丢失这些修改。继续？'))return;
+  status('读取 '+entry.name+' …');
+  try{
+    const data=await api('/repos/'+REPO+'/contents/'+DIR+'/'+entry.name);
+    currentFile=entry.name;currentSha=data.sha;lastEntry=entry;
+    const md=b64ToUtf8(data.content),fm=parseFrontMatter(md);
+    currentServer={md:md,fm:fm};
+    fillFields(md,fm,entry.name);
+    $('editor').scrollTop=0;
+    const at=tryRestoreDraft();
+    if(at){
+      saveStatusHTML('已恢复未发布的本地草稿（'+fmtTime(at)+'保存）。<a href="javascript:void(0)" id="discardDraft">载入服务器版本</a>');
+      $('discardDraft').onclick=()=>openPost(entry,true);
+    }else saveStatus('已打开 '+entry.name,'ok');
+    setActiveList();updateWc();updateFnHint();previewNow();
+    closeSidebar();
+  }catch(e){saveStatus('读取失败：'+e.message,'bad');}
+}
+function newPost(force){
+  if(dirty&&!force&&!confirm('当前有未发布的修改，新建文章会丢失这些修改。继续？'))return;
+  currentFile=null;currentSha=null;currentServer=null;lastEntry=null;
+  const d=new Date();
+  $('fDate').value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  fillFields('','',[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')+'-.md');
+  $('fSlug').value='';$('fTitle').value='';$('fTags').value='';$('fSummary').value='';
+  const at=tryRestoreDraft();
+  if(at){
+    saveStatusHTML('已恢复上次未发布的草稿（'+fmtTime(at)+'保存）。<a href="javascript:void(0)" id="discardDraft">空白新建</a>');
+    $('discardDraft').onclick=()=>newPost(true);
+  }else{
+    $('editor').value='## 小标题\n\n在这里开始写…';
+    saveStatus('新文章：填好标题和 slug，即可写作并发布','ok');
+  }
+  setActiveList();updateWc();updateFnHint();previewNow();
+  closeSidebar();$('fTitle').focus();
 }
 
-$('newBtn').addEventListener('click', () => {
-  currentFile = null; currentSha = null;
-  const d = new Date();
-  $('fDate').value = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-  $('editor').value = '## 小标题\n\n正文…';
-  saveStatus('新文章模式：填好信息后点"保存并发布"', 'ok');
-});
-
-$('saveBtn').addEventListener('click', async () => {
-  if (!token) { saveStatus('未配置 Token', 'bad'); return; }
-  const slug = $('fSlug').value.trim(), date = $('fDate').value.trim();
-  if (!slug || !/^[a-z0-9-]+$/.test(slug)) { saveStatus('slug 只能是小写英文、数字和连字符', 'bad'); return; }
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) { saveStatus('日期格式应为 YYYY-MM-DD', 'bad'); return; }
-  const fname = date + '-' + slug + '.md';
-  const body = { message: 'blog: ' + (currentFile === fname ? 'update ' : 'add ') + fname, content: utf8ToB64(buildMarkdown()) };
-  if (currentFile === fname && currentSha) body.sha = currentSha;
-  if (currentFile && currentFile !== fname) saveStatus('注意：修改了日期或 slug，将创建新文件（旧文件请用删除按钮移除）', '');
-  try {
-    saveStatus('提交到 GitHub…');
-    await api('/repos/' + REPO + '/contents/' + DIR + '/' + fname, {
-      method: 'PUT', body: JSON.stringify(body)
-    });
-    currentFile = fname;
-    await api('/repos/' + REPO + '/contents/' + DIR + '/' + fname).then(d => currentSha = d.sha);
-    saveStatus('已发布 ' + fname + ' ✓ GitHub Pages 将在一两分钟内自动更新', 'ok');
+/* ---------- publish / delete ---------- */
+function buildMarkdown(){
+  return '---\n'
+    +'title: '+$('fTitle').value.trim()+'\n'
+    +'date: '+$('fDate').value.trim()+'\n'
+    +'tags: ['+$('fTags').value.trim()+']\n'
+    +'summary: '+$('fSummary').value.trim()+'\n'
+    +'---\n\n'+$('editor').value;
+}
+async function publish(){
+  if(!token){saveStatus('未配置 Token，无法发布（右上角「GitHub 令牌」处粘贴）','bad');return;}
+  const slug=$('fSlug').value.trim(),date=$('fDate').value.trim();
+  if(!$('fTitle').value.trim()){saveStatus('请填写标题','bad');return;}
+  if(!/^[a-z0-9-]+$/.test(slug)){saveStatus('slug 只能是小写英文、数字和连字符','bad');return;}
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){saveStatus('日期格式应为 YYYY-MM-DD','bad');return;}
+  const fname=date+'-'+slug+'.md';
+  const prev=currentFile;
+  const existed=prev===fname;
+  $('saveBtn').disabled=true;
+  saveStatus('正在发布…');
+  try{
+    const body={message:'blog: '+(existed?'update ':'add ')+fname,content:utf8ToB64(buildMarkdown())};
+    if(existed&&currentSha)body.sha=currentSha;
+    await api('/repos/'+REPO+'/contents/'+DIR+'/'+fname,{method:'PUT',body:JSON.stringify(body)});
+    currentFile=fname;
+    const d=await api('/repos/'+REPO+'/contents/'+DIR+'/'+fname);
+    currentSha=d.sha;
+    dirty=false;currentServer={md:$('editor').value,fm:{title:$('fTitle').value.trim(),date:date,tags:$('fTags').value.trim(),summary:$('fSummary').value.trim()}};
+    clearDraft('new');clearDraft(fname);
+    try{sessionStorage.removeItem('sx-admin-meta');}catch(e){}
+    let extra='';
+    if(prev&&prev!==fname)extra='<br>⚠️ 改了日期/slug：创建了新文件，旧文件 '+esc(prev)+' 还在列表里，请打开它点「删除此文」。';
+    saveStatusHTML('已发布 ✓ Pages 一两分钟内更新 · <a target="_blank" rel="noopener" href="'+BASE+'blog/'+slug+'.html">查看文章 ↗</a>'+extra,'ok');
     loadList();
-  } catch (e) { saveStatus('发布失败：' + e.message, 'bad'); }
-});
-
-$('deleteBtn').addEventListener('click', async () => {
-  if (!currentFile || !currentSha) { saveStatus('请先从列表打开要删除的文章', 'bad'); return; }
-  if (!confirm('确定删除 ' + currentFile + ' ？此操作会直接提交到仓库。')) return;
-  try {
-    await api('/repos/' + REPO + '/contents/' + DIR + '/' + currentFile, {
-      method: 'DELETE', body: JSON.stringify({ message: 'blog: delete ' + currentFile, sha: currentSha })
-    });
-    saveStatus('已删除 ' + currentFile + ' ✓', 'ok');
-    currentFile = null; currentSha = null;
-    $('editor').value = ''; preview();
+  }catch(e){saveStatus('发布失败：'+e.message,'bad');}
+  finally{$('saveBtn').disabled=false;setActiveList();}
+}
+async function delPost(){
+  if(!currentFile||!currentSha){saveStatus('请先从列表打开要删除的文章','bad');return;}
+  if(!confirm('确定删除 '+currentFile+'？此操作会直接提交到仓库。'))return;
+  try{
+    await api('/repos/'+REPO+'/contents/'+DIR+'/'+currentFile,{method:'DELETE',body:JSON.stringify({message:'blog: delete '+currentFile,sha:currentSha})});
+    clearDraft(currentFile);
+    saveStatus('已删除 '+currentFile+' ✓','ok');
+    currentFile=null;currentSha=null;currentServer=null;dirty=false;
+    $('editor').value='';previewNow();updateWc();updateFnHint();
+    try{sessionStorage.removeItem('sx-admin-meta');}catch(e){}
     loadList();
-  } catch (e) { saveStatus('删除失败：' + e.message, 'bad'); }
-});
+  }catch(e){saveStatus('删除失败：'+e.message,'bad');}
+}
 
-function preview(){
-  const md = $('editor').value;
-  const html = marked.parse(md);
-  $('preview').innerHTML = html;
-  const imgs = $('preview').querySelectorAll('img');
-  imgs.forEach(i => { if (i.getAttribute('src') && !i.getAttribute('src').startsWith('http') && !i.getAttribute('src').startsWith('../'))
-    i.src = i.getAttribute('src').replace(/^assets\//, '../assets/'); });
-  if (window.renderMathInElement) renderMathInElement($('preview'), {
-    delimiters: [{left:'$$',right:'$$',display:true},{left:'\\[',right:'\\]',display:true},{left:'$',right:'$',display:false}],
-    throwOnError: false
+/* ---------- editing helpers ---------- */
+function editRange(from,to,text,selFrom,selTo){
+  const el=$('editor');el.focus();
+  el.setSelectionRange(from,to);
+  let ok=false;
+  try{ok=document.execCommand('insertText',false,text);}catch(e){}
+  if(!ok){
+    el.setRangeText(text,from,to,'end');
+    el.dispatchEvent(new Event('input',{bubbles:true}));
+  }
+  if(selFrom!=null)el.setSelectionRange(selFrom,selTo==null?selFrom:selTo);
+  else el.setSelectionRange(from+text.length,from+text.length);
+}
+function wrapSel(before,after,ph){
+  const el=$('editor');
+  const s=el.selectionStart,e=el.selectionEnd;
+  const sel=el.value.slice(s,e)||ph||'';
+  editRange(s,e,before+sel+after,s+before.length,s+before.length+sel.length);
+}
+function prefixToggle(prefix){
+  const el=$('editor'),v=el.value,s=el.selectionStart,e=el.selectionEnd;
+  const ls=v.lastIndexOf('\n',s-1)+1;
+  let le=v.indexOf('\n',e);if(le<0)le=v.length;
+  const lines=v.slice(ls,le).split('\n');
+  const escP=prefix.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  const has=new RegExp('^'+escP);
+  const strip=l=>l.replace(/^(\s*)(?:[-*+]\s+|\d+\.\s+|>\s+|#{1,6}\s+)?/,'$1');
+  const all=lines.every(l=>has.test(l));
+  const out=lines.map(l=>all?l.replace(has,''):prefix+strip(l)).join('\n');
+  editRange(ls,le,out,ls,ls+out.length);
+}
+function headingToggle(level){
+  const pre='#'.repeat(level)+' ';
+  const el=$('editor'),v=el.value,s=el.selectionStart,e=el.selectionEnd;
+  const ls=v.lastIndexOf('\n',s-1)+1;
+  let le=v.indexOf('\n',e);if(le<0)le=v.length;
+  const lines=v.slice(ls,le).split('\n');
+  const reH=/^#{1,6}\s+/;
+  const all=lines.every(l=>l.startsWith(pre));
+  const out=lines.map(l=>all?l.replace(reH,''):pre+l.replace(reH,'')).join('\n');
+  editRange(ls,le,out,ls,ls+out.length);
+}
+function insertBlock(text){
+  const el=$('editor'),s=el.selectionStart;
+  const before=el.value.slice(0,s);
+  const pad=before&&!before.endsWith('\n')?'\n':'';
+  editRange(s,s,pad+text);
+}
+function runCmd(cmd){
+  switch(cmd){
+    case 'h2':headingToggle(2);break;
+    case 'h3':headingToggle(3);break;
+    case 'bold':wrapSel('**','**','粗体');break;
+    case 'italic':wrapSel('*','*','斜体');break;
+    case 'strike':wrapSel('~~','~~','删除文字');break;
+    case 'icode':wrapSel('`','`','代码');break;
+    case 'codeblock':wrapSel('\n```\n','\n```\n','代码');break;
+    case 'link':wrapSel('[','](https://)','链接文字');break;
+    case 'image':$('fileInput').click();break;
+    case 'quote':prefixToggle('> ');break;
+    case 'ul':prefixToggle('- ');break;
+    case 'ol':prefixToggle('1. ');break;
+    case 'math':wrapSel('$','$','公式');break;
+    case 'mathblock':wrapSel('\n$$\n','\n$$\n','\\begin{aligned}\n…\n\\end{aligned}');break;
+    case 'table':insertBlock('| 列1 | 列2 | 列3 |\n| --- | --- | --- |\n|  |  |  |\n');break;
+    case 'hr':insertBlock('\n---\n\n');break;
+  }
+}
+
+/* ---------- image upload ---------- */
+async function uploadOne(slug,f){
+  if(f.size>8*1024*1024)throw new Error(f.name+' 超过 8MB，请压缩后再传');
+  const extRaw=(f.name.match(/\.([a-zA-Z0-9]+)$/)||[])[1];
+  const extMap={jpg:'jpg',jpeg:'jpg',png:'png',gif:'gif',webp:'webp',svg:'svg'};
+  const ext=(extRaw&&extMap[extRaw.toLowerCase()])||'png';
+  const base=(f.name.replace(/\.[^.]+$/,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40))||'img';
+  const name=Date.now()+'-'+base+'.'+ext;
+  const path='assets/blog/'+slug+'/'+name;
+  const buf=await f.arrayBuffer();
+  await api('/repos/'+REPO+'/contents/'+path,{method:'PUT',body:JSON.stringify({message:'blog: upload '+path,content:bytesToB64(buf)})});
+  return {path:path,alt:base};
+}
+async function handleFiles(list){
+  const files=Array.from(list).filter(f=>f.type&&f.type.startsWith('image/'));
+  if(!files.length)return;
+  if(!token){saveStatus('未配置 Token，无法上传图片','bad');return;}
+  const slug=$('fSlug').value.trim();
+  if(!/^[a-z0-9-]+$/.test(slug)){saveStatus('上传图片前请先填写 slug（图片将存入 assets/blog/<slug>/ 并随文章一起发布）','bad');return;}
+  let i=0;
+  for(const f of files){
+    i++;
+    saveStatus('正在上传 '+f.name+'（'+i+'/'+files.length+'）…');
+    try{
+      const r=await uploadOne(slug,f);
+      insertBlock('!['+r.alt+'](../'+r.path+')\n\n');
+    }catch(e){saveStatus('上传失败：'+e.message,'bad');return;}
+  }
+  saveStatus('已上传 '+files.length+' 张图片 ✓','ok');
+}
+
+/* ---------- preview ---------- */
+let prevTmr;
+function schedulePreview(){clearTimeout(prevTmr);prevTmr=setTimeout(previewNow,150);}
+function previewNow(){
+  const box=$('preview');
+  box.innerHTML=marked.parse($('editor').value);
+  box.querySelectorAll('img').forEach(i=>{
+    const s=i.getAttribute('src')||'';
+    if(s&&!/^https?:/.test(s)&&!s.startsWith('/')&&!s.startsWith('../'))i.src='../'+s;
+  });
+  if(window.renderMathInElement)renderMathInElement(box,{
+    delimiters:[{left:'$$',right:'$$',display:true},{left:'\\[',right:'\\]',display:true},{left:'$',right:'$',display:false}],
+    throwOnError:false,
+    macros:{'\\ket':'|#1\\rangle','\\bra':'\\langle#1|','\\braket':'\\langle #1 \\rangle','\\DD':'\\mathrm{d}'}
   });
 }
-$('editor').addEventListener('input', () => { preview(); });
+function updateWc(){$('wc').textContent=$('editor').value.replace(/\s/g,'').length+' 字';}
+function updateFnHint(){
+  const s=$('fSlug').value.trim(),d=$('fDate').value.trim();
+  $('fnHint').textContent=s?('_posts/'+(d||'YYYY-MM-DD')+'-'+s+'.md'):'';
+}
 
-$('tokenInput').value = token;
-if (mh) { status('已通过链接导入 Token 并保存到本浏览器 ✓', 'ok'); loadList(); }
-else if (token) { status('已从本地恢复 Token ✓', 'ok'); loadList(); }
-else status('未配置 Token —— 只能浏览，无法读写。');
-preview();
+/* ---------- mode / sidebar ---------- */
+function setMode(m){
+  document.body.dataset.mode=m;
+  try{localStorage.setItem('sx-admin-mode',m);}catch(e){}
+  document.querySelectorAll('#modeSeg button').forEach(b=>b.classList.toggle('on',b.dataset.m===m));
+  if(m!=='edit')previewNow();
+}
+function closeSidebar(){document.body.classList.remove('sidebar-open');}
+
+/* ---------- events ---------- */
+$('editor').addEventListener('input',markDirty);
+$('fTitle').addEventListener('input',markDirty);
+$('fTags').addEventListener('input',markDirty);
+$('fSummary').addEventListener('input',markDirty);
+$('fSlug').addEventListener('input',()=>{markDirty();updateFnHint();});
+$('fDate').addEventListener('input',()=>{markDirty();updateFnHint();});
+
+$('editor').addEventListener('keydown',e=>{
+  const meta=e.metaKey||e.ctrlKey;
+  if(meta&&e.key.toLowerCase()==='s'){e.preventDefault();publish();return;}
+  if(meta&&e.key.toLowerCase()==='b'){e.preventDefault();wrapSel('**','**','粗体');return;}
+  if(meta&&e.key.toLowerCase()==='i'){e.preventDefault();wrapSel('*','*','斜体');return;}
+  if(meta&&e.key.toLowerCase()==='k'){e.preventDefault();wrapSel('[','](https://)','链接文字');return;}
+  if(e.key==='Tab'){e.preventDefault();editRange(e.target.selectionStart,e.target.selectionEnd,'  ');return;}
+  if(e.key==='Enter'&&!e.shiftKey&&!meta){
+    const el=e.target,v=el.value,s=el.selectionStart;
+    if(s!==el.selectionEnd)return;
+    const ls=v.lastIndexOf('\n',s-1)+1;
+    const m=v.slice(ls,s).match(/^(\s*)([-*+]\s+|\d+\.\s+)?(.*)$/);
+    if(!m||!m[2])return;
+    e.preventDefault();
+    if(!m[3]){editRange(ls,s,m[1]);}
+    else{
+      const om=m[2].match(/^(\d+)\.\s+$/);
+      const next=om?(parseInt(om[1],10)+1)+'. ':m[2];
+      editRange(s,s,'\n'+m[1]+next);
+    }
+  }
+});
+let syncing=false;
+$('editor').addEventListener('scroll',()=>{
+  if(document.body.dataset.mode!=='split'||syncing)return;
+  const el=$('editor'),pv=$('preview');
+  const r=el.scrollTop/Math.max(1,el.scrollHeight-el.clientHeight);
+  syncing=true;
+  pv.scrollTop=r*(pv.scrollHeight-pv.clientHeight);
+  requestAnimationFrame(()=>syncing=false);
+});
+$('editor').addEventListener('paste',e=>{
+  const items=(e.clipboardData||{}).items||[];
+  const it=Array.from(items).find(i=>i.type&&i.type.startsWith('image/'));
+  if(it){e.preventDefault();const f=it.getAsFile();if(f)handleFiles([f]);}
+});
+['dragover','dragleave','drop'].forEach(ev=>{
+  ['editor','preview'].forEach(id=>{
+    const t=$(id);
+    if(ev==='dragover'){t.addEventListener(ev,e=>{e.preventDefault();t.classList.add('dropping');});}
+    else if(ev==='dragleave'){t.addEventListener(ev,()=>t.classList.remove('dropping'));}
+    else{t.addEventListener(ev,e=>{e.preventDefault();t.classList.remove('dropping');if(e.dataTransfer&&e.dataTransfer.files.length)handleFiles(e.dataTransfer.files);});}
+  });
+});
+$('fileInput').addEventListener('change',e=>{if(e.target.files.length)handleFiles(e.target.files);e.target.value='';});
+$('tb').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-cmd]');
+  if(b)runCmd(b.dataset.cmd);
+});
+document.querySelectorAll('#modeSeg button').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.m)));
+$('menuBtn').addEventListener('click',()=>document.body.classList.toggle('sidebar-open'));
+$('backdrop').addEventListener('click',closeSidebar);
+$('newBtn').addEventListener('click',()=>newPost());
+$('saveBtn').addEventListener('click',publish);
+$('deleteBtn').addEventListener('click',delPost);
+window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
+
+$('saveToken').addEventListener('click',()=>{
+  token=($('tokenInput').value||'').trim();
+  if(!token){status('请先粘贴 Token','bad');return;}
+  try{localStorage.setItem('sx-gh-token',token);}catch(e){}
+  tokenState();
+  status('Token 已保存到本浏览器 ✓','ok');
+  loadList();
+});
+$('clearToken').addEventListener('click',()=>{
+  try{localStorage.removeItem('sx-gh-token');}catch(e){}
+  token='';$('tokenInput').value='';
+  tokenState();
+  status('Token 已清除（进入只读浏览模式）');
+  $('postList').innerHTML='';
+});
+
+/* ---------- init ---------- */
+$('tokenInput').value=token;
+tokenState();
+let mode='split';
+try{
+  mode=localStorage.getItem('sx-admin-mode')||((window.innerWidth<1100)?'edit':'split');
+}catch(e){if(window.innerWidth<1100)mode='edit';}
+setMode(mode);
+if(mh){status('已通过链接导入 Token ✓','ok');}
+else if(token){status('已从本地恢复 Token ✓','ok');}
+else{status('未配置 Token —— 只读浏览模式，粘贴令牌后可编辑发布。');}
+loadList();
+if(!token)$('tokenBox').open=true;
+previewNow();
+updateWc();updateFnHint();
+window.addEventListener('DOMContentLoaded',()=>setTimeout(previewNow,50));
 </script>
 </body>
 </html>
