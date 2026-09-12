@@ -73,7 +73,11 @@ body[data-mode="preview"] .editcol{display:none}
 .plist .pt{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:13.5px;color:var(--ink);line-height:1.45}
 .plist li.active a{background:var(--sel,rgba(23,114,208,.1));box-shadow:inset 3px 0 0 var(--blue)}
 .plist li.active.dirty .pt::after{content:' ●';color:var(--bad);font-size:11px}
-.sidebar .newbtn{width:100%;margin-top:12px}
+.tplrow{display:flex;gap:8px;align-items:center;margin:12px 0 8px}
+.tplrow span{font-size:12px;color:var(--muted);flex:none}
+select{font-family:var(--sans);font-size:12.5px;color:var(--ink);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px 8px;width:100%}
+select:focus{outline:2px solid var(--blue);outline-offset:1px}
+.sidebar .newbtn{width:100%}
 
 /* ---- editor column ---- */
 .editcol{display:flex;flex-direction:column}
@@ -153,6 +157,10 @@ body[data-mode="preview"] .editcol{display:none}
     <div class="panel">
       <h3>文章列表（_posts/）</h3>
       <ul class="plist" id="postList"></ul>
+      <div class="tplrow"><span>模板</span><select id="tplSel">
+        <option value="blank">空白文章</option>
+        <option value="cpho">物理竞赛点评（题目＋点评＋解析）</option>
+      </select></div>
       <button id="newBtn" class="newbtn" type="button">＋ 新建文章</button>
     </div>
   </aside>
@@ -357,20 +365,110 @@ async function openPost(entry,force){
     closeSidebar();
   }catch(e){saveStatus('读取失败：'+e.message,'bad');}
 }
+const TEMPLATES={
+  blank:{name:'空白文章',title:'',tags:'',summary:'',body:'## 小标题\n\n在这里开始写…'},
+  cpho:{name:'物理竞赛点评',title:'第 __ 届中学生物理竞赛复赛点评（上）：第 1–4 题',tags:'物理竞赛, 复赛, 试题解析',summary:'',body:String.raw`> **本期信息**：第 ＿＿ 届全国中学生物理竞赛＿＿赛（复赛 / 决赛），＿＿＿＿ 年 ＿＿ 月 ＿＿ 日考试，共 ＿＿ 道题、＿＿ 分、＿＿ 小时。本文解析第 ＿＿–＿＿ 题。题目文字按试卷重新录入，解答参考官方解答重新整理；每题末尾留一段「**我的回忆**」，想到什么补什么。
+
+## 写在前面
+
+（两三句引入：为什么翻出这一届、当年的整体感受、试卷覆盖了哪些模块。）
+
+---
+
+## 一、（＿＿ 分）题目标题
+
+### 题目
+
+（转写原题。填好 slug 后，题目截图直接粘贴进编辑器即可自动上传，记得把图注改成图号和说明。）
+
+![图 1. 题图说明](../assets/blog/你的slug/fig-1.png)
+
+（1）第一问……
+
+（2）第二问……
+
+### 点评
+
+- **考点**：
+- **难度定位**：全卷第 ＿ 题，难度 ★★☆☆☆
+- **常见错法**：
+
+### 解析
+
+**（1）** 一句话点破关键思路：设 ……，由 ……：
+
+$$
+核心方程
+$$
+
+（完整推导，最终结果用 \boxed{} 框出。）
+
+**（2）** ……
+
+> **我的回忆**
+>
+> （待补：考场上的状态、卡在哪一步、出考场对答案时的心情……）
+
+---
+
+## 二、（＿＿ 分）题目标题
+
+### 题目
+
+（转写原题 / 粘贴题目截图。）
+
+![图 2. 题图说明](../assets/blog/你的slug/fig-2.png)
+
+（1）……
+
+### 点评
+
+- **考点**：
+- **难度定位**：
+- **常见错法**：
+
+### 解析
+
+**（1）** ……
+
+> **我的回忆**
+>
+> （待补：……）
+
+---
+
+<!-- 更多题：复制「二、」整段继续加，改题号、分值和标题即可 -->
+
+## 写在后面
+
+（整体复盘：这一届的难度曲线、和上一届相比的变化、最值得记住的一道题。后 ＿＿ 题留到下一篇。）`}
+};
 function newPost(force){
   if(dirty&&!force&&!confirm('当前有未发布的修改，新建文章会丢失这些修改。继续？'))return;
+  const tkey=$('tplSel').value,tpl=TEMPLATES[tkey]||TEMPLATES.blank;
   currentFile=null;currentSha=null;currentServer=null;lastEntry=null;
   const d=new Date();
-  $('fDate').value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-  fillFields('','',[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')+'-.md');
-  $('fSlug').value='';$('fTitle').value='';$('fTags').value='';$('fSummary').value='';
-  const at=tryRestoreDraft();
-  if(at){
-    saveStatusHTML('已恢复上次未发布的草稿（'+fmtTime(at)+'保存）。<a href="javascript:void(0)" id="discardDraft">空白新建</a>');
-    $('discardDraft').onclick=()=>newPost(true);
+  const today=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  $('fDate').value=today;
+  fillFields('','',today+'-.md');
+  $('fSlug').value='';
+  $('fTitle').value=tpl.title||'';
+  $('fTags').value=tpl.tags||'';
+  $('fSummary').value=tpl.summary||'';
+  if(tkey!=='blank'){
+    $('editor').value=tpl.body;
+    dirty=true;
+    saveDraftNow();
+    saveStatus('已套用模板「'+tpl.name+'」：把 ＿＿ 占位替换成实际信息、填好标题和 slug 即可开写','ok');
   }else{
-    $('editor').value='## 小标题\n\n在这里开始写…';
-    saveStatus('新文章：填好标题和 slug，即可写作并发布','ok');
+    const at=tryRestoreDraft();
+    if(at){
+      saveStatusHTML('已恢复上次未发布的草稿（'+fmtTime(at)+'保存）。<a href="javascript:void(0)" id="discardDraft">空白新建</a>');
+      $('discardDraft').onclick=()=>newPost(true);
+    }else{
+      $('editor').value=tpl.body;
+      saveStatus('新文章：填好标题和 slug，即可写作并发布','ok');
+    }
   }
   setActiveList();updateWc();updateFnHint();previewNow();
   closeSidebar();$('fTitle').focus();
@@ -619,6 +717,11 @@ document.querySelectorAll('#modeSeg button').forEach(b=>b.addEventListener('clic
 $('menuBtn').addEventListener('click',()=>document.body.classList.toggle('sidebar-open'));
 $('backdrop').addEventListener('click',closeSidebar);
 $('newBtn').addEventListener('click',()=>newPost());
+function updateNewBtnLabel(){
+  const tpl=TEMPLATES[$('tplSel').value]||TEMPLATES.blank;
+  $('newBtn').textContent=($('tplSel').value==='blank')?'＋ 新建文章':'＋ 新建「'+tpl.name+'」';
+}
+$('tplSel').addEventListener('change',updateNewBtnLabel);
 $('saveBtn').addEventListener('click',publish);
 $('deleteBtn').addEventListener('click',delPost);
 window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
@@ -653,7 +756,7 @@ else{status('未配置 Token —— 只读浏览模式，粘贴令牌后可编�
 loadList();
 if(!token)$('tokenBox').open=true;
 previewNow();
-updateWc();updateFnHint();
+updateWc();updateFnHint();updateNewBtnLabel();
 window.addEventListener('DOMContentLoaded',()=>setTimeout(previewNow,50));
 </script>
 </body>
