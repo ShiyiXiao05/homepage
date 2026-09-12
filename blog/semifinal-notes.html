@@ -262,7 +262,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <body>
 <div class="toggles"><button id="langBtn" class="tgl" type="button" aria-label="Switch language">EN</button><button id="themeBtn" class="tgl" type="button" aria-label="Toggle theme">◐</button></div>
 <div class="page">
-<a class="home-link" href="index.html">← 博客</a><article><h1>复赛小记（上）</h1><div class="post-meta"><span class="post-date">2026.09.12</span><span class="rt" data-min="29"></span><a class="chip" href="index.html?tag=物理">物理</a><a class="chip" href="index.html?tag=随笔">随笔</a></div><details class="toc"><summary data-ui="toc">目录</summary><div class="toc">
+<a class="home-link" href="index.html">← 博客</a><article><h1>复赛小记（上）</h1><div class="post-meta"><span class="post-date">2026.09.12</span><span class="rt" data-min="28"></span><a class="chip" href="index.html?tag=物理">物理</a><a class="chip" href="index.html?tag=随笔">随笔</a></div><details class="toc"><summary data-ui="toc">目录</summary><div class="toc">
 <ul>
 <li><a href="#_1">写在前面</a></li>
 <li><a href="#_2">一、手机透镜组的主点与等效焦距</a></li>
@@ -282,7 +282,6 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <li><a href="#_10">解答</a></li>
 </ul>
 </li>
-<li><a href="#_11">下一篇</a></li>
 </ul>
 </div>
 </details><div class="body"><h2 id="_1">写在前面</h2>
@@ -516,9 +515,8 @@ T_c=\frac{\pi^2mgr}{8nR}.\]</div>
 <h3 id="_10">解答</h3>
 <p><strong>(1)</strong> 由接触点的几何关系：</p>
 <div class="arithmatex">\[b = a + 4R\cot\frac{\theta}{2}\]</div>
-<p><strong>(2)</strong> C、D 两杆的受力图：C 杆受两端来自 A、A' 的支持力 <span class="arithmatex">\(N_1\)</span>（两处）、自身重力 <span class="arithmatex">\(Mg\)</span>、来自 B 的压力 <span class="arithmatex">\(N_3\)</span>，以及 A、A' 与 C 之间的静摩擦力 <span class="arithmatex">\(f_1\)</span>（两处）；D 杆受地面支持力 <span class="arithmatex">\(N_5\)</span> 与摩擦力 <span class="arithmatex">\(f_5\)</span>、来自 B 的压力 <span class="arithmatex">\(N_4\)</span> 与摩擦 <span class="arithmatex">\(f_2\)</span>、来自 A 的支持力 <span class="arithmatex">\(N_2\)</span> 与摩擦 <span class="arithmatex">\(f_2\)</span>（同一对作用力）、自身重力 <span class="arithmatex">\(Mg\)</span>。</p>
-<p>各杆的平衡方程（ <span class="arithmatex">\(f_1\)</span> 为 A、C 间摩擦力，<span class="arithmatex">\(f_2\)</span> 为 A、D 与 B、D 间的摩擦力，<span class="arithmatex">\(N_2\)</span> 为 A、D 间压力，<span class="arithmatex">\(N_4\)</span> 为 B、D 间压力）：</p>
-<div class="arithmatex">\[\text{A 杆：}\quad N_1 + mg = N_2\cos\theta + f_2\sin\theta\]</div>
+<p><strong>(2)</strong> 受力图我们已经画在图上了，剩下的其实就是列方程解就好了。
+$<span class="arithmatex">\(\text{A 杆：}\quad N_1 + mg = N_2\cos\theta + f_2\sin\theta\)</span>$</p>
 <div class="arithmatex">\[f_1 + f_2\cos\theta = N_2\sin\theta\]</div>
 <p>对 A 杆圆柱轴线的力矩平衡：<span class="arithmatex">\(f_1 R = f_2 R\)</span>，即 <span class="arithmatex">\(f_1 = f_2\)</span>。</p>
 <div class="arithmatex">\[\text{B 杆：}\quad N_3 = 2N_4\cos\theta + mg\]</div>
@@ -527,7 +525,9 @@ T_c=\frac{\pi^2mgr}{8nR}.\]</div>
 <div class="arithmatex">\[f_5 + N_2\sin\theta = N_4\sin\theta + f_2\cos\theta\]</div>
 <p>对 D 杆与地面接触点的力矩平衡：</p>
 <div class="arithmatex">\[N_2 a + Mg\left(\frac{L}{2}\cos\theta - R\sin\theta\right) = N_4 b + f_2\cdot 2R\]</div>
-<p>（也可对 D 杆质心列力矩方程，结果等价。）</p>
+<hr />
+<p>也可对 D 杆质心列力矩方程，结果等价。其实这个题目做到这里就可以准备跑路了，下一道题的数值结果的正确与否完全取决于你这道题的方程的正确性。如果没什么太大把握其实不是很建议继续往下算。当然是对于和我一样的一般选手，如果你有足够的时间这个题还是可以做一做。</p>
+<hr />
 <p><strong>(3)</strong> 此条件下 <span class="arithmatex">\(b = a + 4R\cot\dfrac{\theta}{2} = 24\ \mathrm{cm}\)</span>。</p>
 <p>由 A 杆的方程可得 <span class="arithmatex">\(f_1 = f_2 = \dfrac{\sin\theta}{1 + \cos\theta}N_2\)</span>、<span class="arithmatex">\(N_1 + mg = N_2\)</span>；由 B、C 杆方程可得 <span class="arithmatex">\(N_1 = N_4\cos\theta + \dfrac{1}{2}(M + m)g\)</span>。将它们代入 D 杆力矩方程，解出：</p>
 <div class="arithmatex">\[N_1 = 10.427\,mg,\qquad f_1 = f_2 = 4.733\,mg\]</div>
@@ -537,14 +537,9 @@ T_c=\frac{\pi^2mgr}{8nR}.\]</div>
 <div class="arithmatex">\[f_5 = N_1\left(\tan\theta - \frac{\sin\theta}{1 + \cos\theta}\right) - \frac{1}{2}(M + m)g\tan\theta - mg\frac{\sin\theta}{1 + \cos\theta} = 2.194\,mg\]</div>
 <p>平衡要求 <span class="arithmatex">\(f_5 \le \mu' N_5\)</span>：</p>
 <div class="arithmatex">\[\mu' \ge \frac{f_5}{N_5} = 0.209\]</div>
-<p>即当 <span class="arithmatex">\(\boxed{\mu \ge 0.454,\ \mu' \ge 0.209}\)</span> 时结构能保持平衡。</p>
-<blockquote>
-<p><strong>我的回忆</strong></p>
-<p>（待补：当年考场上的故事——这道题画受力图画了多久；六根杆的约束关系有没有数错；对"没有钉没有卯、全靠挤压结合"的编木拱桥的理解……）</p>
-</blockquote>
+<p>即当 <span class="arithmatex">\(\mu \ge 0.454,\ \mu' \ge 0.209\)</span> 时结构能保持平衡。</p>
 <hr />
-<h2 id="_11">下一篇</h2>
-<p>后四题（电偶极子场中的点电荷、涡流悬浮与加热、大气层中的声传播、X 射线谱与光电子能谱）内容更多也更硬核，等我整理好再发。正好今年复赛就在眼前，就当给要上考场的同学一份"真题精读"的样本——竞赛题再难，拆成一道一道的小问，其实都是课内知识的组合与延伸。</p></div><div class="end-mark">∙ ∙ ∙</div><nav class="post-nav"><a href="index.html" data-ui="back">返回列表</a></nav></article><div class="comments"><h2 data-ui="cmts">留言</h2>
+<p>看了这四个题之后感觉当时的计算能力抗压能力还是太强了。我很难想象现在自己还能在考场上三个小时去做一套这样的题目了。果然人生的智力巅峰阶段还得是高中啊（）。后面的一半应该会保持更新，欢迎大家的评论交流。</p></div><div class="end-mark">∙ ∙ ∙</div><nav class="post-nav"><a href="index.html" data-ui="back">返回列表</a></nav></article><div class="comments"><h2 data-ui="cmts">留言</h2>
 <script src="https://giscus.app/client.js"
   data-repo="ShiyiXiao05/homepage" data-repo-id="R_kgDOStnO4Q"
   data-category="Announcements" data-category-id="DIC_kwDOStnO4c4DFbGe"
