@@ -64,6 +64,8 @@ def md_to_html(text):
         },
     )
     html = md.convert(text)
+    html = re.sub(r"<blockquote>\s*<p><strong>随想</strong></p>",
+                  '<blockquote class="author-note"><p class="author-note-title">随想</p>', html)
     return html, md.toc
 
 def add_figures(html):
@@ -254,6 +256,12 @@ figure img{border:1px solid var(--border);border-radius:8px}
 figcaption{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:9px;line-height:1.5}
 .body blockquote{border-left:3px solid var(--border);padding:2px 0 2px 16px;color:var(--muted);margin:15px 0}
 .body blockquote p{margin:6px 0}
+.body blockquote.author-note{border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:0 10px 10px 0;background:var(--card);color:var(--body);padding:16px 20px;margin:24px 0;line-height:1.9}
+.body .author-note .author-note-title{color:var(--blue);font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.14em;margin:0 0 10px}
+.body .author-note p{margin:10px 0}
+.body .author-note>:last-child{margin-bottom:0}
+@media(max-width:520px){.body blockquote.author-note{padding:14px 16px}}
+
 .body code{font-family:var(--mono);font-size:.86em;background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1px 5px}
 .codehilite{border:1px solid var(--border);border-radius:8px;overflow-x:auto;margin:16px 0}
 .codehilite pre{margin:0;padding:13px 15px;font-family:var(--mono);font-size:13px;line-height:1.65}

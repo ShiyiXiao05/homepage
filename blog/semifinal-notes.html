@@ -78,6 +78,12 @@ figure img{border:1px solid var(--border);border-radius:8px}
 figcaption{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:9px;line-height:1.5}
 .body blockquote{border-left:3px solid var(--border);padding:2px 0 2px 16px;color:var(--muted);margin:15px 0}
 .body blockquote p{margin:6px 0}
+.body blockquote.author-note{border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:0 10px 10px 0;background:var(--card);color:var(--body);padding:16px 20px;margin:24px 0;line-height:1.9}
+.body .author-note .author-note-title{color:var(--blue);font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.14em;margin:0 0 10px}
+.body .author-note p{margin:10px 0}
+.body .author-note>:last-child{margin-bottom:0}
+@media(max-width:520px){.body blockquote.author-note{padding:14px 16px}}
+
 .body code{font-family:var(--mono);font-size:.86em;background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1px 5px}
 .codehilite{border:1px solid var(--border);border-radius:8px;overflow-x:auto;margin:16px 0}
 .codehilite pre{margin:0;padding:13px 15px;font-family:var(--mono);font-size:13px;line-height:1.65}
@@ -262,7 +268,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <body>
 <div class="toggles"><button id="langBtn" class="tgl" type="button" aria-label="Switch language">EN</button><button id="themeBtn" class="tgl" type="button" aria-label="Toggle theme">◐</button></div>
 <div class="page">
-<a class="home-link" href="index.html">← 博客</a><article><h1>复赛小记（上）</h1><div class="post-meta"><span class="post-date">2026.09.12</span><span class="rt" data-min="28"></span><a class="chip" href="index.html?tag=物理">物理</a><a class="chip" href="index.html?tag=随笔">随笔</a></div><details class="toc"><summary data-ui="toc">目录</summary><div class="toc">
+<a class="home-link" href="index.html">← 博客</a><article><h1>复赛小记（上）</h1><div class="post-meta"><span class="post-date">2026.09.12</span><span class="rt" data-min="30"></span><a class="chip" href="index.html?tag=物理">物理</a><a class="chip" href="index.html?tag=随笔">随笔</a></div><details class="toc"><summary data-ui="toc">目录</summary><div class="toc">
 <ul>
 <li><a href="#_1">写在前面</a></li>
 <li><a href="#_2">一、手机透镜组的主点与等效焦距</a></li>
@@ -298,9 +304,11 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <p>（i）将 H 看作透镜 1 的"物"，求 H 相对于 <span class="arithmatex">\(O_1\)</span> 的物距；将 H' 看作透镜 2 的"像"，求 H' 相对于 <span class="arithmatex">\(O_2\)</span> 的像距。</p>
 <p>（ii）透镜组成像时，物距、物方焦距从物方主点 H 算起，像距、像方焦距从像方主点 H' 算起，求物方焦距 <span class="arithmatex">\(F\)</span> 和像方焦距 <span class="arithmatex">\(F'\)</span>。</p>
 <hr />
+<blockquote class="author-note"><p class="author-note-title">随想</p>
 <p><strong>其实拿到这个题目之后最大的感觉就是：这玩意不就是难集的原题嘛hhh</strong></p>
-<p>在40届竞赛之前几何光学应该是有一段时间没有以这么大的篇幅出现在复赛试题中了，估计原因就是区分度不是很大。甚至说只要你学会了理想光具组理论之后所有的几何光学题目都不应该有什么困难的地方。这道题目也就是一个理想光具组理论的介绍，新概念光学和难题集萃上都有相关的题目。当时通览全卷后也觉得这个题目很适合拿来作为第一道题去做，一是背景比较熟悉，对于最终结果有一个大致的预估，其二是计算量尚可，作为热身很合适。</p>
+<p>在40届竞赛之前几何光学应该是有一段时间没有以这么大的篇幅出现在复赛试题中了，估计原因就是区分度不是很大。至少对于近轴条件下、理想共轴光具组的成像问题，学会这套理论后，处理起来就有了比较统一的思路。这道题目也就是一个理想光具组理论的介绍，新概念光学和难题集萃上都有相关的题目。当时通览全卷后也觉得这个题目很适合拿来作为第一道题去做，一是背景比较熟悉，对于最终结果有一个大致的预估，其二是计算量尚可，作为热身很合适。</p>
 <p>难题集萃上应该是在下册光学部分第一章几何光学的题27-29有关于主面主点等理想光具组理论等的题目，这几道题还是很经典的，如果能够学会这几道题那么这个题也应该很轻松。下面一起来推一推具体的结果。</p>
+</blockquote>
 <hr />
 <p><strong>(1)</strong> 设刻度尺在物距 <span class="arithmatex">\(u_1\)</span> 处成像的像距为 <span class="arithmatex">\(v_1\)</span>，对等效凸透镜用成像公式：</p>
 <div class="arithmatex">\[\frac{1}{u_1} + \frac{1}{v_1} = \frac{1}{F}\]</div>
@@ -313,10 +321,12 @@ F = \frac{s\, l_1 l_2}{l\,(l_1 - l_2)}\]</div>
 <p>把 <span class="arithmatex">\(F\)</span> 代回 <span class="arithmatex">\(u_1\)</span> 的表达式：</p>
 <div class="arithmatex">\[u_1 = \frac{s\, l_2\,(l_1 + l)}{l\,(l_1 - l_2)}\]</div>
 <hr />
-<p>那么其实这个第一问也就是一个初中的自招难度，相信只要是学习过一点自招的同学应该或多或少都了解过这个倒数公式：
-$$
+<blockquote class="author-note"><p class="author-note-title">随想</p>
+<p>那么其实这个第一问也就是一个初中的自招难度，相信只要是学习过一点自招的同学应该或多或少都了解过这个倒数公式：</p>
+<div class="arithmatex">\[
 \frac{1}{u}+\frac{1}{v}=\frac{1}{f}
-$$</p>
+\]</div>
+</blockquote>
 <hr />
 <p><strong>(2)(i)</strong> 设透镜 1 的物距、像距为 <span class="arithmatex">\(u_1\)</span>、<span class="arithmatex">\(v_1\)</span>，透镜 2 的物距、像距为 <span class="arithmatex">\(u_2\)</span>、<span class="arithmatex">\(v_2\)</span>，分别满足：</p>
 <div class="arithmatex">\[\frac{1}{u_1} + \frac{1}{v_1} = \frac{1}{f_1}, \qquad \frac{1}{u_2} + \frac{1}{v_2} = \frac{1}{f_2}\]</div>
@@ -327,13 +337,17 @@ $$</p>
 <p>由光路可逆（或对称地把 H' 看作透镜 2 的"像"），H' 相对于 <span class="arithmatex">\(O_2\)</span> 的像距：</p>
 <div class="arithmatex">\[v_{H'} = \frac{f_2 d}{d - f_1 - f_2}\]</div>
 <hr />
+<blockquote class="author-note"><p class="author-note-title">随想</p>
 <p>这一问主要也就是需要搞懂一个放大率是带有符号这件事，剩下的计算方面也并不是很复杂，依序计算即可。</p>
+</blockquote>
 <hr />
 <p><strong>(2)(ii)</strong> 物距为无穷大（平行光入射）时，经透镜组成像的位置即像方焦点，此时 <span class="arithmatex">\(u_1 = \infty\)</span>，<span class="arithmatex">\(v_1 = f_1\)</span>，<span class="arithmatex">\(u_2 = d - f_1\)</span>。代入透镜 2 成像公式得 <span class="arithmatex">\(v_{F'} = v_2 = \dfrac{(d-f_1)f_2}{d - f_1 - f_2}\)</span>。像方焦距从 H' 算起：</p>
 <div class="arithmatex">\[F' = v_{F'} - v_{H'} = \frac{-f_1 f_2}{d - f_1 - f_2},\qquad \text{即 } \frac{1}{F'} = \frac{1}{f_1} + \frac{1}{f_2} - \frac{d}{f_1 f_2}\]</div>
 <p>由光路可逆，物方焦距 <span class="arithmatex">\(F = F'\)</span>。</p>
 <hr />
+<blockquote class="author-note"><p class="author-note-title">随想</p>
 <p>总结来看这道题目确实不是很复杂，在考场上能看到一个这样的题目对于稳定信心来说很有帮助，至少我看到这个题目之后是心中一阵窃喜。</p>
+</blockquote>
 <hr />
 <h2 id="_3">二、半圆玻璃管中的活塞</h2>
 <h3 id="_4">题目</h3>
@@ -342,17 +356,19 @@ $$</p>
 <p>（1）当温度 <span class="arithmatex">\(T\)</span> 高于某临界温度 <span class="arithmatex">\(T_c\)</span> 时，玻璃管的正中央（<span class="arithmatex">\(\theta = 0\)</span>）是活塞的稳定平衡位置。求临界温度 <span class="arithmatex">\(T_c\)</span> 的表达式，并计算活塞在该平衡位置附近做微振动的圆频率；</p>
 <p>（2）当温度 <span class="arithmatex">\(T = T_c\)</span> 时，分析并判断活塞在玻璃管正中央时平衡的稳定性。解答如下几问时，可将 <span class="arithmatex">\(T_c\)</span> 看作为已知参量，不必代入（1）中的结果；</p>
 <p>（3）当 <span class="arithmatex">\(T &lt; T_c\)</span> 时，求活塞的稳定平衡位置与竖直方向的夹角 <span class="arithmatex">\(\theta_0\)</span> 所满足的方程，并给出温度略小于 <span class="arithmatex">\(T_c\)</span> 时 <span class="arithmatex">\(\theta_0\)</span> 的近似表达式（保留至非零的最低阶）；</p>
-<p>（4）当 <span class="arithmatex">\(T &lt; T_c\)</span> 时，求活塞在稳定平衡位置附近做微振动的圆频率 <span class="arithmatex">\(\omega_0\)</span> 对 <span class="arithmatex">\(\theta_0\)</span> 的依赖关系 <span class="arithmatex">\(\omega_0(\theta_0)\)</span>（表达式中可含有上一问中的 <span class="arithmatex">\(\theta_0\)</span> 参量，但不可包含 <span class="arithmatex">\(T\)</span> 参量），并给出温度 <span class="arithmatex">\(T\)</span> 略小于 <span class="arithmatex">\(T_c\)</span> 和略小于 <span class="arithmatex">\(T_c\)</span> 两种情况下，活塞微振动的圆频率对温度的依赖关系；</p>
+<p>（4）当 <span class="arithmatex">\(T &lt; T_c\)</span> 时，求活塞在稳定平衡位置附近做微振动的圆频率 <span class="arithmatex">\(\omega_0\)</span> 对 <span class="arithmatex">\(\theta_0\)</span> 的依赖关系 <span class="arithmatex">\(\omega_0(\theta_0)\)</span>（表达式中可含有上一问中的 <span class="arithmatex">\(\theta_0\)</span> 参量，但不可包含 <span class="arithmatex">\(T\)</span> 参量），并给出温度 <span class="arithmatex">\(T\)</span> 略高于 <span class="arithmatex">\(T_c\)</span> 和略低于 <span class="arithmatex">\(T_c\)</span> 两种情况下，活塞微振动的圆频率对温度的依赖关系；</p>
 <p>（5）当 <span class="arithmatex">\(T &lt; T_c\)</span> 时，假设活塞的初始速度近似为零，求活塞从正中央运动到可到达的角位置 <span class="arithmatex">\(\theta\)</span> 处的角速度大小。</p>
 <hr />
+<blockquote class="author-note"><p class="author-note-title">随想</p>
 <p>那这道题目实际上就是一个很具有普物风格的题目。从一个基本的模型出发，讨论不同参数关系情况下体系表现出的不同的行为，从稳定平衡到微振动，是一个结合了热学和力学的题目。总体上也很容易想到这类振动的题目有受力法和能量法两种方式求解，我们依次来看一看，首先看受力法：</p>
+</blockquote>
 <hr />
 <h3 id="_5">受力法</h3>
 <p>设活塞偏离正中央的角度为 <span class="arithmatex">\(\theta\)</span>。两侧气柱长度分别为 <span class="arithmatex">\(r(\pi/2 - \theta)\)</span> 和 <span class="arithmatex">\(r(\pi/2 + \theta)\)</span>，由理想气体状态方程，两侧压强为 <span class="arithmatex">\(p = nRT / V\)</span>。活塞沿管切向的运动方程为：</p>
 <div class="arithmatex">\[mr\frac{\mathrm{d}^2\theta}{\mathrm{d}t^2} = mg\sin\theta - \frac{nRT}{r(\pi/2 - \theta)} + \frac{nRT}{r(\pi/2 + \theta)}=mg\sin\theta-\frac{8nRT\theta}{r(\pi^2-4\theta^2)}\]</div>
 <p><strong>(1)</strong> 当 <span class="arithmatex">\(|\theta| \ll 1\)</span> 时展开保留到一阶：</p>
 <div class="arithmatex">\[\frac{\mathrm{d}^2\theta}{\mathrm{d}t^2} = \frac{1}{r}\left(g - \frac{8nRT}{\pi^2 r m}\right)\theta\]</div>
-<p>正中央稳定要求回复系数为正，即 <span class="arithmatex">\(g - \dfrac{8nRT}{\pi^2 r m} &lt; 0\)</span>，所以临界温度：</p>
+<p>正中央稳定要求加速度与位移方向相反，即 <span class="arithmatex">\(g - \dfrac{8nRT}{\pi^2 r m} &lt; 0\)</span>，所以临界温度：</p>
 <div class="arithmatex">\[T_c = \frac{\pi^2 m g r}{8 n R}\]</div>
 <p>此时活塞做简谐振动，圆频率：</p>
 <div class="arithmatex">\[\omega = \sqrt{\frac{1}{r}\left(\frac{8nRT}{\pi^2 r m} - g\right)} = \sqrt{\frac{g}{r}\cdot\frac{T - T_c}{T_c}}\]</div>
@@ -360,32 +376,40 @@ $$</p>
 <div class="arithmatex">\[\frac{\mathrm{d}^2\theta}{\mathrm{d}t^2} = -\frac{24 + \pi^2}{6\pi^2}\cdot\frac{g}{r}\theta^3\]</div>
 <p>活塞受到正比于 <span class="arithmatex">\(\theta^3\)</span> 的恢复力，所以正中央仍是稳定平衡位置。</p>
 <hr />
-<p>这个式子展开的时候大概估计一下可以预想到前面的正弦项展开到第三阶应该是一个负号，后一项分子分母同乘(<span class="arithmatex">\(\pi^2+4\theta^2\)</span>)后应该只有一个三阶项且符号为负，是一个稳定平衡的位置。</p>
+<blockquote class="author-note"><p class="author-note-title">随想</p>
+<p>这个式子展开的时候大概估计一下可以预想到前面的正弦项展开到第三阶应该是一个负号，后一项分子分母同乘 <span class="arithmatex">\(\pi^2+4\theta^2\)</span> 后，保留至三阶时分母可以用 <span class="arithmatex">\(\pi^4\)</span> 代替。在 <span class="arithmatex">\(T=T_c\)</span> 时，两部分的一阶项恰好抵消，剩下的三阶项系数为负，所以是一个稳定平衡的位置。</p>
+</blockquote>
 <hr />
 <p><strong>(3)</strong> <span class="arithmatex">\(T &lt; T_c\)</span> 时，设稳定平衡位置在 <span class="arithmatex">\(\theta_0 \neq 0\)</span> 处，该处合力为零：</p>
 <div class="arithmatex">\[mg\sin\theta_0 - \frac{nRT}{r(\pi/2 - \theta_0)} + \frac{nRT}{r(\pi/2 + \theta_0)} = 0\]</div>
 <p>整理得 <span class="arithmatex">\(\theta_0\)</span> 满足的方程：</p>
 <div class="arithmatex">\[\frac{2nRT}{mgr} = \left(\frac{\pi^2}{4} - \theta_0^2\right)\frac{\sin\theta_0}{\theta_0}\]</div>
-<p>右端 <span class="arithmatex">\(f(\theta_0) = \left(\dfrac{\pi^2}{4} - \theta_0^2\right)\dfrac{\sin\theta_0}{\theta_0}\)</span> 在 <span class="arithmatex">\(\theta_0 \in (0, \pi/2)\)</span> 上单调递减，<span class="arithmatex">\(\theta_0 \to 0\)</span> 时取最大值 <span class="arithmatex">\(\pi^2/4\)</span>。所以方程有非零解的条件正是 <span class="arithmatex">\(T &lt; T_c\)</span>。当 <span class="arithmatex">\(T\)</span> 略小于 <span class="arithmatex">\(T_c\)</span> 时 <span class="arithmatex">\(\theta_0 \approx 0\)</span>，把 <span class="arithmatex">\(T/T_c = \left(1 - \dfrac{4\theta_0^2}{\pi^2}\right)\dfrac{\sin\theta_0}{\theta_0}\)</span> 展开到第一阶非0项得：</p>
-<div class="arithmatex">\[\theta_0 = \pm\sqrt{\frac{6\pi^2}{24 + \pi^2}\cdot\frac{T_c - T}{T_c}}\]</div>
+<p>右端 <span class="arithmatex">\(f(\theta_0) = \left(\dfrac{\pi^2}{4} - \theta_0^2\right)\dfrac{\sin\theta_0}{\theta_0}\)</span> 在 <span class="arithmatex">\(\theta_0 \in (0, \pi/2)\)</span> 上单调递减，<span class="arithmatex">\(\theta_0 \to 0\)</span> 时取最大值 <span class="arithmatex">\(\pi^2/4\)</span>。所以方程有非零解的条件正是 <span class="arithmatex">\(T &lt; T_c\)</span>。当 <span class="arithmatex">\(T\)</span> 略小于 <span class="arithmatex">\(T_c\)</span> 时 <span class="arithmatex">\(\theta_0 \approx 0\)</span>，把 <span class="arithmatex">\(T/T_c = \left(1 - \dfrac{4\theta_0^2}{\pi^2}\right)\dfrac{\sin\theta_0}{\theta_0}\)</span> 保留偏离 1 的最低阶非零项得：</p>
+<div class="arithmatex">\[\theta_0 \approx \pm\sqrt{\frac{6\pi^2}{24 + \pi^2}\cdot\frac{T_c - T}{T_c}}\]</div>
 <p>（正负号表示平衡位置可以在左右两侧。）</p>
 <hr />
-<p>关于题目中那个函数的性质建议考场打表判断，求导还是略微麻烦了。</p>
+<blockquote class="author-note"><p class="author-note-title">随想</p>
+<p>关于题目中那个函数的性质，考场上可以先打表猜一下趋势，不过打表不能代替单调性的证明。这里把它拆成两个正的递减因子就很方便：<span class="arithmatex">\(\pi^2/4-\theta^2\)</span> 显然递减，而</p>
+<div class="arithmatex">\[\left(\frac{\sin\theta}{\theta}\right)'=\frac{\theta\cos\theta-\sin\theta}{\theta^2}&lt;0\qquad(0&lt;\theta&lt;\pi/2),\]</div>
+<p>因为 <span class="arithmatex">\(\sin\theta-\theta\cos\theta\)</span> 在原点为零，导数为 <span class="arithmatex">\(\theta\sin\theta&gt;0\)</span>。这样就不用对整个乘积硬求导了。</p>
+</blockquote>
 <hr />
 <p><strong>(4)</strong> 在 <span class="arithmatex">\(\theta_0 + \theta\)</span>（<span class="arithmatex">\(|\theta| \ll 1\)</span>）处给活塞微扰，微振动方程为：</p>
-<div class="arithmatex">\[\frac{\mathrm{d}^2\theta}{\mathrm{d}t^2} = -\frac{g\cos\theta_0}{r}\left[1 - \frac{\tan\theta_0}{\theta_0}\cdot\frac{\pi^2/2 + 2\theta_0^2}{\pi^2/2 - 2\theta_0^2}\right]\theta\]</div>
+<div class="arithmatex">\[\frac{\mathrm{d}^2\theta}{\mathrm{d}t^2} = \frac{g\cos\theta_0}{r}\left[1 - \frac{\tan\theta_0}{\theta_0}\cdot\frac{\pi^2/2 + 2\theta_0^2}{\pi^2/2 - 2\theta_0^2}\right]\theta\]</div>
 <p>所以：</p>
 <div class="arithmatex">\[\omega_0(\theta_0) = \sqrt{\frac{g\cos\theta_0}{r}\left[\frac{\tan\theta_0}{\theta_0}\cdot\frac{\pi^2/2 + 2\theta_0^2}{\pi^2/2 - 2\theta_0^2} - 1\right]}\]</div>
 <p>温度略高于 <span class="arithmatex">\(T_c\)</span> 时（用 (1) 的结果）：</p>
-<div class="arithmatex">\[\omega = \sqrt{\frac{g}{r}\left(\frac{8nRT}{\pi^2 m r} - 1\right)} = \sqrt{\frac{g}{r}\cdot\frac{T - T_c}{T_c}}\]</div>
+<div class="arithmatex">\[\omega = \sqrt{\frac{g}{r}\left(\frac{8nRT}{\pi^2 m g r} - 1\right)} = \sqrt{\frac{g}{r}\cdot\frac{T - T_c}{T_c}}\]</div>
 <p>温度略低于 <span class="arithmatex">\(T_c\)</span> 时（<span class="arithmatex">\(\theta_0 \ll 1\)</span>，代入 (3) 的近似）：</p>
-<div class="arithmatex">\[\omega_0 \approx \sqrt{\frac{2g}{r}\cdot\frac{24 + \pi^2}{3\pi^2}\cdot\frac{T_c - T}{T_c}}\]</div>
+<div class="arithmatex">\[\omega_0 \approx \sqrt{\frac{2g}{r}\cdot\frac{T_c - T}{T_c}}\]</div>
 <p><strong>(5)</strong> 运动方程两边乘 <span class="arithmatex">\(\mathrm{d}\theta\)</span> 并从正中央积分（初速度为零）：</p>
 <div class="arithmatex">\[\frac{1}{2}mr\dot{\theta}^2 = mg(1 - \cos\theta) + \frac{nRT}{r}\ln\left(1 - \frac{4\theta^2}{\pi^2}\right)\]</div>
 <p>于是活塞到达角位置 <span class="arithmatex">\(\theta\)</span> 处的角速度大小：</p>
 <div class="arithmatex">\[|\dot{\theta}| = \sqrt{\frac{2g}{r}(1 - \cos\theta) + \frac{2nRT}{m r^2}\ln\left(1 - \frac{4\theta^2}{\pi^2}\right)}\]</div>
 <hr />
-<p>这里利用的小技巧是 <span class="arithmatex">\(\frac{\mathrm{d^2}\theta}{\mathrm{d}t^2}\mathrm{d}\theta=\frac{\mathrm{d}}{\mathrm{d}t}(\dot{\theta})\\mathrm{d}\theta=\dot{\theta}\mathrm{d}\dot{\theta}\)</span></p>
+<blockquote class="author-note"><p class="author-note-title">随想</p>
+<p>这里利用的小技巧是 <span class="arithmatex">\(\ddot\theta\,\mathrm{d}\theta=\frac{\mathrm{d}\dot\theta}{\mathrm{d}t}\dot\theta\,\mathrm{d}t=\dot\theta\,\mathrm{d}\dot\theta=\mathrm{d}(\dot\theta^2/2)\)</span>。</p>
+</blockquote>
 <hr />
 <h3 id="_6">能量法</h3>
 <p>能量角度看，平衡位置对应势能的驻点，稳定平衡对应极小值，微振动频率则由极小值附近的曲率决定。不过，两侧气体始终与外界等温，会与外界交换热量，因此我们先由气体做功构造一个有效势能。</p>
@@ -397,8 +421,9 @@ $$</p>
 <p>重力做功为 <span class="arithmatex">\(mgr(1-\cos\theta)\)</span>。取正中央的有效势能为零，定义</p>
 <div class="arithmatex">\[U_{\mathrm{eff}}(\theta)
 = mgr(\cos\theta-1)-nRT\ln\left(1-\frac{\theta^2}{a^2}\right).\]</div>
-<p>那这道题目的能量守恒方程可以写为：</p>
-<div class="arithmatex">\[\frac12 mr^2\dot\theta^2+U_{\mathrm{eff}}(\theta)=\text{const}.\]</div>
+<p>那这道题目的能量积分可以写为（记常量为 <span class="arithmatex">\(E\)</span>）：</p>
+<div class="arithmatex">\[\frac12 mr^2\dot\theta^2+U_{\mathrm{eff}}(\theta)=E.\]</div>
+<p>这里的守恒量包含气体做功对应的有效势能；由于气体与外界交换热量，不能把它理解为“活塞机械能 + 气体内能”守恒。</p>
 <p><strong>(1)</strong></p>
 <p>在 <span class="arithmatex">\(\theta=0\)</span> 附近展开有效势能：</p>
 <div class="arithmatex">\[U_{\mathrm{eff}}(\theta)
@@ -416,7 +441,7 @@ T_c=\frac{\pi^2mgr}{8nR}.\]</div>
 <p>当 <span class="arithmatex">\(T=T_c\)</span> 时，二次项消失，最低阶非零项为</p>
 <div class="arithmatex">\[U_{\mathrm{eff}}(\theta)
 =\frac{mgr(24+\pi^2)}{24\pi^2}\theta^4+O(\theta^6).\]</div>
-<p>四次项系数为正，说明 <span class="arithmatex">\(\theta=0\)</span> 仍然是严格的局部极小值，因此正中央仍是稳定平衡位置。</p>
+<p>四次项系数为正，说明 <span class="arithmatex">\(\theta=0\)</span> 仍然是严格的局部极小值，因此正中央仍是稳定平衡位置，但附近的振动不是简谐振动。</p>
 <p><strong>(3)</strong></p>
 <p>由极值条件</p>
 <div class="arithmatex">\[U_{\mathrm{eff}}'(\theta_0)
@@ -465,8 +490,11 @@ T_c=\frac{\pi^2mgr}{8nR}.\]</div>
 <div class="arithmatex">\[|\dot\theta|
 =\sqrt{\frac{2g}{r}(1-\cos\theta)
 +\frac{2nRT}{mr^2}\ln\left(1-\frac{4\theta^2}{\pi^2}\right)}.\]</div>
+<p>根号内须非负。严格说，恰在正中央且初速度严格为零的活塞不会自行离开平衡位置；这里取微小扰动、忽略初始能量的近似。若保留正中央的初始角速度 <span class="arithmatex">\(\dot\theta_i\)</span>，根号内还应加上 <span class="arithmatex">\(\dot\theta_i^2\)</span>。</p>
 <hr />
+<blockquote class="author-note"><p class="author-note-title">随想</p>
 <p>总体上看这个题目的思路上难度不是很大，按部就班地求解即可，计算量也还不算特别大，考试时这个题目应该还是要拿到绝大部分的分数。</p>
+</blockquote>
 <hr />
 <h2 id="40">三、（40 分）楔块上的匀质圆球</h2>
 <h3 id="_7">题目</h3>
@@ -480,12 +508,14 @@ T_c=\frac{\pi^2mgr}{8nR}.\]</div>
 <p>（v）为了使匀质圆球保持无滑动，球与楔块之间静摩擦因数 <span class="arithmatex">\(\mu\)</span> 的最小可能值 <span class="arithmatex">\(\mu_0\)</span>。</p>
 <p>（2）若 <span class="arithmatex">\(\mu\)</span> 小于（1）(v) 问中的 <span class="arithmatex">\(\mu_0\)</span>，且楔块斜面足够长，求圆球从静止开始运动一段时间 <span class="arithmatex">\(\Delta t\)</span> 后，圆球上与楔块接触的点 P 相对于楔块的速度。</p>
 <hr />
+<blockquote class="author-note"><p class="author-note-title">随想</p>
 <p>这个题也是有一点意义不明，一个很经典的球滚斜面模型，没啥好说的，算就是了。所以其实可以看见到这里为止40届题目的思路不是很困难，但是计算量确实不小。</p>
+</blockquote>
 <hr />
 <h3 id="_8">解答</h3>
-<p><strong>(1)(i)</strong> 球无滑动滚下时，设楔块加速度为 <span class="arithmatex">\(a_0\)</span>（水平），球质心相对楔块的加速度为 <span class="arithmatex">\(a_c\)</span>（沿斜面），摩擦力为 <span class="arithmatex">\(f\)</span>。球在地面参考系中，沿斜面方向的质心运动方程与绕质心的转动方程分别为：</p>
+<p><strong>(1)(i)</strong> 球无滑动滚下时，设楔块加速度为 <span class="arithmatex">\(a_0\)</span>（水平，方向与球相对楔块运动的水平分量相反），球质心相对楔块的加速度为 <span class="arithmatex">\(a_c\)</span>（沿斜面），摩擦力为 <span class="arithmatex">\(f\)</span>。在随楔块平动的参考系中，计入惯性力后，沿斜面方向的质心运动方程与绕质心的转动方程分别为：</p>
 <div class="arithmatex">\[ma_c = ma_0\cos\theta + mg\sin\theta - f, \qquad fr = I_c\ddot{\varphi}\]</div>
-<p>纯滚动条件 <span class="arithmatex">\(a_c = r\ddot{\varphi}\)</span>，且匀质球 <span class="arithmatex">\(I_c = \dfrac{2}{5}mr^2\)</span>，得 <span class="arithmatex">\(f = \dfrac{2}{5}ma_c\)</span>。地面系中系统水平方向动量守恒：</p>
+<p>纯滚动条件 <span class="arithmatex">\(a_c = r\ddot{\varphi}\)</span>，且匀质球 <span class="arithmatex">\(I_c = \dfrac{2}{5}mr^2\)</span>，得 <span class="arithmatex">\(f = \dfrac{2}{5}ma_c\)</span>。地面系中系统水平方向动量守恒，对时间求导得：</p>
 <div class="arithmatex">\[m(a_c\cos\theta - a_0) = M a_0\]</div>
 <p>联立解得：</p>
 <div class="arithmatex">\[a_0 = \dfrac{\dfrac{5}{7}mg\sin\theta\cos\theta}{M + m - \dfrac{5}{7}m\cos^2\theta}\]</div>
@@ -499,7 +529,7 @@ T_c=\frac{\pi^2mgr}{8nR}.\]</div>
 <div class="arithmatex">\[\mu_0 = \frac{f}{N_1} = \frac{2(M + m)}{7M + 2m}\tan\theta\]</div>
 <p><strong>(2)</strong> <span class="arithmatex">\(\mu &lt; \mu_0\)</span> 时球连滚带滑。此时 <span class="arithmatex">\(f = \mu N_1\)</span>，球质心动力学方程仍由上式给出，联立解得：</p>
 <div class="arithmatex">\[a_c = \frac{(M + m)g(\sin\theta - \mu\cos\theta)}{M + m - m\cos^2\theta - \mu m\sin\theta\cos\theta}\]</div>
-<p><span class="arithmatex">\(a_c\)</span>、角加速度 <span class="arithmatex">\(\ddot{\varphi} = \dfrac{5f}{2mr}\)</span> 均为常量。接触点 P 相对楔块的速度为质心滑动速度与转动线速度之差：</p>
+<p><span class="arithmatex">\(a_c\)</span>、角加速度 <span class="arithmatex">\(\ddot{\varphi} = \dfrac{5f}{2mr}\)</span> 均为常量。取沿斜面向下为正，接触点 P 相对楔块的速度为质心速度与转动线速度之差：</p>
 <div class="arithmatex">\[v_P = \frac{(M + m)g\sin\theta - \mu\left(m + \dfrac{7}{2}M\right)g\cos\theta}{M + m - m\cos^2\theta - \mu m\sin\theta\cos\theta}\Delta t\]</div>
 <h2 id="40_1">四、（40 分）编木拱桥的平衡</h2>
 <h3 id="_9">题目</h3>
@@ -510,13 +540,17 @@ T_c=\frac{\pi^2mgr}{8nR}.\]</div>
 <figure><img alt="图 4d / 图 4e. A 杆与 B 杆的受力图" src="../assets/blog/cpho40/fig-4de.svg" /><figcaption>图 4d / 图 4e. A 杆与 B 杆的受力图</figcaption></figure>
 <p>（3）设 <span class="arithmatex">\(M = 6m\)</span>，<span class="arithmatex">\(\theta = 45°\)</span>，<span class="arithmatex">\(L = 30\ \mathrm{cm}\)</span>，<span class="arithmatex">\(a = 16\ \mathrm{cm}\)</span>，<span class="arithmatex">\(R = 2(\sqrt{2}-1)\ \mathrm{cm}\)</span>，试求静摩擦因数 <span class="arithmatex">\(\mu\)</span> 和 <span class="arithmatex">\(\mu'\)</span> 满足什么数值条件时，图 4c 所示的结构能保持平衡（数值结果保留三位有效数字）？</p>
 <hr />
+<blockquote class="author-note"><p class="author-note-title">随想</p>
 <p>我考场上直接就没看懂这个题目，于是把第一问做了之后就跑路了，后来发现感觉还是有一点跑路跑路早了，感觉并没有那么地难这个题。主要还是平常训练的时候这种静力学的题目做的不多，手感太生疏了。而且后面的题目也有更多可以拿分的题，于是做了一点之后就润了。</p>
+</blockquote>
 <hr />
 <h3 id="_10">解答</h3>
 <p><strong>(1)</strong> 由接触点的几何关系：</p>
 <div class="arithmatex">\[b = a + 4R\cot\frac{\theta}{2}\]</div>
-<p><strong>(2)</strong> 受力图我们已经画在图上了，剩下的其实就是列方程解就好了。
-$<span class="arithmatex">\(\text{A 杆：}\quad N_1 + mg = N_2\cos\theta + f_2\sin\theta\)</span>$</p>
+<p><strong>(2)</strong> C、D 两杆的受力图如下。<span class="arithmatex">\(f_1\)</span> 为 A、C 间摩擦力，<span class="arithmatex">\(f_2\)</span> 为 A、D 间摩擦力；B 杆表面光滑，与 B 接触处只有压力。<span class="arithmatex">\(N_5\)</span> 和 <span class="arithmatex">\(f_5\)</span> 分别表示地面对 D 的支持力和摩擦力。</p>
+<figure><img alt="题解图 4. C、D 两杆的受力图" src="../assets/blog/cpho40/fig-4-solution.svg" /><figcaption>题解图 4. C、D 两杆的受力图</figcaption></figure>
+<p>接下来分别列平衡方程：</p>
+<div class="arithmatex">\[\text{A 杆：}\quad N_1 + mg = N_2\cos\theta + f_2\sin\theta\]</div>
 <div class="arithmatex">\[f_1 + f_2\cos\theta = N_2\sin\theta\]</div>
 <p>对 A 杆圆柱轴线的力矩平衡：<span class="arithmatex">\(f_1 R = f_2 R\)</span>，即 <span class="arithmatex">\(f_1 = f_2\)</span>。</p>
 <div class="arithmatex">\[\text{B 杆：}\quad N_3 = 2N_4\cos\theta + mg\]</div>
@@ -526,12 +560,14 @@ $<span class="arithmatex">\(\text{A 杆：}\quad N_1 + mg = N_2\cos\theta + f_2\
 <p>对 D 杆与地面接触点的力矩平衡：</p>
 <div class="arithmatex">\[N_2 a + Mg\left(\frac{L}{2}\cos\theta - R\sin\theta\right) = N_4 b + f_2\cdot 2R\]</div>
 <hr />
-<p>也可对 D 杆质心列力矩方程，结果等价。其实这个题目做到这里就可以准备跑路了，下一道题的数值结果的正确与否完全取决于你这道题的方程的正确性。如果没什么太大把握其实不是很建议继续往下算。当然是对于和我一样的一般选手，如果你有足够的时间这个题还是可以做一做。</p>
+<blockquote class="author-note"><p class="author-note-title">随想</p>
+<p>也可对 D 杆质心列力矩方程，结果等价。其实这个题目做到这里就可以准备跑路了，下一问的数值结果的正确与否完全取决于你这道题的方程的正确性。如果没什么太大把握其实不是很建议继续往下算。当然是对于和我一样的一般选手，如果你有足够的时间这个题还是可以做一做。</p>
+</blockquote>
 <hr />
 <p><strong>(3)</strong> 此条件下 <span class="arithmatex">\(b = a + 4R\cot\dfrac{\theta}{2} = 24\ \mathrm{cm}\)</span>。</p>
 <p>由 A 杆的方程可得 <span class="arithmatex">\(f_1 = f_2 = \dfrac{\sin\theta}{1 + \cos\theta}N_2\)</span>、<span class="arithmatex">\(N_1 + mg = N_2\)</span>；由 B、C 杆方程可得 <span class="arithmatex">\(N_1 = N_4\cos\theta + \dfrac{1}{2}(M + m)g\)</span>。将它们代入 D 杆力矩方程，解出：</p>
 <div class="arithmatex">\[N_1 = 10.427\,mg,\qquad f_1 = f_2 = 4.733\,mg\]</div>
-<p>系统保持平衡要求 <span class="arithmatex">\(f_1 \le \mu N_1\)</span>（因为 <span class="arithmatex">\(f_1 = f_2\)</span>、<span class="arithmatex">\(N_2 = N_1 + mg &gt; N_1\)</span>，<span class="arithmatex">\(\mu\)</span> 的范围由第一式决定）：</p>
+<p>系统保持平衡要求 <span class="arithmatex">\(f_1 \le \mu N_1\)</span>、<span class="arithmatex">\(f_2 \le \mu N_2\)</span>（因为 <span class="arithmatex">\(f_1 = f_2\)</span>、<span class="arithmatex">\(N_2 = N_1 + mg &gt; N_1\)</span>，<span class="arithmatex">\(\mu\)</span> 的范围由第一式决定）：</p>
 <div class="arithmatex">\[\mu \ge \frac{f_1}{N_1} = 0.454\]</div>
 <p>由 B、D 杆方程可得 <span class="arithmatex">\(N_5 = \dfrac{3}{2}(M + m)g = \dfrac{21}{2}mg\)</span>，以及</p>
 <div class="arithmatex">\[f_5 = N_1\left(\tan\theta - \frac{\sin\theta}{1 + \cos\theta}\right) - \frac{1}{2}(M + m)g\tan\theta - mg\frac{\sin\theta}{1 + \cos\theta} = 2.194\,mg\]</div>
@@ -539,7 +575,9 @@ $<span class="arithmatex">\(\text{A 杆：}\quad N_1 + mg = N_2\cos\theta + f_2\
 <div class="arithmatex">\[\mu' \ge \frac{f_5}{N_5} = 0.209\]</div>
 <p>即当 <span class="arithmatex">\(\mu \ge 0.454,\ \mu' \ge 0.209\)</span> 时结构能保持平衡。</p>
 <hr />
-<p>看了这四个题之后感觉当时的计算能力抗压能力还是太强了。我很难想象现在自己还能在考场上三个小时去做一套这样的题目了。果然人生的智力巅峰阶段还得是高中啊（）。后面的一半应该会保持更新，欢迎大家的评论交流。</p></div><div class="end-mark">∙ ∙ ∙</div><nav class="post-nav"><a href="index.html" data-ui="back">返回列表</a></nav></article><div class="comments"><h2 data-ui="cmts">留言</h2>
+<blockquote class="author-note"><p class="author-note-title">随想</p>
+<p>看了这四个题之后感觉当时的计算能力抗压能力还是太强了。我很难想象现在自己还能在考场上三个小时去做一套这样的题目了。果然人生的智力巅峰阶段还得是高中啊（）。后面的一半应该会保持更新，欢迎大家的评论交流。</p>
+</blockquote></div><div class="end-mark">∙ ∙ ∙</div><nav class="post-nav"><a href="index.html" data-ui="back">返回列表</a></nav></article><div class="comments"><h2 data-ui="cmts">留言</h2>
 <script src="https://giscus.app/client.js"
   data-repo="ShiyiXiao05/homepage" data-repo-id="R_kgDOStnO4Q"
   data-category="Announcements" data-category-id="DIC_kwDOStnO4c4DFbGe"

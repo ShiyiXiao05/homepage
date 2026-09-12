@@ -104,6 +104,13 @@ select:focus{outline:2px solid var(--blue);outline-offset:1px}
 #preview p{margin:10px 0}
 #preview ul,#preview ol{margin:10px 0;padding-left:24px}
 #preview img{max-width:100%;height:auto;border:1px solid var(--border);border-radius:8px}
+
+#preview blockquote.author-note{border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:0 10px 10px 0;background:var(--card);color:var(--body);padding:16px 20px;margin:24px 0;line-height:1.9}
+#preview .author-note .author-note-title{color:var(--blue);font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.14em;margin:0 0 10px}
+#preview .author-note p{margin:10px 0}
+#preview .author-note>:last-child{margin-bottom:0}
+@media(max-width:520px){#preview blockquote.author-note{padding:14px 16px}}
+
 #preview blockquote{border-left:3px solid var(--border);padding:2px 0 2px 14px;color:var(--muted);margin:12px 0}
 #preview code{font-family:var(--mono);font-size:.86em;background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1px 5px}
 #preview pre{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;overflow-x:auto;margin:12px 0}
@@ -676,6 +683,12 @@ function schedulePreview(){clearTimeout(prevTmr);prevTmr=setTimeout(previewNow,1
 function previewNow(){
   const box=$('preview');
   const __src=$('editor').value.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/,'');box.innerHTML=marked.parse(__src);
+  box.querySelectorAll('blockquote').forEach(note=>{
+    const title=note.firstElementChild;
+    if(title&&title.tagName==='P'&&title.innerHTML.trim()==='<strong>随想</strong>'){
+      note.classList.add('author-note');title.classList.add('author-note-title');title.textContent='随想';
+    }
+  });
   box.querySelectorAll('img').forEach(i=>{
     const s=i.getAttribute('src')||'';
     if(s&&!/^https?:/.test(s)&&!s.startsWith('/')&&!s.startsWith('../'))i.src='../'+s;
