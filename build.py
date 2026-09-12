@@ -152,7 +152,7 @@ THEME_JS = """
 var langBtn=document.getElementById('langBtn');
 var themeBtn=document.getElementById('themeBtn');
 var metaTheme=document.getElementById('metaTheme');
-var UI={zh:{home:'主页',blog:'博客',back:'返回列表',newer:'较新一篇',older:'较旧一篇',toc:'目录',langA:'切换语言',themeA:'切换配色主题',clear:'清除筛选'},en:{home:'Home',blog:'Blog',back:'All posts',newer:'Newer',older:'Older',toc:'Contents',langA:'Switch language',themeA:'Toggle color theme',clear:'Clear filter'}};
+var UI={zh:{home:'主页',blog:'博客',back:'返回列表',newer:'较新一篇',older:'较旧一篇',toc:'目录',langA:'切换语言',themeA:'切换配色主题',clear:'清除筛选',likeA:'点赞这篇文章'},en:{home:'Home',blog:'Blog',back:'All posts',newer:'Newer',older:'Older',toc:'Contents',langA:'Switch language',themeA:'Toggle color theme',clear:'Clear filter',likeA:'Like this post'}};
 var cur=(function(){try{return localStorage.getItem('sx-lang')==='en'?'en':'zh'}catch(e){return 'zh'}})();
 function applyTheme(t){document.documentElement.dataset.theme=t;
   if(metaTheme)metaTheme.content=t==='dark'?'#20212b':'#ffffff';}
@@ -165,12 +165,31 @@ function setLang(l){cur=l;document.documentElement.lang=l==='zh'?'zh-CN':'en';
   langBtn.setAttribute('aria-label',UI[l].langA);
   themeBtn.setAttribute('aria-label',UI[l].themeA);
   fmtRT();
+  var lb=document.getElementById('likeBtn');
+  if(lb){var la=UI[l].likeA;if(la)lb.setAttribute('aria-label',la);}
   try{localStorage.setItem('sx-lang',l);}catch(e){}}
 langBtn.addEventListener('click',function(){setLang(cur==='zh'?'en':'zh')});
 themeBtn.addEventListener('click',function(){
   applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
   try{localStorage.setItem('sx-theme',document.documentElement.dataset.theme);}catch(e){}
   if(window.giscusSync)window.giscusSync();});
+var likeBtn=document.getElementById('likeBtn');
+if(likeBtn){(function(){
+  var slug=likeBtn.dataset.slug;
+  var likedKey='sx-liked-'+slug;
+  var liked=(function(){try{return localStorage.getItem(likedKey)==='1'}catch(e){return false}})();
+  var cEl=document.getElementById('likeCount');
+  function setCount(n){if(typeof n==='number')cEl.textContent=n;}
+  function render(){likeBtn.classList.toggle('liked',liked);likeBtn.setAttribute('aria-pressed',liked?'true':'false');}
+  fetch('https://abacus.jasoncameron.dev/get/shiyi-blog/'+slug).then(function(r){return r.json()}).then(function(d){setCount(d.value||0)}).catch(function(){});
+  if(liked)render();
+  likeBtn.addEventListener('click',function(){
+    if(liked)return;
+    fetch('https://abacus.jasoncameron.dev/hit/shiyi-blog/'+slug).then(function(r){return r.json()}).then(function(d){setCount(d.value||0)}).catch(function(){});
+    liked=true;try{localStorage.setItem(likedKey,'1')}catch(e){}
+    render();likeBtn.classList.add('pop');setTimeout(function(){likeBtn.classList.remove('pop')},600);
+  });
+})();} 
 applyTheme(document.documentElement.dataset.theme||'light');
 window.giscusSync=function(){var f=document.querySelector('iframe.giscus-frame');if(f)
   f.contentWindow.postMessage({giscus:{setConfig:{theme:document.documentElement.dataset.theme==='dark'?'dark':'light'}}},'https://giscus.app');};
@@ -273,6 +292,15 @@ figcaption{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:
 .comments h2{font-size:16px;margin-bottom:14px}
 .katex-display{overflow-x:auto;overflow-y:hidden;padding:4px 0}
 .end-mark{text-align:center;color:var(--muted);font-family:var(--mono);letter-spacing:.6em;margin:36px 0 0}
+.likebox{text-align:center;margin:22px 0 0}
+.likebtn{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--border);border-radius:999px;padding:9px 22px;background:var(--surface);color:var(--muted);cursor:pointer;font-family:var(--mono);font-size:14px;transition:color .15s,border-color .15s}
+.likebtn:hover{color:#e0245e;border-color:#e0245e}
+.likebtn svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;transition:fill .2s,stroke .2s}
+.likebtn.liked{color:#e0245e;border-color:#e0245e}
+.likebtn.liked svg{fill:#e0245e;stroke:#e0245e}
+.likebtn.pop svg{animation:likepop .55s ease}
+@keyframes likepop{0%{transform:scale(1)}45%{transform:scale(1.3)}70%{transform:scale(.92)}100%{transform:scale(1)}}
+.likebtn .likecount{font-family:var(--mono);font-size:13.5px}
 .post-nav{display:flex;justify-content:space-between;gap:16px;margin-top:26px;padding-top:16px;border-top:1px solid var(--border)}
 .post-nav a{font-family:var(--mono);font-size:13px;max-width:48%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .post-nav a.next{text-align:right;margin-left:auto}
@@ -280,7 +308,7 @@ figcaption{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:
 .post-nav a.next .lbl{margin-right:0;margin-left:6px}
 footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--border);font-family:var(--mono);font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 @media(max-width:640px){.page{padding:60px 20px 56px}article h1{font-size:24px}h1.page-title{font-size:28px}.plist a{gap:12px}}
-@media print{.toggles,.post-nav{display:none!important}.page{max-width:100%;padding:0}a{color:inherit}}
+@media print{.toggles,.post-nav,.likebox{display:none!important}.page{max-width:100%;padding:0}a{color:inherit}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 """
 
@@ -380,6 +408,7 @@ def build_post(p, posts):
             + toc_html +
             '<div class="body">' + p["body"] + '</div>'
             '<div class="end-mark">∙ ∙ ∙</div>'
+            + '<div class="likebox"><button id="likeBtn" class="likebtn" type="button" data-slug="' + p["slug"] + '" aria-pressed="false" aria-label="点赞这篇文章"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.6-4.9-10.1-9.3C.3 7.9 1.9 3.9 5.7 3.9c2.2 0 3.8 1.2 6.3 3.7 2.5-2.5 4.1-3.7 6.3-3.7 3.8 0 5.4 4 3.8 7.8C19.6 16.1 12 21 12 21z"/></svg><span id="likeCount"></span></button></div>'
             '<nav class="post-nav">' + "".join(nav) + "</nav></article>"
             + giscus)
     desc = p["summary"] or p["title"]
