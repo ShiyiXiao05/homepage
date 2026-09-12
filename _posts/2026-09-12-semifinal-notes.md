@@ -114,19 +114,25 @@ $$F' = v_{F'} - v_{H'} = \frac{-f_1 f_2}{d - f_1 - f_2},\qquad \text{即 } \frac
 
 （5）当 $T < T_c$ 时，假设活塞的初始速度近似为零，求活塞从正中央运动到可到达的角位置 $\theta$ 处的角速度大小。
 
-### 解答
+---
 
-设活塞偏离正中央的角度为 $\theta$。两侧气柱长度分别为 $r(\pi/2 - \theta)$ 和 $r(\pi/2 + \theta)$，由理想气体状态方程（等温），两侧压强为 $p = nRT / V$。活塞沿管切向的运动方程为：
+那这道题目实际上就是一个很具有普物风格的题目。从一个基本的模型出发，讨论不同参数关系情况下体系表现出的不同的行为，从稳定平衡到微振动，是一个结合了热学和力学的题目。总体上也很容易想到这类振动的题目有受力法和能量法两种方式求解，我们依次来看一看，首先看受力法
 
-$$mr\frac{\mathrm{d}^2\theta}{\mathrm{d}t^2} = mg\sin\theta - \frac{nRT}{r(\pi/2 - \theta)} + \frac{nRT}{r(\pi/2 + \theta)}$$
+---
 
-**(1)** 当 $|\theta| \ll 1$ 时展开（$\sin\theta \approx \theta$，$1/(\pi/2 \mp \theta) \approx \dfrac{2}{\pi}\left(1 \pm \dfrac{4\theta}{\pi^2} + \dfrac{16\theta^2}{\pi^4}\right)$，保留到一阶）：
+### 受力法
 
-$$\frac{\mathrm{d}^2\theta}{\mathrm{d}t^2} = -\frac{1}{r}\left(g - \frac{8nRT}{\pi^2 r m}\right)\theta$$
+设活塞偏离正中央的角度为 $\theta$。两侧气柱长度分别为 $r(\pi/2 - \theta)$ 和 $r(\pi/2 + \theta)$，由理想气体状态方程，两侧压强为 $p = nRT / V$。活塞沿管切向的运动方程为：
+
+$$mr\frac{\mathrm{d}^2\theta}{\mathrm{d}t^2} = mg\sin\theta - \frac{nRT}{r(\pi/2 - \theta)} + \frac{nRT}{r(\pi/2 + \theta)}=mg\sin\theta-\frac{8nRT\theta}{r(\pi^2-4\theta^2)}$$
+
+**(1)** 当 $|\theta| \ll 1$ 时展开保留到一阶：
+
+$$\frac{\mathrm{d}^2\theta}{\mathrm{d}t^2} = \frac{1}{r}\left(g - \frac{8nRT}{\pi^2 r m}\right)\theta$$
 
 正中央稳定要求回复系数为正，即 $g - \dfrac{8nRT}{\pi^2 r m} < 0$，所以临界温度：
 
-$$\boxed{T_c = \frac{\pi^2 m g r}{8 n R}}$$
+$$T_c = \frac{\pi^2 m g r}{8 n R}$$
 
 此时活塞做简谐振动，圆频率：
 
@@ -134,9 +140,15 @@ $$\omega = \sqrt{\frac{1}{r}\left(\frac{8nRT}{\pi^2 r m} - g\right)} = \sqrt{\fr
 
 **(2)** $T = T_c$ 时保留到三阶，运动方程化为：
 
-$$\frac{\mathrm{d}^2\theta}{\mathrm{d}t^2} = -\frac{24 + \pi^2}{6\pi^2}\cdot\frac{g}{r}\,\theta^3$$
+$$\frac{\mathrm{d}^2\theta}{\mathrm{d}t^2} = -\frac{24 + \pi^2}{6\pi^2}\cdot\frac{g}{r}\theta^3$$
 
-活塞受到正比于 $\theta^3$ 的恢复力，所以正中央仍是**稳定**平衡位置（不是简谐振动）。
+活塞受到正比于 $\theta^3$ 的恢复力，所以正中央仍是稳定平衡位置。
+
+---
+
+这个式子展开的时候大概估计一下可以预想到前面的正弦项展开到第三阶应该是一个负号，后一项分子分母同乘($\pi^2+4\theta^2$)后应该只有一个三阶项且符号为负，是一个稳定平衡的位置。
+
+---
 
 **(3)** $T < T_c$ 时，设稳定平衡位置在 $\theta_0 \neq 0$ 处，该处合力为零：
 
@@ -146,11 +158,18 @@ $$mg\sin\theta_0 - \frac{nRT}{r(\pi/2 - \theta_0)} + \frac{nRT}{r(\pi/2 + \theta
 
 $$\frac{2nRT}{mgr} = \left(\frac{\pi^2}{4} - \theta_0^2\right)\frac{\sin\theta_0}{\theta_0}$$
 
-右端 $f(\theta_0) = \left(\dfrac{\pi^2}{4} - \theta_0^2\right)\dfrac{\sin\theta_0}{\theta_0}$ 在 $\theta_0 \in (0, \pi/2)$ 上单调递减，$\theta_0 \to 0$ 时取最大值 $\pi^2/4$。所以方程有非零解的条件正是 $T < T_c$。当 $T$ 略小于 $T_c$ 时 $\theta_0 \approx 0$，把 $T/T_c = \left(1 - \dfrac{4\theta_0^2}{\pi^2}\right)\dfrac{\sin\theta_0}{\theta_0}$ 展开得：
+右端 $f(\theta_0) = \left(\dfrac{\pi^2}{4} - \theta_0^2\right)\dfrac{\sin\theta_0}{\theta_0}$ 在 $\theta_0 \in (0, \pi/2)$ 上单调递减，$\theta_0 \to 0$ 时取最大值 $\pi^2/4$。所以方程有非零解的条件正是 $T < T_c$。当 $T$ 略小于 $T_c$ 时 $\theta_0 \approx 0$，把 $T/T_c = \left(1 - \dfrac{4\theta_0^2}{\pi^2}\right)\dfrac{\sin\theta_0}{\theta_0}$ 展开到第一阶非0项得：
 
 $$\theta_0 = \pm\sqrt{\frac{6\pi^2}{24 + \pi^2}\cdot\frac{T_c - T}{T_c}}$$
 
 （正负号表示平衡位置可以在左右两侧。）
+
+---
+
+关于题目中那个函数的性质建议考场打表判断，求导还是略微麻烦了。
+
+---
+
 
 **(4)** 在 $\theta_0 + \theta$（$|\theta| \ll 1$）处给活塞微扰，微振动方程为：
 
@@ -174,11 +193,144 @@ $$\frac{1}{2}mr\dot{\theta}^2 = mg(1 - \cos\theta) + \frac{nRT}{r}\ln\left(1 - \
 
 于是活塞到达角位置 $\theta$ 处的角速度大小：
 
-$$\boxed{|\dot{\theta}| = \sqrt{\frac{2g}{r}(1 - \cos\theta) + \frac{2nRT}{m r^2}\ln\left(1 - \frac{4\theta^2}{\pi^2}\right)}}$$
+$$|\dot{\theta}| = \sqrt{\frac{2g}{r}(1 - \cos\theta) + \frac{2nRT}{m r^2}\ln\left(1 - \frac{4\theta^2}{\pi^2}\right)}$$
 
-> **我的回忆**
->
-> （待补：当年热学题做到第几问；对"稳定性要用三阶项判断"这个套路的印象……）
+---
+
+这里利用的小技巧是 $\frac{\mathrm{d^2}\theta}{\mathrm{d}t^2}\mathrm{d}\theta=\frac{\mathrm{d}}{\mathrm{d}t}(\dot{\theta})\\mathrm{d}\theta=\dot{\theta}\mathrm{d}\dot{\theta}$
+
+---
+
+### 能量法
+
+能量角度看，平衡位置对应势能的驻点，稳定平衡对应极小值，微振动频率则由极小值附近的曲率决定。不过，两侧气体始终与外界等温，会与外界交换热量，因此我们先由气体做功构造一个有效势能。
+
+设玻璃管的横截面积为 $S$，记 $a = \pi/2$。当活塞位于 $\theta$ 处时，两侧气体体积为
+
+$$V_1 = Sr(a-\theta),\qquad V_2 = Sr(a+\theta),\qquad |\theta|<a.$$
+
+等温准静态过程中，一侧气体对活塞做功为 $\int p\mathrm{d}V = nRT\ln(V/V_{\mathrm{初}})$。从正中央移到 $\theta$ 处，两侧气体做功之和为
+
+$$W_{\mathrm{气}} = nRT\ln\frac{V_1V_2}{(Sra)^2}
+= nRT\ln\left(1-\frac{\theta^2}{a^2}\right).$$
+
+重力做功为 $mgr(1-\cos\theta)$。取正中央的有效势能为零，定义
+
+$$U_{\mathrm{eff}}(\theta)
+= mgr(\cos\theta-1)-nRT\ln\left(1-\frac{\theta^2}{a^2}\right).$$
+
+那这道题目的能量守恒方程可以写为：
+
+$$\frac12 mr^2\dot\theta^2+U_{\mathrm{eff}}(\theta)=\text{const}.$$
+
+**(1)**
+
+在 $\theta=0$ 附近展开有效势能：
+
+$$U_{\mathrm{eff}}(\theta)
+=\left(\frac{nRT}{a^2}-\frac{mgr}{2}\right)\theta^2
++\left(\frac{nRT}{2a^4}+\frac{mgr}{24}\right)\theta^4
++O(\theta^6).$$
+
+二次项系数由负变正时，正中央由势能极大值变成极小值，故
+
+$$\frac{nRT_c}{a^2}=\frac{mgr}{2}
+\quad\Longrightarrow\quad
+T_c=\frac{\pi^2mgr}{8nR}.$$
+
+当 $T>T_c$ 时，二次项可写成 $\frac12 mr^2\omega^2\theta^2$。与上式比较，得到
+
+$$\omega=\sqrt{\frac{U_{\mathrm{eff}}''(0)}{mr^2}}
+=\sqrt{\frac{g}{r}\frac{T-T_c}{T_c}}.$$
+
+**(2)**
+
+当 $T=T_c$ 时，二次项消失，最低阶非零项为
+
+$$U_{\mathrm{eff}}(\theta)
+=\frac{mgr(24+\pi^2)}{24\pi^2}\theta^4+O(\theta^6).$$
+
+四次项系数为正，说明 $\theta=0$ 仍然是严格的局部极小值，因此正中央仍是稳定平衡位置。
+
+**(3)**
+
+由极值条件
+
+$$U_{\mathrm{eff}}'(\theta_0)
+=-mgr\sin\theta_0+\frac{2nRT\theta_0}{a^2-\theta_0^2}=0,$$
+
+得到非零平衡位置满足
+
+$$\frac{T}{T_c}
+=\left(1-\frac{4\theta_0^2}{\pi^2}\right)
+\frac{\sin\theta_0}{\theta_0}.$$
+
+右端在 $0<\theta_0<\pi/2$ 上从 1 严格递减到 0，因此每个 $0<T<T_c$ 都对应唯一的正根，以及与它对称的负根。正半轴上势能先减后增，所以这两个非零驻点都是稳定平衡位置。
+
+温度略低于 $T_c$ 时，$|\theta_0|\ll1$，展开平衡条件：
+
+$$\frac{T}{T_c}
+=1-\left(\frac{4}{\pi^2}+\frac16\right)\theta_0^2
++O(\theta_0^4).$$
+
+因此最低阶近似为
+
+$$\theta_0\approx\pm\sqrt{\frac{6\pi^2}{24+\pi^2}
+\frac{T_c-T}{T_c}}.$$
+
+**(4)**
+
+令 $\theta=\theta_0+\eta$，其中 $|\eta|\ll1$。由于 $U_{\mathrm{eff}}'(\theta_0)=0$，能量在平衡位置附近展开为
+
+$$E-U_{\mathrm{eff}}(\theta_0)
+\approx\frac12 mr^2\dot\eta^2
++\frac12 U_{\mathrm{eff}}''(\theta_0)\eta^2.$$
+
+这就是谐振子的能量形式，所以 $\omega_0^2=U_{\mathrm{eff}}''(\theta_0)/(mr^2)$。由
+
+$$U_{\mathrm{eff}}''(\theta)
+=-mgr\cos\theta+2nRT\frac{a^2+\theta^2}{(a^2-\theta^2)^2},$$
+
+再利用第（3）问的平衡条件消去 $T$，得到
+
+$$\omega_0(\theta_0)
+=\sqrt{\frac{g}{r}\left[
+\frac{\sin\theta_0}{\theta_0}
+\frac{\pi^2/4+\theta_0^2}{\pi^2/4-\theta_0^2}
+-\cos\theta_0\right]}.$$
+
+当 $T$ 略高于 $T_c$ 时，稳定平衡仍在正中央，由第（1）问有
+
+$$\omega=\sqrt{\frac{g}{r}\frac{T-T_c}{T_c}}.$$
+
+当 $T$ 略低于 $T_c$ 时，展开非零平衡位置处的曲率：
+
+$$\omega_0^2
+=\frac{g}{r}\left[\left(\frac{8}{\pi^2}+\frac13\right)\theta_0^2
++O(\theta_0^4)\right].$$
+
+代入第（3）问的 $\theta_0^2$，得到
+
+$$\omega_0\approx\sqrt{\frac{2g}{r}\frac{T_c-T}{T_c}}.$$
+
+**(5)**
+
+正中央的有效势能为零，初始动能又近似为零，故能量积分给出
+
+$$\frac12 mr^2\dot\theta^2
+=-U_{\mathrm{eff}}(\theta)
+=mgr(1-\cos\theta)
++nRT\ln\left(1-\frac{4\theta^2}{\pi^2}\right).$$
+
+因此，在运动能够到达的位置，角速度大小为
+
+$$|\dot\theta|
+=\sqrt{\frac{2g}{r}(1-\cos\theta)
++\frac{2nRT}{mr^2}\ln\left(1-\frac{4\theta^2}{\pi^2}\right)}.$$
+
+---
+
+总体上看这个题目的思路上难度不是很大，按部就班地求解即可，计算量也还不算特别大，考试时这个题目应该还是要拿到绝大部分的分数。
 
 ---
 
