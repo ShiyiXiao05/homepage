@@ -229,7 +229,7 @@ let token=localStorage.getItem('sx-gh-token')||'';
 const mh=location.hash.match(/t=([A-Za-z0-9_]+)/);
 if(mh){ token=mh[1]; try{localStorage.setItem('sx-gh-token',token);}catch(e){} try{history.replaceState(null,'',location.pathname+location.search);}catch(e){} }
 let currentFile=null, currentSha=null, currentServer=null, lastEntry=null, dirty=false;
-let knownFiles=[];
+let knownFiles=[], postMeta={}, postMetaSha=null;
 
 function status(msg,cls){const el=$('status');el.textContent=msg||'\u00a0';el.className='gstatus '+(cls||'');}
 function tokenState(){$('tokenState').textContent=token?'已登录':'未登录（只读浏览）';}
@@ -275,29 +275,35 @@ function markDirty(){
 function fmtTime(ts){return new Date(ts).toLocaleString('zh-CN',{hour12:false,month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});}
 
 /* ---------- list ---------- */
+async function loadPostMeta(){
+  try{
+    const d=await api('/repos/'+REPO+'/contents/'+DIR+'/meta.json');
+    postMetaSha=d.sha;
+    postMeta=JSON.parse(b64ToUtf8(d.content))||{};
+  }catch(e){postMeta={};postMetaSha=null;}
+}
 async function loadList(){
   status('加载文章列表…');
   try{
     const data=await api('/repos/'+REPO+'/contents/'+DIR);
     const files=data.filter(f=>f.name.endsWith('.md')).map(f=>f.name).sort().reverse();
     knownFiles=files;
-    let meta={};try{meta=JSON.parse(sessionStorage.getItem('sx-admin-meta')||'{}');}catch(e){}
-    await Promise.all(files.filter(n=>!meta[n]).slice(0,50).map(async n=>{
-      try{
-        const d=await api('/repos/'+REPO+'/contents/'+DIR+'/'+n);
-        const fm=parseFrontMatter(b64ToUtf8(d.content));
-        meta[n]={t:fm.title||n,d:fm.date||n.slice(0,10)};
-      }catch(e){meta[n]={t:n,d:n.slice(0,10)};}
-    }));
-    try{sessionStorage.setItem('sx-admin-meta',JSON.stringify(meta));}catch(e){}
+    await loadPostMeta();
     const ul=$('postList');ul.innerHTML='';
-    files.forEach(n=>{
+    for(const n of files){
+      let t=postMeta[n]&&postMeta[n].title;
+      if(!t){ // 旧格式（front matter 写在文件里）：读文件兜底
+        try{
+          const d=await api('/repos/'+REPO+'/contents/'+DIR+'/'+n);
+          t=parseFrontMatter(b64ToUtf8(d.content)).title;
+        }catch(e){}
+      }
       const li=document.createElement('li');li.dataset.fn=n;
       const a=document.createElement('a');
-      a.innerHTML='<span class="nd">'+esc(meta[n].d||n.slice(0,10))+'</span><span class="pt">'+esc(meta[n].t||n)+'</span>';
+      a.innerHTML='<span class="nd">'+esc(n.slice(0,10))+'</span><span class="pt">'+esc(t||n)+'</span>';
       a.title=n;a.onclick=()=>openPost({name:n});
       li.appendChild(a);ul.appendChild(li);
-    });
+    }
     status((token?'':'只读模式 · ')+files.length+' 篇文章 ✓',token?'ok':'');
     setActiveList();
   }catch(e){status('加载失败：'+e.message,'bad');}
@@ -364,8 +370,15 @@ async function openPost(entry,force){
     const data=await api('/repos/'+REPO+'/contents/'+DIR+'/'+entry.name);
     currentFile=entry.name;currentSha=data.sha;lastEntry=entry;
     const md=b64ToUtf8(data.content),fm=parseFrontMatter(md),body=stripFrontMatter(md);
-    currentServer={body:body,fm:fm};
-    fillFields(body,fm,entry.name);
+    const pm=postMeta[entry.name]||{};
+    const meta={
+      title:(pm.title||fm.title||''),
+      tags:Array.isArray(pm.tags)?pm.tags.join(', '):(pm.tags||fm.tags||''),
+      summary:pm.summary||fm.summary||'',
+      date:entry.name.slice(0,10)
+    };
+    currentServer={body:body,fm:meta};
+    fillFields(body,meta,entry.name);
     $('editor').scrollTop=0;
     const at=tryRestoreDraft();
     if(at){
@@ -486,14 +499,6 @@ function newPost(force){
 }
 
 /* ---------- publish / delete ---------- */
-function buildMarkdown(){
-  return '---\n'
-    +'title: '+$('fTitle').value.trim()+'\n'
-    +'date: '+$('fDate').value.trim()+'\n'
-    +'tags: ['+$('fTags').value.trim()+']\n'
-    +'summary: '+$('fSummary').value.trim()+'\n'
-    +'---\n\n'+$('editor').value;
-}
 async function publish(){
   if(!token){saveStatus('未配置 Token，无法发布（右上角「GitHub 令牌」处粘贴）','bad');return;}
   const slug=$('fSlug').value.trim(),date=$('fDate').value.trim();
@@ -507,18 +512,36 @@ async function publish(){
   $('saveBtn').disabled=true;
   saveStatus('正在发布…');
   try{
-    const body={message:'blog: '+(existed?'update ':'add ')+fname,content:utf8ToB64(buildMarkdown())};
+    const body={message:'blog: '+(existed?'update ':'add ')+fname,content:utf8ToB64($('editor').value)};
     if(existed&&currentSha)body.sha=currentSha;
     await api('/repos/'+REPO+'/contents/'+DIR+'/'+fname,{method:'PUT',body:JSON.stringify(body)});
     currentFile=fname;
     const d=await api('/repos/'+REPO+'/contents/'+DIR+'/'+fname);
     currentSha=d.sha;
+    // 元信息写入 meta.json（.md 只存纯正文）
+    let metaWarn='';
+    try{
+      await loadPostMeta();
+      if(prev&&prev!==fname)delete postMeta[prev];
+      postMeta[fname]={
+        title:$('fTitle').value.trim(),
+        tags:$('fTags').value.trim().split(/[,，]/).map(s=>s.trim()).filter(Boolean),
+        summary:$('fSummary').value.trim()
+      };
+      const mb={message:'blog: update meta',content:utf8ToB64(JSON.stringify(postMeta,null,2)+'\n')};
+      if(postMetaSha)mb.sha=postMetaSha;
+      await api('/repos/'+REPO+'/contents/'+DIR+'/meta.json',{method:'PUT',body:JSON.stringify(mb)});
+    }catch(e){metaWarn='<br>⚠️ 元信息(meta.json)保存失败，下次保存会自动重试。';}
     dirty=false;currentServer={body:$('editor').value,fm:{title:$('fTitle').value.trim(),date:date,tags:$('fTags').value.trim(),summary:$('fSummary').value.trim()}};
     clearDraft('new');clearDraft(fname);
-    try{sessionStorage.removeItem('sx-admin-meta');}catch(e){}
-    let extra='';
-    if(prev&&prev!==fname)extra='<br>⚠️ 改了日期/slug：创建了新文件，旧文件 '+esc(prev)+' 还在列表里，请打开它点「删除此文」。';
-    saveStatusHTML('已提交 ✓ 自动构建中，约 1 分钟后生效 · <a target="_blank" rel="noopener" href="'+BASE+'blog/'+slug+'.html">查看文章 ↗</a>'+extra,'ok');
+    if(prev&&prev!==fname){ // 改了日期/slug：自动移除旧文件
+      try{
+        const od=await api('/repos/'+REPO+'/contents/'+DIR+'/'+prev);
+        await api('/repos/'+REPO+'/contents/'+DIR+'/'+prev,{method:'DELETE',body:JSON.stringify({message:'blog: remove old '+prev,sha:od.sha})});
+        knownFiles=knownFiles.filter(n=>n!==prev);
+      }catch(e){}
+    }
+    saveStatusHTML('已提交 ✓ 自动构建中，约 1 分钟后生效 · <a target="_blank" rel="noopener" href="'+BASE+'blog/'+slug+'.html">查看文章 ↗</a>'+metaWarn,'ok');
     loadList();
   }catch(e){saveStatus('发布失败：'+e.message,'bad');}
   finally{$('saveBtn').disabled=false;setActiveList();}
@@ -527,12 +550,22 @@ async function delPost(){
   if(!currentFile||!currentSha){saveStatus('请先从列表打开要删除的文章','bad');return;}
   if(!confirm('确定删除 '+currentFile+'？此操作会直接提交到仓库。'))return;
   try{
-    await api('/repos/'+REPO+'/contents/'+DIR+'/'+currentFile,{method:'DELETE',body:JSON.stringify({message:'blog: delete '+currentFile,sha:currentSha})});
-    clearDraft(currentFile);
-    saveStatus('已删除 '+currentFile+' ✓','ok');
+    const gone=currentFile;
+    await api('/repos/'+REPO+'/contents/'+DIR+'/'+gone,{method:'DELETE',body:JSON.stringify({message:'blog: delete '+gone,sha:currentSha})});
+    clearDraft(gone);
+    await loadPostMeta();
+    if(postMeta[gone]){
+      try{
+        delete postMeta[gone];
+        const mb={message:'blog: update meta (remove '+gone+')',content:utf8ToB64(JSON.stringify(postMeta,null,2)+'\n')};
+        if(postMetaSha)mb.sha=postMetaSha;
+        await api('/repos/'+REPO+'/contents/'+DIR+'/meta.json',{method:'PUT',body:JSON.stringify(mb)});
+      }catch(e){}
+    }
+    knownFiles=knownFiles.filter(n=>n!==gone);
+    saveStatus('已删除 '+gone+' ✓','ok');
     currentFile=null;currentSha=null;currentServer=null;dirty=false;
     $('editor').value='';previewNow();updateWc();updateFnHint();
-    try{sessionStorage.removeItem('sx-admin-meta');}catch(e){}
     loadList();
   }catch(e){saveStatus('删除失败：'+e.message,'bad');}
 }

@@ -10,6 +10,7 @@ Usage:  python3 build.py
 - On first run it bootstraps a local .venv with the required packages,
   so `python3 build.py` is the only command you ever need.
 """
+import json
 import os
 import re
 import subprocess
@@ -96,6 +97,7 @@ def parse_post(path):
     body, toc = md_to_html(body)
     body = add_figures(body)
     return {
+        "fname": fname,
         "slug": re.sub(r"^\d{4}-\d{2}-\d{2}-", "", fname[:-3]),
         "date": date,
         "date_disp": date.replace("-", "."),
@@ -473,6 +475,31 @@ def inject_homepage(posts):
 def main():
     files = sorted((f for f in os.listdir(POSTS_DIR) if f.endswith(".md")), reverse=True)
     posts = [parse_post(os.path.join(POSTS_DIR, f)) for f in files]
+
+    # _posts/meta.json: optional sidecar {filename: {title, tags, summary}} managed by
+    # blog/admin.html. When present it overrides front matter, so .md files stay pure prose.
+    meta_path = os.path.join(POSTS_DIR, "meta.json")
+    if os.path.exists(meta_path):
+        try:
+            with open(meta_path, encoding="utf-8") as fh:
+                post_meta = json.load(fh)
+            for p in posts:
+                m = post_meta.get(p["fname"])
+                if not m:
+                    continue
+                p["title"] = str(m.get("title") or p["title"])
+                p["summary"] = str(m.get("summary") or p["summary"])
+                mt = m.get("tags")
+                if isinstance(mt, list):
+                    p["tags"] = [str(t).strip() for t in mt if str(t).strip()]
+                elif isinstance(mt, str) and mt.strip():
+                    p["tags"] = [t.strip() for t in re.findall(r"[^,\[\]\s]+", mt)]
+                if m.get("date"):
+                    p["date"] = str(m["date"])
+                    p["date_disp"] = p["date"].replace("-", ".")
+        except (ValueError, OSError) as e:
+            print(f"[build] WARNING: ignoring meta.json: {e}")
+
     posts.sort(key=lambda p: p["date"], reverse=True)
     print(f"[build] {len(posts)} post(s) found")
 
