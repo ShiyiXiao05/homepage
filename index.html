@@ -81,6 +81,10 @@
     cursor: pointer; transition: color .15s, border-color .15s, transform .15s;
   }
   .tgl:hover { color: var(--blue); border-color: var(--blue); transform: scale(1.08); }
+  .pal-dots { display: flex; gap: 7px; align-items: center; margin-right: 6px; }
+  .pal-dot { width: 17px; height: 17px; border-radius: 50%; border: none; background: var(--c); cursor: pointer; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); transition: transform .15s; padding: 0; }
+  .pal-dot:hover { transform: scale(1.2); }
+  .pal-dot.on { outline: 2px solid var(--ink); outline-offset: 2px; }
 
   /* header */
   header { display: flex; gap: 40px; align-items: flex-start; margin-bottom: 46px; }
@@ -195,6 +199,12 @@
 <body>
 
 <div class="toggles">
+  <div class="pal-dots" role="group" aria-label="配色方案">
+    <button class="pal-dot" data-pal="ruri" style="--c:#195fae" type="button" title="瑠璃×朱" aria-label="瑠璃×朱"></button>
+    <button class="pal-dot" data-pal="kari" style="--c:#8a9a3b" type="button" title="蒸栗×墨" aria-label="蒸栗×墨"></button>
+    <button class="pal-dot" data-pal="nadeshiko" style="--c:#c4657e" type="button" title="撫子×苏芳" aria-label="撫子×苏芳"></button>
+    <button class="pal-dot" data-pal="asagi" style="--c:#2e8a8e" type="button" title="浅葱×紺青" aria-label="浅葱×紺青"></button>
+  </div>
   <button id="langBtn" class="tgl" type="button" aria-label="Switch to English">EN</button>
   <button id="themeBtn" class="tgl" type="button" aria-label="切换深色模式">◐</button>
 </div>
@@ -499,10 +509,35 @@
     try { localStorage.setItem('sx-lang', l); } catch (e) {}
   }
 
+  var PALETTES = {
+    ruri:      {name:'瑠璃×朱', light:{bg:'#faf8f2',card:'#f4f1e8',blue:'#195fae',hover:'#c7401f',like:'#c7401f',sel:'rgba(25,95,174,.13)'}, dark:{bg:'#191b21',card:'#22242b',blue:'#8fb0de',hover:'#e08856',like:'#e08856',sel:'rgba(143,176,222,.2)'}},
+    kari:      {name:'蒸栗×墨', light:{bg:'#f7f6e7',card:'#efeedb',blue:'#4f5d23',hover:'#2e2a20',like:'#4f5d23',sel:'rgba(85,99,31,.15)'}, dark:{bg:'#1d1f17',card:'#262a1e',blue:'#c6ce96',hover:'#e0e4ae',like:'#c6ce96',sel:'rgba(198,206,150,.2)'}},
+    nadeshiko: {name:'撫子×苏芳', light:{bg:'#fbf4f6',card:'#f6ebee',blue:'#8e4457',hover:'#c4657e',like:'#c4657e',sel:'rgba(142,68,87,.12)'}, dark:{bg:'#211b1e',card:'#2a2226',blue:'#e3a8b5',hover:'#d98c9f',like:'#d98c9f',sel:'rgba(227,168,181,.18)'}},
+    asagi:     {name:'浅葱×紺青', light:{bg:'#f0f6f6',card:'#e8f0f0',blue:'#1d6e73',hover:'#0f4c51',like:'#1d6e73',sel:'rgba(29,110,115,.13)'}, dark:{bg:'#171c1e',card:'#1f2628',blue:'#7ec7d8',hover:'#a5dce5',like:'#7ec7d8',sel:'rgba(126,199,216,.18)'}}
+  };
+  var curPalette = (function(){ try { return localStorage.getItem('sx-palette') || 'ruri'; } catch(e){ return 'ruri'; } })();
+  function applyPalette(pid) {
+    var pal = PALETTES[pid] || PALETTES.ruri;
+    curPalette = pid;
+    var m = document.documentElement.dataset.theme === 'dark' ? pal.dark : pal.light;
+    var st = document.documentElement.style;
+    st.setProperty('--bg', m.bg); st.setProperty('--card', m.card);
+    st.setProperty('--blue', m.blue); st.setProperty('--hover', m.hover);
+    st.setProperty('--like', m.like); st.setProperty('--sel', m.sel);
+    document.querySelectorAll('.pal-dot').forEach(function(d){
+      d.classList.toggle('on', d.dataset.pal === pid);
+    });
+    try { localStorage.setItem('sx-palette', pid); } catch (e) {}
+  }
+  document.querySelectorAll('.pal-dot').forEach(function(dot){
+    dot.addEventListener('click', function(){ applyPalette(dot.dataset.pal); });
+  });
+
   function setTheme(t) {
     document.documentElement.dataset.theme = t;
     metaTheme.content = t==='dark'?'#191b21':'#faf8f2';
     themeBtn.setAttribute('aria-label', t === 'dark' ? '切换浅色模式' : '切换深色模式');
+    applyPalette(curPalette);
     try { localStorage.setItem('sx-theme', t); } catch (e) {}
   }
 
@@ -539,6 +574,7 @@
     var l = localStorage.getItem('sx-lang');
     if (l && T[l]) setLang(l);
   } catch (e) {}
+  applyPalette(curPalette);
 })();
 </script>
 </body>
