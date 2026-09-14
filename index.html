@@ -12,7 +12,7 @@
 <meta property="og:image" content="https://shiyiXiao05.github.io/homepage/assets/og-card.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" type="application/atom+xml" title="肖世屹的博客" href="blog/feed.xml">
-<meta name="theme-color" content="#faf8f2" id="metaTheme">
+<meta name="theme-color" content="#e9eef7" id="metaTheme">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23faf8f2'/%3E%3Crect x='4' y='4' width='11' height='11' fill='%23195fae'/%3E%3Crect x='17' y='17' width='11' height='11' fill='%23195fae'/%3E%3Crect x='17' y='4' width='11' height='11' fill='none' stroke='%23c7401f' stroke-width='2'/%3E%3Crect x='4' y='17' width='11' height='11' fill='none' stroke='%23c7401f' stroke-width='2'/%3E%3C/svg%3E">
 <script>
 (function(){try{
@@ -23,15 +23,15 @@
 </script>
 <style>
   :root {
-    --bg: #faf8f2;
+    --bg: #e9eef7;
     --ink: #201f1c;
     --body: #45433c;
     --muted: #7c786c;
-    --border: #e6e1d5;
-    --card: #f4f1e8;
-    --blue: #195fae;
-    --hover: #c7401f;
-    --sel: rgba(25,95,174,.13);
+    --border: #dde3ef;
+    --card: #f6f8fc;
+    --blue: #174a99;
+    --hover: #b23a12;
+    --sel: rgba(23,74,153,.15);
     color-scheme: light;
     --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
     --mono: "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
@@ -510,10 +510,10 @@
   }
 
   var PALETTES = {
-    ruri:      {name:'瑠璃×朱', light:{bg:'#faf8f2',card:'#f4f1e8',blue:'#195fae',hover:'#c7401f',like:'#c7401f',sel:'rgba(25,95,174,.13)'}, dark:{bg:'#191b21',card:'#22242b',blue:'#8fb0de',hover:'#e08856',like:'#e08856',sel:'rgba(143,176,222,.2)'}},
-    kari:      {name:'蒸栗×墨', light:{bg:'#f7f6e7',card:'#efeedb',blue:'#4f5d23',hover:'#2e2a20',like:'#4f5d23',sel:'rgba(85,99,31,.15)'}, dark:{bg:'#1d1f17',card:'#262a1e',blue:'#c6ce96',hover:'#e0e4ae',like:'#c6ce96',sel:'rgba(198,206,150,.2)'}},
-    nadeshiko: {name:'撫子×苏芳', light:{bg:'#fbf4f6',card:'#f6ebee',blue:'#8e4457',hover:'#c4657e',like:'#c4657e',sel:'rgba(142,68,87,.12)'}, dark:{bg:'#211b1e',card:'#2a2226',blue:'#e3a8b5',hover:'#d98c9f',like:'#d98c9f',sel:'rgba(227,168,181,.18)'}},
-    asagi:     {name:'浅葱×紺青', light:{bg:'#f0f6f6',card:'#e8f0f0',blue:'#1d6e73',hover:'#0f4c51',like:'#1d6e73',sel:'rgba(29,110,115,.13)'}, dark:{bg:'#171c1e',card:'#1f2628',blue:'#7ec7d8',hover:'#a5dce5',like:'#7ec7d8',sel:'rgba(126,199,216,.18)'}}
+    ruri:      {name:'瑠璃×朱', light:{bg:'#e9eef7',card:'#f6f8fc',blue:'#174a99',hover:'#b23a12',like:'#b23a12',sel:'rgba(23,74,153,.15)'}, dark:{bg:'#191b21',card:'#22242b',blue:'#8fb0de',hover:'#e08856',like:'#e08856',sel:'rgba(143,176,222,.2)'}},
+    kari:      {name:'蒸栗×墨', light:{bg:'#edecd6',card:'#f7f6e7',blue:'#43511b',hover:'#2e2a20',like:'#43511b',sel:'rgba(67,81,27,.16)'}, dark:{bg:'#1d1f17',card:'#262a1e',blue:'#c6ce96',hover:'#e0e4ae',like:'#c6ce96',sel:'rgba(198,206,150,.2)'}},
+    nadeshiko: {name:'撫子×苏芳', light:{bg:'#f5e5ea',card:'#fcf4f6',blue:'#7a2f42',hover:'#b23a52',like:'#b23a52',sel:'rgba(122,47,66,.14)'}, dark:{bg:'#211b1e',card:'#2a2226',blue:'#e3a8b5',hover:'#d98c9f',like:'#d98c9f',sel:'rgba(227,168,181,.18)'}},
+    asagi:     {name:'浅葱×紺青', light:{bg:'#e1edee',card:'#f2f8f8',blue:'#0f5a5e',hover:'#0a3d40',like:'#0f5a5e',sel:'rgba(15,90,94,.14)'}, dark:{bg:'#171c1e',card:'#1f2628',blue:'#7ec7d8',hover:'#a5dce5',like:'#7ec7d8',sel:'rgba(126,199,216,.18)'}}
   };
   var curPalette = (function(){ try { return localStorage.getItem('sx-palette') || 'ruri'; } catch(e){ return 'ruri'; } })();
   function applyPalette(pid) {
@@ -535,7 +535,7 @@
 
   function setTheme(t) {
     document.documentElement.dataset.theme = t;
-    metaTheme.content = t==='dark'?'#191b21':'#faf8f2';
+    metaTheme.content = t==='dark'?'#191b21':'#e9eef7';
     themeBtn.setAttribute('aria-label', t === 'dark' ? '切换浅色模式' : '切换深色模式');
     applyPalette(curPalette);
     try { localStorage.setItem('sx-theme', t); } catch (e) {}
