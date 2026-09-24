@@ -5,7 +5,9 @@ Usage:  python3 build.py
 
 - Reads Markdown posts from _posts/*.md (front matter: title, date, tags, summary)
 - Generates the blog:  blog/index.html (list) + blog/<slug>.html (posts)
-- Injects the latest posts into index.html between the BLOG:RECENT markers
+- Generates sitemap.xml, robots.txt, 404.html, blog/feed.xml
+- Injects the latest posts into index.html between the BLOG:RECENT markers,
+  and writes the footer "最后更新" date (zh + en) from the build date
 - blog/admin.html (the online editor) is hand-maintained; edit it directly
 - On first run it bootstraps a local .venv with the required packages,
   so `python3 build.py` is the only command you ever need.
@@ -15,10 +17,12 @@ import os
 import re
 import subprocess
 import sys
+import time
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 POSTS_DIR = os.path.join(ROOT, "_posts")
-SITE = "https://shiyiXiao05.github.io/homepage"
+# 站点规范 URL（全小写；index.html 的 og:url / og:image / canonical 与此保持一致）
+SITE = "https://shiyixiao05.github.io/homepage"
 
 # giscus 评论配置：到 giscus.app 生成后把两个 ID 填进来即可开启评论区（留空则不渲染）
 GISCUS_REPO = "ShiyiXiao05/homepage"
@@ -462,21 +466,6 @@ def write(path, content):
     open(path, "w", encoding="utf-8").write(content)
     print("[build] wrote", os.path.relpath(path, ROOT))
 
-def inject_homepage(posts):
-    index = os.path.join(ROOT, "index.html")
-    html = open(index, encoding="utf-8").read()
-    marker_start, marker_end = "<!-- BLOG:RECENT:START -->", "<!-- BLOG:RECENT:END -->"
-    if marker_start not in html:
-        print("[build] homepage markers not found — skipped recent-posts injection")
-        return
-    items = "".join(
-        f'<li><span class="nd">[{p["date_disp"][:7]}]</span><a href="blog/{p["slug"]}.html">{p["title"]}</a></li>'
-        for p in posts[:3]
-    )
-    html = re.sub(marker_start + ".*?" + marker_end, marker_start + "\n" + items + "\n" + marker_end, html, flags=re.S)
-    open(index, "w", encoding="utf-8").write(html)
-    print("[build] homepage recent-posts updated")
-
 def build_feed(posts):
     entries = ""
     for p in posts:
@@ -493,13 +482,12 @@ def build_feed(posts):
             f'<link href="{SITE}/blog/"/>\n<id>{SITE}/blog/</id>\n'
             f"<updated>{updated}</updated>\n{entries}</feed>")
 
-def build_sitemap(posts):
-    urls = [f"{SITE}/", f"{SITE}/blog/"]
-    lastmods = ["2026-09-12", "2026-09-12"]
+def build_sitemap(posts, today):
+    # 主页会随每次构建更新（页脚日期、近期博文），博客列表跟随最新文章
+    urls = [(f"{SITE}/", today), (f"{SITE}/blog/", posts[0]["date"] if posts else today)]
     for p in posts:
-        urls.append(f"{SITE}/blog/{p['slug']}.html")
-        lastmods.append(p["date"])
-    items = "".join(f"<url><loc>{u}</loc><lastmod>{d}</lastmod></url>" for u, d in zip(urls, lastmods))
+        urls.append((f"{SITE}/blog/{p['slug']}.html", p["date"]))
+    items = "".join(f"<url><loc>{u}</loc><lastmod>{d}</lastmod></url>" for u, d in urls)
     return ('<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + items + "\n</urlset>")
 
@@ -537,22 +525,42 @@ a:hover{text-decoration:underline}
 </body>
 </html>"""
 
-def inject_homepage(posts):
+def inject_homepage(posts, today):
+    """刷新 index.html：近期博文列表 + 页脚「最后更新」日期（唯一数据源在构建时写入）。"""
     index = os.path.join(ROOT, "index.html")
     html = open(index, encoding="utf-8").read()
+
     marker_start, marker_end = "<!-- BLOG:RECENT:START -->", "<!-- BLOG:RECENT:END -->"
-    if marker_start not in html:
+    if marker_start in html:
+        items = "".join(
+            f'<li><span class="nd">[{p["date_disp"][:7]}]</span><a href="blog/{p["slug"]}.html">{p["title"]}</a></li>'
+            for p in posts[:3]
+        )
+        html = re.sub(marker_start + ".*?" + marker_end, marker_start + "\n" + items + "\n" + marker_end, html, flags=re.S)
+        print("[build] homepage recent-posts updated")
+    else:
         print("[build] homepage markers not found — skipped recent-posts injection")
-        return
-    items = "".join(
-        f'<li><span class="nd">[{p["date_disp"][:7]}]</span><a href="blog/{p["slug"]}.html">{p["title"]}</a></li>'
-        for p in posts[:3]
-    )
-    html = re.sub(marker_start + ".*?" + marker_end, marker_start + "\n" + items + "\n" + marker_end, html, flags=re.S)
+
+    # 页脚日期：可见文本 + zh/en 两份 i18n 字典，格式 YYYY.MM
+    ym = today[:7].replace("-", ".")
+    subs = [
+        (r'(<span data-i18n="updated">最后更新 )\d{4}\.\d{2}(</span>)', rf"\g<1>{ym}\g<2>"),
+        (r"(updated: '最后更新 )\d{4}\.\d{2}(')", rf"\g<1>{ym}\g<2>"),
+        (r"(updated: 'Last updated )\d{4}\.\d{2}(')", rf"\g<1>{ym}\g<2>"),
+    ]
+    hit = 0
+    for pat, rep in subs:
+        html, n = re.subn(pat, rep, html)
+        hit += n
+    if hit == len(subs):
+        print(f"[build] homepage footer date updated → {ym}")
+    else:
+        print(f"[build] WARNING: footer date patterns matched {hit}/{len(subs)} — 请检查 index.html 的 updated 文案")
+
     open(index, "w", encoding="utf-8").write(html)
-    print("[build] homepage recent-posts updated")
 
 def main():
+    today = time.strftime("%Y-%m-%d")
     files = sorted((f for f in os.listdir(POSTS_DIR) if f.endswith(".md")), reverse=True)
     posts = [parse_post(os.path.join(POSTS_DIR, f)) for f in files]
 
@@ -605,12 +613,12 @@ def main():
             os.remove(os.path.join(out, f))
             print("[build] removed stale", f)
 
-    write(os.path.join(ROOT, "sitemap.xml"), build_sitemap(posts))
+    write(os.path.join(ROOT, "sitemap.xml"), build_sitemap(posts, today))
     write(os.path.join(ROOT, "robots.txt"), ROBOTS_TXT)
     write(os.path.join(ROOT, "404.html"), build_404())
     write(os.path.join(out, "feed.xml"), build_feed(posts))
 
-    inject_homepage(posts)
+    inject_homepage(posts, today)
     print("[build] done.")
 
 if __name__ == "__main__":

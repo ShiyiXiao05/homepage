@@ -21,6 +21,8 @@ jobs:
         run: pip install markdown pymdown-extensions pygments
 
       - name: Build site
+        env:
+          TZ: Asia/Shanghai   # 构建时写入的页脚日期/sitemap lastmod 与本地时区一致
         run: python3 build.py
 
       - name: Commit generated files
